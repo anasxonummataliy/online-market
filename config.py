@@ -17,3 +17,5 @@ class PostgresConfig:
 @dataclass
 class Configuration:
     db = PostgresConfig()
+
+
