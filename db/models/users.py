@@ -5,7 +5,6 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from db.base import TimeBasedModel
 
 
-
 class User(TimeBasedModel):
     class Type(Enum):
         ADMIN = "admin"
