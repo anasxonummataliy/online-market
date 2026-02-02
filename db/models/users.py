@@ -1,10 +1,10 @@
 from sqlalchemy import BigInteger, String
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from db.base import Base
+from db.base import BaseModel
+from db import Card
 
-class User(Base):
-    id: Mapped[int] = mapped_column(primary_key=True, index=True)
-    first_name: Mapped[str] = mapped_column(String)
-    last_name: Mapped[str] = mapped_column(String)
 
+class User(BaseModel):
+    fullname: Mapped[str] = mapped_column(String)
+    cards: Mapped[list["Card"]] = relationship("Card", back_populates="user")
