@@ -1,12 +1,9 @@
-from __future__ import annotations
-from typing import TYPE_CHECKING
 from enum import Enum
 from sqlalchemy import BigInteger, String, Enum as SqlEnum
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from db.base import TimeBasedModel
-if TYPE_CHECKING:
-    from db.models.shops import Cart
+
 
 
 class User(TimeBasedModel):

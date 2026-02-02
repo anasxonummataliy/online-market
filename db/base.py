@@ -1,7 +1,10 @@
 from datetime import datetime
+from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase, declared_attr, mapped_column
 from sqlalchemy.orm.attributes import Mapped
 from sqlalchemy.types import BigInteger, DateTime
+
+from config import conf
 
 
 class Base(DeclarativeBase):
@@ -30,3 +33,5 @@ class TimeBasedModel(BaseModel):
 
     updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now())
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now())
+
+engine = create_engine(conf.db.db_url, echo=True)

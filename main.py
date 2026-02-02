@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from config import conf
 import db.models
-from db.base import Base
+from db.base import Base, engine
 
 
 import asyncio
@@ -17,7 +17,6 @@ bot = Bot(conf.bot.TOKEN)
 
 
 async def startup(bot: Bot):
-    engine = create_engine(conf.db.db_url)
     Base.metadata.create_all(engine)
     print("yaratildi")
     await bot.send_message(chat_id=8122865725, text="ishga tushdi")
