@@ -3,7 +3,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.orm.properties import ForeignKey
 from sqlalchemy.types import BigInteger
 from db import User
-from db.base import BaseModel, CreatedBaseModel
+from db.base import BaseModel, TimeBasedModel
 from sqlalchemy_file import ImageField
 
 
@@ -14,7 +14,7 @@ class Category(BaseModel):
     )
 
 
-class Product(CreatedBaseModel):
+class Product(TimeBasedModel):
     name: Mapped[str] = mapped_column(String)
     description: Mapped[str] = mapped_column(String)
     price: Mapped[float] = mapped_column(Float)
@@ -26,7 +26,28 @@ class Product(CreatedBaseModel):
     category_id: Mapped[int] = mapped_column(
         BigInteger, ForeignKey(Category.id), ondelete="CASCADE"
     )
+    cart_items: Mapped[list["CartItem"]] = relationship(
+        "cart_items.product_id", back_populates="product"
+    )
 
 
-class Card(BaseModel):
-    user: Mapped["User"] = relationship("User", back_populates="cards")
+class Cart(BaseModel):
+    user: Mapped["User"] = relationship("User", back_populates="carts")
+    user_id: Mapped[int] = mapped_column(
+        BigInteger, ForeignKey(User.id), ondelete="CASCADE"
+    )
+    cart_item: Mapped[list["CartItem"]] = relationship(
+        "cart_items.id", back_populates="cart"
+    )
+
+
+class CartItem(BaseModel):
+    product: Mapped["Product"] = relationship("Product", back_populates="cart_items")
+    product_id: Mapped[int] = mapped_column(
+        BigInteger, ForeignKey(Product.id), ondelete="CASCADE"
+    )
+    quantity: Mapped[int] = mapped_column(BigInteger)
+    cart: Mapped["Cart"] = relationship(Cart.id, back_populates="cart_item")  # type: ignore
+    cart_id: Mapped[int] = mapped_column(
+        BigInteger, ForeignKey(Cart.id), ondelete="CASCADE"
+    )

@@ -25,7 +25,7 @@ class BaseModel(Base):
     id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
 
 
-class CreatedBaseModel(BaseModel):
+class TimeBasedModel(BaseModel):
     __abstract__ = True
 
     updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now())

@@ -1,10 +1,19 @@
-from sqlalchemy import BigInteger, String
+from enum import Enum
+from sqlalchemy import BigInteger, String, Enum as SqlEnum
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from db.base import BaseModel
-from db import Card
+from db.base import BaseModel, TimeBasedModel
+from db import Cart
 
 
-class User(BaseModel):
+class User(TimeBasedModel):
+    class Type(Enum):
+        ADMIN = "admin"
+        USER = "user"
+
+    telegram_id: Mapped[int] = mapped_column(BigInteger, unique=True, index=True)
     fullname: Mapped[str] = mapped_column(String)
-    cards: Mapped[list["Card"]] = relationship("Card", back_populates="user")
+    username: Mapped[str] = mapped_column(String, nullable=True, unique=True)
+    phone_number: Mapped[str] = mapped_column(String, nullable=True, unique=True)
+    type: Mapped[SqlEnum] = mapped_column(SqlEnum(Type), default=Type.USER)
+    carts: Mapped[list["Cart"]] = relationship("Cart", back_populates="user")
