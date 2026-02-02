@@ -5,7 +5,7 @@ from sqlalchemy.types import BigInteger, DateTime
 
 
 class Base(DeclarativeBase):
-    @declared_attr # type: ignore
+    @declared_attr.directive
     def __tablename__(cls) -> str:
         name = cls.__name__[1:]
         _name = cls.__name__[0]

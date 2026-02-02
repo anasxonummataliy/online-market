@@ -2,7 +2,7 @@ from enum import Enum
 from sqlalchemy import BigInteger, String, Enum as SqlEnum
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from db.base import BaseModel, TimeBasedModel
+from db.base import TimeBasedModel
 from db import Cart
 
 

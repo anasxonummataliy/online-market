@@ -2,7 +2,7 @@ from sqlalchemy import Float, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.orm.properties import ForeignKey
 from sqlalchemy.types import BigInteger
-from db import User
+from db import User, OrderItem
 from db.base import BaseModel, TimeBasedModel
 from sqlalchemy_file import ImageField
 
@@ -29,6 +29,7 @@ class Product(TimeBasedModel):
     cart_items: Mapped[list["CartItem"]] = relationship(
         "cart_items.product_id", back_populates="product"
     )
+    order_items: Mapped[list[OrderItem]] = relationship('order_items.product_id')
 
 
 class Cart(BaseModel):
