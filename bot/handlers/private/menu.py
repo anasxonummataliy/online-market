@@ -18,5 +18,5 @@ async def start_handler(msg: Message):
     # }
     # await User.create(**user_data)
     rkb = ReplyKeyboardBuilder()
-    rkb.add(*[KeyboardButton(text='Help'), KeyboardButton(text=MY_REFERRALS)])
+    rkb.add(*[KeyboardButton(text=HELP), KeyboardButton(text=MY_REFERRALS)])
     await msg.answer("Salom", reply_markup=rkb.as_markup())

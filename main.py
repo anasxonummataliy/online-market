@@ -6,6 +6,7 @@ from aiogram import Bot, Dispatcher
 from config import conf
 from database.base import db
 from bot.handlers.private.menu import menu_router
+from bot.handlers.private.referrals import referrals_router
 
 dp = Dispatcher()
 bot = Bot(conf.bot.TOKEN)
@@ -18,7 +19,7 @@ async def startup(bot: Bot):
 
 
 async def main():
-    dp.include_router(menu_router)
+    dp.include_routers(menu_router, referrals_router)
     dp.startup.register(startup)
     await dp.start_polling(bot)
 
