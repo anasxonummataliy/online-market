@@ -1,6 +1,5 @@
 from enum import Enum
-from sqlalchemy.orm.properties import ForeignKey
-from sqlalchemy import BigInteger, String, Enum as SqlEnum
+from sqlalchemy import BigInteger, String, Enum as SqlEnum, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from database.base import TimeBasedModel
@@ -11,16 +10,13 @@ class User(TimeBasedModel):
         ADMIN = "admin"
         USER = "user"
 
-    telegram_id: Mapped[int] = mapped_column(BigInteger, unique=True, index=True)
     fullname: Mapped[str] = mapped_column(String)
     username: Mapped[str] = mapped_column(String, nullable=True, unique=True)
     phone_number: Mapped[str] = mapped_column(String, nullable=True, unique=True)
     type: Mapped[SqlEnum] = mapped_column(SqlEnum(Type), default=Type.USER)
-    parent_user_id: Mapped[int] = mapped_column(
-        BigInteger, ForeignKey("users.id", ondelete="SET NULL")
+    parent_user_id: Mapped[int | None] = mapped_column(
+        BigInteger, ForeignKey("users.id", ondelete="SET NULL"), nullable=True
     )
 
     carts: Mapped[list["Cart"]] = relationship("Cart", back_populates="user")
     orders: Mapped[list["Order"]] = relationship("Order", back_populates="user")
-    referrals: Mapped[list["User"]] = relationship("User", back_populates="parent_user")
-    parent_user: Mapped["User"] = relationship("User", back_populates="referrals")
