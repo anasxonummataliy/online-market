@@ -4,7 +4,7 @@ from sqlalchemy.orm.properties import ForeignKey
 from sqlalchemy.types import BigInteger
 from sqlalchemy_file import ImageField
 
-from db.base import BaseModel, TimeBasedModel
+from database.base import BaseModel, TimeBasedModel
 
 
 class Category(BaseModel):

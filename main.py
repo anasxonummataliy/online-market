@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from config import conf
-import db.models
-from db.base import Base, engine
+import database.models
+from database.base import Base, engine
 
 
 import asyncio

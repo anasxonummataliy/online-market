@@ -3,9 +3,9 @@ from sqlalchemy import BigInteger, Integer, Enum as SQLEnum, Float
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.orm.properties import ForeignKey
 
-from db import TimeBasedModel
-from db.models.shops import Product
-from db.models.users import User
+from database import TimeBasedModel
+from database.models.shops import Product
+from database.models.users import User
 
 
 class Order(TimeBasedModel):
