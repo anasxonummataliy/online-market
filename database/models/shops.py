@@ -9,6 +9,7 @@ from database.base import BaseModel, TimeBasedModel
 
 class Category(BaseModel):
     name: Mapped[str] = mapped_column(String)
+
     products: Mapped[list["Product"]] = relationship(
         "Product", back_populates="category"
     )
@@ -22,10 +23,11 @@ class Product(TimeBasedModel):
         ImageField(thumbnail_size=(128, 128)), nullable=True
     )
     quantity: Mapped[int] = mapped_column(BigInteger)
-    category: Mapped["Category"] = relationship("Category", back_populates="products")
     category_id: Mapped[int] = mapped_column(
         BigInteger, ForeignKey("categories.id", ondelete="CASCADE")
     )
+
+    category: Mapped["Category"] = relationship("Category", back_populates="products")
     cart_items: Mapped[list["CartItem"]] = relationship(
         "CartItem", back_populates="product"
     )
@@ -35,22 +37,24 @@ class Product(TimeBasedModel):
 
 
 class Cart(BaseModel):
-    user: Mapped["User"] = relationship("User", back_populates="carts")
     user_id: Mapped[int] = mapped_column(
         BigInteger, ForeignKey("users.id", ondelete="CASCADE")
     )
+
+    user: Mapped["User"] = relationship("User", back_populates="carts")
     cart_item: Mapped[list["CartItem"]] = relationship(
         "CartItem", back_populates="cart"
     )
 
 
 class CartItem(BaseModel):
-    product: Mapped["Product"] = relationship("Product", back_populates="cart_items")
     product_id: Mapped[int] = mapped_column(
         BigInteger, ForeignKey("products.id", ondelete="CASCADE")
     )
     quantity: Mapped[int] = mapped_column(BigInteger)
-    cart: Mapped["Cart"] = relationship("Cart", back_populates="cart_item")
     cart_id: Mapped[int] = mapped_column(
         BigInteger, ForeignKey("carts.id", ondelete="CASCADE")
     )
+
+    product: Mapped["Product"] = relationship("Product", back_populates="cart_items")
+    cart: Mapped["Cart"] = relationship("Cart", back_populates="cart_item")

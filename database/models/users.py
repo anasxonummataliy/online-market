@@ -16,11 +16,11 @@ class User(TimeBasedModel):
     username: Mapped[str] = mapped_column(String, nullable=True, unique=True)
     phone_number: Mapped[str] = mapped_column(String, nullable=True, unique=True)
     type: Mapped[SqlEnum] = mapped_column(SqlEnum(Type), default=Type.USER)
+    parent_user_id: Mapped[int] = mapped_column(
+        BigInteger, ForeignKey("users.id", ondelete="SET NULL")
+    )
 
     carts: Mapped[list["Cart"]] = relationship("Cart", back_populates="user")
     orders: Mapped[list["Order"]] = relationship("Order", back_populates="user")
     referrals: Mapped[list["User"]] = relationship("User", back_populates="parent_user")
     parent_user: Mapped["User"] = relationship("User", back_populates="referrals")
-    parent_user_id: Mapped[int] = mapped_column(
-        BigInteger, ForeignKey("users.id", ondelete="SET NULL")
-    )
