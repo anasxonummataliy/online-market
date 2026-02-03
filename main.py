@@ -14,7 +14,6 @@ bot = Bot(conf.bot.TOKEN)
 
 async def startup(bot: Bot):
     await db.create_all()
-    print("yaratildi")
     await bot.send_message(chat_id=8122865725, text="ishga tushdi")
 
 

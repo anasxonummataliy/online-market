@@ -22,5 +22,5 @@ class User(TimeBasedModel):
     referrals: Mapped[list["User"]] = relationship("User", back_populates="parent_user")
     parent_user: Mapped["User"] = relationship("User", back_populates="referrals")
     parent_user_id: Mapped[int] = mapped_column(
-        BigInteger, ForeignKey("users.id", ondelete="SET_NULL")
+        BigInteger, ForeignKey("users.id", ondelete="SET NULL")
     )
