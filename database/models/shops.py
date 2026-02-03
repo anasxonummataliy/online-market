@@ -1,8 +1,8 @@
 from sqlalchemy import Float, String
-from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy.orm.properties import ForeignKey
-from sqlalchemy.types import BigInteger
 from sqlalchemy_file import ImageField
+from sqlalchemy.types import BigInteger
+from sqlalchemy.orm.properties import ForeignKey
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from database.base import BaseModel, TimeBasedModel
 
