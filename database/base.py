@@ -110,7 +110,7 @@ db = AsyncDatabaseSession()
 db.init()
 
 
-class BaseModel(Base):
+class BaseModel(Base, AbstractClass):
     __abstract__ = True
     id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
 
@@ -118,7 +118,9 @@ class BaseModel(Base):
 class TimeBasedModel(BaseModel):
     __abstract__ = True
 
-    updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now(), onupdate=datetime.now())
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime, default=datetime.now(), onupdate=datetime.now()
+    )
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now())
 
 

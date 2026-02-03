@@ -15,12 +15,12 @@ class Order(TimeBasedModel):
     user: Mapped["User"] = relationship("User", back_populates="orders")
     user_id: Mapped[int] = mapped_column(
         BigInteger,
-        ForeignKey("categories.id", ondelete="CASCADE"),
+        ForeignKey("users.id", ondelete="CASCADE"),
     )
 
     status: Mapped[SQLEnum] = mapped_column(SQLEnum(Status), default=Status.IN_PROGRESS)
     order_items: Mapped[list["OrderItem"]] = relationship(
-        "order_items.id", back_populates="order"
+        "OrderItem", back_populates="order"
     )
 
 

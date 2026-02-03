@@ -15,4 +15,6 @@ class User(TimeBasedModel):
     username: Mapped[str] = mapped_column(String, nullable=True, unique=True)
     phone_number: Mapped[str] = mapped_column(String, nullable=True, unique=True)
     type: Mapped[SqlEnum] = mapped_column(SqlEnum(Type), default=Type.USER)
+    
     carts: Mapped[list["Cart"]] = relationship("Cart", back_populates="user")
+    orders: Mapped[list["Order"]] = relationship("Order", back_populates="user")
