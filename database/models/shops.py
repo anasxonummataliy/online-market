@@ -47,10 +47,10 @@ class Cart(BaseModel):
 class CartItem(BaseModel):
     product: Mapped["Product"] = relationship("Product", back_populates="cart_items")
     product_id: Mapped[int] = mapped_column(
-        BigInteger, ForeignKey('products.id', ondelete="CASCADE")
+        BigInteger, ForeignKey("products.id", ondelete="CASCADE")
     )
     quantity: Mapped[int] = mapped_column(BigInteger)
-    cart: Mapped["Cart"] = relationship("Cart", back_populates="cart_item") 
+    cart: Mapped["Cart"] = relationship("Cart", back_populates="cart_item")
     cart_id: Mapped[int] = mapped_column(
         BigInteger, ForeignKey("carts.id", ondelete="CASCADE")
     )
