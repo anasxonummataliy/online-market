@@ -24,33 +24,33 @@ class Product(TimeBasedModel):
     quantity: Mapped[int] = mapped_column(BigInteger)
     category: Mapped["Category"] = relationship("Category", back_populates="products")
     category_id: Mapped[int] = mapped_column(
-        BigInteger, ForeignKey(Category.id, ondelete="CASCADE")
+        BigInteger, ForeignKey("categories.id", ondelete="CASCADE")
     )
     cart_items: Mapped[list["CartItem"]] = relationship(
-        "cart_items.product_id", back_populates="product"
+        "CartItem", back_populates="product"
     )
     order_items: Mapped[list["OrderItem"]] = relationship(
-        "OrdOrderItem", back_populates="product"
+        "OrderItem", back_populates="product"
     )
 
 
 class Cart(BaseModel):
-    user: Mapped["User"] = relationship("Users.id", back_populates="carts")
+    user: Mapped["User"] = relationship("User", back_populates="carts")
     user_id: Mapped[int] = mapped_column(
         BigInteger, ForeignKey("users.id", ondelete="CASCADE")
     )
     cart_item: Mapped[list["CartItem"]] = relationship(
-        "cart_items.id", back_populates="cart"
+        "CartItem", back_populates="cart"
     )
 
 
 class CartItem(BaseModel):
     product: Mapped["Product"] = relationship("Product", back_populates="cart_items")
     product_id: Mapped[int] = mapped_column(
-        BigInteger, ForeignKey(Product.id, ondelete="CASCADE")
+        BigInteger, ForeignKey('products.id', ondelete="CASCADE")
     )
     quantity: Mapped[int] = mapped_column(BigInteger)
-    cart: Mapped["Cart"] = relationship(Cart.id, back_populates="cart_item")  # type: ignore
+    cart: Mapped["Cart"] = relationship("Cart", back_populates="cart_item") 
     cart_id: Mapped[int] = mapped_column(
-        BigInteger, ForeignKey(Cart.id, ondelete="CASCADE")
+        BigInteger, ForeignKey("carts.id", ondelete="CASCADE")
     )

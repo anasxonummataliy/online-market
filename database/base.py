@@ -94,7 +94,7 @@ class AsyncDatabaseSession:
     def init(self):
         self._engine = create_async_engine(conf.db.db_url)
         self._session = sessionmaker(
-            self._engine, expire_on_commit=False, class_=AsyncSession()
+            self._engine, expire_on_commit=False, class_=AsyncSession
         )()
 
     async def create_all(self):
@@ -118,7 +118,7 @@ class BaseModel(Base):
 class TimeBasedModel(BaseModel):
     __abstract__ = True
 
-    updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now())
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now(), onupdate=datetime.now())
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now())
 
 

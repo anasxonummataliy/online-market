@@ -4,8 +4,6 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.orm.properties import ForeignKey
 
 from database import TimeBasedModel
-from database.models.shops import Product
-from database.models.users import User
 
 
 class Order(TimeBasedModel):
@@ -29,7 +27,7 @@ class Order(TimeBasedModel):
 class OrderItem(TimeBasedModel):
     order: Mapped["Order"] = relationship("Order", back_populates="order_items")
     order_id: Mapped[int] = mapped_column(
-        BigInteger, ForeignKey(Order.id, ondelete="CASCADE")
+        BigInteger, ForeignKey('orders.id', ondelete="CASCADE")
     )
     product: Mapped["Product"] = relationship("Product", back_populates="order_items")
     product_id: Mapped[int] = mapped_column(
