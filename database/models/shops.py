@@ -1,9 +1,10 @@
-from sqlalchemy import Float, String
+from sqlalchemy import Float, String, select
 from sqlalchemy_file import ImageField
 from sqlalchemy.types import BigInteger
 from sqlalchemy.orm.properties import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
+from bot.main import db
 from database.base import BaseModel, TimeBasedModel
 
 
@@ -34,6 +35,14 @@ class Product(TimeBasedModel):
     order_items: Mapped[list["OrderItem"]] = relationship(
         "OrderItem", back_populates="product"
     )
+
+    @classmethod
+    async def filter(cls, category_id: int):
+        return (
+            (await db.excute(select(cls).where(cls.category_id == category_id)))
+            .scalars()
+            .all()
+        )
 
 
 class Cart(BaseModel):

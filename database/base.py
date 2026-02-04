@@ -42,15 +42,13 @@ class AbstractClass:
 
     @classmethod
     async def get_all(cls):
-        return (await db.execute(select(cls))).scalars()
+        return (await db.execute(select(cls))).scalars().all()
 
     @classmethod
     async def get(cls, _id: int):
         return (await db.excute(select(cls).where(cls.id == _id))).scalar()
 
-    @classmethod
-    async def filter(cls, _id: int):
-        return (await db.excute(select(cls).where(cls.id == _id))).scalar()
+   
 
     @classmethod
     async def create(cls, **kwargs):
