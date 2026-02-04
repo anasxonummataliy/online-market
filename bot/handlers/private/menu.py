@@ -4,7 +4,7 @@ from aiogram.types import KeyboardButton, Message
 from aiogram.filters import CommandStart, Command
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
 
-from bot.buttons.sub_menu import MY_REFERRALS, HELP
+from bot.buttons.sub_menu import CATEGORIES, MY_REFERRALS, HELP, SETTINGS, WELCOME_TEXT
 from database import User
 from database.base import db
 
@@ -29,5 +29,10 @@ async def start_handler(msg: Message, parent_id: Optional[int] = None):
         username=msg.from_user.username,
         parent_user_id=parent_id,
     )
-    rkb = ReplyKeyboardBuilder()
-    rkb.add(*[KeyboardButton(text=HELP), KeyboardButton(text=MY_REFERRALS)])
+    markup = [
+        [KeyboardButton(text=CATEGORIES)],
+        [KeyboardButton(text=HELP), KeyboardButton(text=MY_REFERRALS)],
+        [KeyboardButton(text=SETTINGS)]
+    ]
+    rkb = ReplyKeyboardBuilder(markup=markup)
+    await msg.answer((WELCOME_TEXT), reply_markup=rkb.as_markup())
