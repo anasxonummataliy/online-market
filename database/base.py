@@ -45,6 +45,14 @@ class AbstractClass:
         return (await db.execute(select(cls))).scalars()
 
     @classmethod
+    async def get(cls, _id: int):
+        return (await db.excute(select(cls).where(cls.id == _id))).scalar()
+
+    @classmethod
+    async def filter(cls, _id: int):
+        return (await db.excute(select(cls).where(cls.id == _id))).scalar()
+
+    @classmethod
     async def create(cls, **kwargs):
         obj = cls(**kwargs)
         db.add(obj)
@@ -112,7 +120,7 @@ db.init()
 
 class BaseModel(Base, AbstractClass):
     __abstract__ = True
-    id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
 
 
 class TimeBasedModel(BaseModel):

@@ -6,8 +6,7 @@ from aiogram.utils.i18n import FSMI18nMiddleware, I18n
 
 from bot.config import conf
 from database.base import db
-from bot.handlers.private.menu import menu_router
-from bot.handlers.private.referrals import referrals_router
+from bot.handlers.private import menu_router, referrals_router, product_router
 
 dp = Dispatcher()
 bot = Bot(conf.bot.TOKEN)
@@ -20,9 +19,9 @@ async def startup(bot: Bot):
 
 async def main():
     dp.startup.register(startup)
-    i18n = I18n(path='locales')
+    i18n = I18n(path="locales")
     dp.update.outer_middleware(FSMI18nMiddleware(i18n))
-    dp.include_routers(menu_router, referrals_router)
+    dp.include_routers(menu_router, referrals_router, product_router)
     await dp.start_polling(bot)
 
 
