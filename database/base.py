@@ -12,7 +12,7 @@ from sqlalchemy import (
     update as sqlalchemy_update,
 )
 
-from config import conf
+from bot.config import conf
 
 
 class Base(AsyncAttrs, DeclarativeBase):

@@ -2,8 +2,9 @@ import sys
 import asyncio
 import logging
 from aiogram import Bot, Dispatcher
+from aiogram.utils.i18n import FSMI18nMiddleware, I18n
 
-from config import conf
+from bot.config import conf
 from database.base import db
 from bot.handlers.private.menu import menu_router
 from bot.handlers.private.referrals import referrals_router
@@ -18,8 +19,10 @@ async def startup(bot: Bot):
 
 
 async def main():
-    dp.include_routers(menu_router, referrals_router)
     dp.startup.register(startup)
+    i18n = I18n(path='locales')
+    dp.update.outer_middleware(FSMI18nMiddleware(i18n))
+    dp.include_routers(menu_router, referrals_router)
     await dp.start_polling(bot)
 
 
