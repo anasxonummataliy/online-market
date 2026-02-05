@@ -15,5 +15,3 @@ async def my_referrals(msg: Message, bot: Bot):
     text = f'✨ Siz taklif qilganlar soni: <b>{n}</b>🔗 Taklif havolasi: <a href="{link}">Bosish orqali kirish</a>'
 
     await msg.answer(text, parse_mode=ParseMode.HTML)
-
-

@@ -27,7 +27,7 @@ class Order(TimeBasedModel):
 class OrderItem(TimeBasedModel):
     order: Mapped["Order"] = relationship("Order", back_populates="order_items")
     order_id: Mapped[int] = mapped_column(
-        BigInteger, ForeignKey('orders.id', ondelete="CASCADE")
+        BigInteger, ForeignKey("orders.id", ondelete="CASCADE")
     )
     product: Mapped["Product"] = relationship("Product", back_populates="order_items")
     product_id: Mapped[int] = mapped_column(
