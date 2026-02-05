@@ -48,8 +48,6 @@ class AbstractClass:
     async def get(cls, _id: int):
         return (await db.excute(select(cls).where(cls.id == _id))).scalar()
 
-   
-
     @classmethod
     async def create(cls, **kwargs):
         obj = cls(**kwargs)
@@ -130,4 +128,4 @@ class TimeBasedModel(BaseModel):
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now())
 
 
-engine = create_engine(conf.db.db_url, echo=True)
+
