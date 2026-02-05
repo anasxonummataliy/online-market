@@ -6,7 +6,7 @@ from aiogram.utils.i18n import FSMI18nMiddleware, I18n
 
 from bot.config import conf
 from database.base import db
-from bot.handlers.private import menu_router, referrals_router, product_router
+from bot.handlers.private import *
 
 dp = Dispatcher()
 bot = Bot(conf.bot.TOKEN)
