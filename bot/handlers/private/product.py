@@ -1,6 +1,6 @@
 from aiogram import Router, Bot, F
-from aiogram.types import CallbackQuery, Message, InlineKeyboardButton
 from aiogram.utils.keyboard import InlineKeyboardBuilder
+from aiogram.types import CallbackQuery, Message, InlineKeyboardButton
 
 from bot.buttons.sub_menu import *
 from database.models import Category, Product
