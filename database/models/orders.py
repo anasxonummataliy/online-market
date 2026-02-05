@@ -1,7 +1,7 @@
 from enum import Enum
 from sqlalchemy.orm.properties import ForeignKey
-from sqlalchemy import BigInteger, Integer, Enum as SQLEnum, Float
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy import BigInteger, Integer, Enum as SQLEnum, Float
 
 from database import TimeBasedModel
 
