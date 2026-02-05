@@ -24,7 +24,8 @@ async def get_all_categories(message: Message):
     else:
         await message.answer("No categories")
 
-@product_router.callback_query(F.startswith('category_'))
+
+@product_router.callback_query(F.startswith("category_"))
 async def callback_categories(callback: CallbackQuery):
     cateogry_id = callback.data.removeprefix("category_")
     products = Product.filter(cateogry_id)
