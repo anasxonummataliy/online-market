@@ -6,7 +6,7 @@ from aiogram.utils.i18n import FSMI18nMiddleware, I18n
 
 from bot.config import conf
 from database.base import db
-from bot.handlers.private import *
+from bot.handlers.private import main_router
 
 dp = Dispatcher()
 bot = Bot(conf.bot.TOKEN)
@@ -27,7 +27,7 @@ async def shutdown(bot: Bot):
 async def main():
     i18n = I18n(path="locales")
     dp.update.outer_middleware(FSMI18nMiddleware(i18n))
-    dp.include_routers(menu_router, referrals_router, product_router)
+    dp.include_routers(main_router)
     await dp.start_polling(bot)
 
 
