@@ -18,16 +18,18 @@ class UsernameAndPasswordProvider(AuthProvider):
     ) -> Response:
         if len(username) < 3:
             raise FormValidationError("Username must be at least 3 characters long.")
-        print(bcrypt.hashpw(password.encode(), conf.web.PASSWORD.encode()))
+
         if username == conf.web.USERNAME and bcrypt.checkpw(
-            password.encode(), conf.web.PASSWORD.encode()
+            password.encode(),
+            conf.web.PASSWORD.encode(),
         ):
             request.session.update({"username": username})
             return response
+
         raise LoginFailed("Invalid username or password.")
 
-    async def is_authenticated(self, request):
-        if request.session.get("username", None) == conf.web.USERNAME:
+    async def is_authenticated(self, request: Request):
+        if request.session.get("username") == conf.web.USERNAME:
             request.state.user = conf.web.USERNAME
             return True
         return False
@@ -36,8 +38,7 @@ class UsernameAndPasswordProvider(AuthProvider):
         return AdminConfig(app_title="Admin Page")
 
     def get_admin_user(self, request: Request) -> AdminUser:
-        user = request.state.user
-        return AdminUser(username=user)
+        return AdminUser(username=request.state.user)
 
     async def logout(self, request: Request, response: Response) -> Response:
         request.session.clear()

@@ -4,6 +4,7 @@ from sqlalchemy import Float, String, select
 from sqlalchemy.orm.properties import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
+from database.models import OrderItem
 from database.base import *
 
 

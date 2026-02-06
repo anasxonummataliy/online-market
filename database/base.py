@@ -1,6 +1,7 @@
 import logging
 from datetime import datetime
 from typing import Optional
+from sqlalchemy import create_engine
 from sqlalchemy.orm.attributes import Mapped
 from sqlalchemy.types import BigInteger, DateTime
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncAttrs, AsyncSession
@@ -125,3 +126,5 @@ class TimeBasedModel(BaseModel):
         DateTime, default=datetime.now(), onupdate=datetime.now()
     )
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now())
+
+sync_engine = create_engine(conf.db.db_url.replace("+asyncpg", ""), echo=False)
