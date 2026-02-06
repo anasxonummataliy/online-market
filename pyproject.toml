@@ -22,7 +22,8 @@ dependencies = [
     "greenlet (>=3.3.1,<4.0.0)",
     "babel (>=2.18.0,<3.0.0)",
     "bcrypt (>=5.0.0,<6.0.0)",
-    "starlette-admin (>=0.16.0,<0.17.0)"
+    "starlette-admin (>=0.16.0,<0.17.0)",
+    "uvicorn (>=0.40.0,<0.41.0)"
 ]
 
 

@@ -27,6 +27,13 @@ class RedisConfig:
 
 
 @dataclass
+class WebConfig:
+    SECRET_KEY: str = os.getenv("SECRET_KEY")
+    USERNAME: str = os.getenv("USERNAME")
+    PASSWORD: str = os.getenv("PASSWORD")
+
+
+@dataclass
 class BotConfig:
     TOKEN = os.getenv("BOT_TOKEN") or ""
     ADMIN = os.getenv("ADMIN") or ""
@@ -37,6 +44,7 @@ class Configuration:
     db = PostgresConfig()
     redis = RedisConfig()
     bot = BotConfig()
+    web = WebConfig()
 
 
 conf = Configuration()
