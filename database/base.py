@@ -6,7 +6,6 @@ from sqlalchemy.types import BigInteger, DateTime
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncAttrs, AsyncSession
 from sqlalchemy.orm import DeclarativeBase, declared_attr, mapped_column, sessionmaker
 from sqlalchemy import (
-    create_engine,
     select,
     delete as sqlalchemy_delete,
     update as sqlalchemy_update,
@@ -116,7 +115,7 @@ db.init()
 
 class BaseModel(Base, AbstractClass):
     __abstract__ = True
-    id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
 
 
 class TimeBasedModel(BaseModel):
@@ -126,6 +125,3 @@ class TimeBasedModel(BaseModel):
         DateTime, default=datetime.now(), onupdate=datetime.now()
     )
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now())
-
-
-
