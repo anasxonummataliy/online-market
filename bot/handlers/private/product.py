@@ -3,7 +3,7 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 from aiogram.types import CallbackQuery, Message, InlineKeyboardButton
 
 from bot.buttons.sub_menu import *
-from database.models import Category, Product
+from database.models.shops import Category, Product
 
 product_router = Router()
 
@@ -28,12 +28,32 @@ async def get_all_categories(message: Message):
 @product_router.callback_query(F.startswith("category_"))
 async def callback_categories(callback: CallbackQuery):
     cateogry_id = callback.data.removeprefix("category_")
-    products = Product.filter(cateogry_id)
+    products = Product.filter(int(cateogry_id))
     ikm = InlineKeyboardBuilder()
-    for product in products:
-        ikm.add(
-            InlineKeyboardButton(
-                text=product.name, callback_data=f"product_{product.id}"
+    if len(product):
+        for product in products:
+            product = product[0]
+            ikm.row(
+                InlineKeyboardButton(
+                    text=f"{product.name} {product.price} 💵",
+                    callback_data=f"product_{product.id}",
+                )
             )
-        )
-    ikm.adjust(2)
+            ikm.row(
+                InlineKeyboardButton(
+                    text="⏮️ Previous", callback_data=f"product_previous_{product.id}"
+                ),
+                InlineKeyboardButton(
+                    text="Add to Cart 🛒",
+                    callback_data=f"product_add_to_cart_{product.id}",
+                ),
+                InlineKeyboardButton(
+                    text="Next ⏭️", callback_data=f"product_previous_{product.id}"
+                ),
+            )
+            await callback.message.delete()
+            await callback.message.answer(
+                "Product detail", reply_markup=ikm.as_markup()
+            )
+    else:
+        callback.answer("No product", show_alert=True)
