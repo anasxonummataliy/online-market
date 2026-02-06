@@ -25,14 +25,14 @@ async def get_all_categories(message: Message):
         await message.answer("No categories")
 
 
-@product_router.callback_query(F.startswith("category_"))
+@product_router.callback_query(F.data.startswith("category_"))
 async def callback_categories(callback: CallbackQuery):
     cateogry_id = callback.data.removeprefix("category_")
-    products = Product.filter(int(cateogry_id))
+    products = await Product.filter(int(cateogry_id))
     ikm = InlineKeyboardBuilder()
-    if len(product):
-        for product in products:
-            product = product[0]
+    if len(products):
+            product = products[0]
+            print(product, "sam")
             ikm.row(
                 InlineKeyboardButton(
                     text=f"{product.name} {product.price} 💵",
@@ -48,7 +48,7 @@ async def callback_categories(callback: CallbackQuery):
                     callback_data=f"product_add_to_cart_{product.id}",
                 ),
                 InlineKeyboardButton(
-                    text="Next ⏭️", callback_data=f"product_previous_{product.id}"
+                    text="Next ⏭️", callback_data=f"product_next_{product.id}"
                 ),
             )
             await callback.message.delete()
@@ -56,4 +56,4 @@ async def callback_categories(callback: CallbackQuery):
                 "Product detail", reply_markup=ikm.as_markup()
             )
     else:
-        callback.answer("No product", show_alert=True)
+        await callback.answer("No product", show_alert=True)

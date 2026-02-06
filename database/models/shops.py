@@ -38,7 +38,7 @@ class Product(TimeBasedModel):
     @classmethod
     async def filter(cls, category_id: int):
         return (
-            (await db.excute(select(cls).where(cls.category_id == category_id)))
+            (await db.execute(select(cls).where(cls.category_id == category_id)))
             .scalars()
             .all()
         )
