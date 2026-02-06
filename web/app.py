@@ -53,8 +53,8 @@ admin.mount_to(app)
 
 os.makedirs("./media/attachment", mode=0o777, exist_ok=True)
 container = LocalStorageDriver("./media").get_container("attachment")
-StorageManager.add_storage("default", container)
+# StorageManager.add_storage("default", container)
 
 
 if __name__ == "__main__":
-    uvicorn.run("web.app:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("web.app:app", host="0.0.0.0", port=8000, reload=False)

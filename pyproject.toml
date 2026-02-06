@@ -23,7 +23,9 @@ dependencies = [
     "babel (>=2.18.0,<3.0.0)",
     "bcrypt (>=5.0.0,<6.0.0)",
     "starlette-admin (>=0.16.0,<0.17.0)",
-    "uvicorn (>=0.40.0,<0.41.0)"
+    "uvicorn (>=0.40.0,<0.41.0)",
+    "fasteners (>=0.20,<0.21)",
+    "itsdangerous (>=2.2.0,<3.0.0)"
 ]
 
 

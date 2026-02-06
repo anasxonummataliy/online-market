@@ -31,29 +31,27 @@ async def callback_categories(callback: CallbackQuery):
     products = await Product.filter(int(cateogry_id))
     ikm = InlineKeyboardBuilder()
     if len(products):
-            product = products[0]
-            print(product, "sam")
-            ikm.row(
-                InlineKeyboardButton(
-                    text=f"{product.name} {product.price} 💵",
-                    callback_data=f"product_{product.id}",
-                )
+        product = products[0]
+        print(product, "sam")
+        ikm.row(
+            InlineKeyboardButton(
+                text=f"{product.name} {product.price} 💵",
+                callback_data=f"product_{product.id}",
             )
-            ikm.row(
-                InlineKeyboardButton(
-                    text="⏮️ Previous", callback_data=f"product_previous_{product.id}"
-                ),
-                InlineKeyboardButton(
-                    text="Add to Cart 🛒",
-                    callback_data=f"product_add_to_cart_{product.id}",
-                ),
-                InlineKeyboardButton(
-                    text="Next ⏭️", callback_data=f"product_next_{product.id}"
-                ),
-            )
-            await callback.message.delete()
-            await callback.message.answer(
-                "Product detail", reply_markup=ikm.as_markup()
-            )
+        )
+        ikm.row(
+            InlineKeyboardButton(
+                text="⏮️ Previous", callback_data=f"product_previous_{product.id}"
+            ),
+            InlineKeyboardButton(
+                text="Add to Cart 🛒",
+                callback_data=f"product_add_to_cart_{product.id}",
+            ),
+            InlineKeyboardButton(
+                text="Next ⏭️", callback_data=f"product_next_{product.id}"
+            ),
+        )
+        await callback.message.delete()
+        await callback.message.answer("Product detail", reply_markup=ikm.as_markup())
     else:
         await callback.answer("No product", show_alert=True)
