@@ -20,7 +20,7 @@ middleware = [
 app = Starlette(middleware=middleware)
 
 
-sync_engine = create_engine(conf.db.db_url.replace("+asyncpg", ""), echo=False)
+sync_engine = create_engine(conf.db.db_url.replace("asyncpg", "psycopg2"), echo=True)
 
 logo_url = "https://cdn-icons-png.flaticon.com/512/5968/5968705.png"
 admin = Admin(
@@ -32,13 +32,13 @@ admin = Admin(
 )
 
 
-class ProductModelView(ModelView):
-    exclude_fields_from_list = ("created_at", "updated_at", "image")
-    exclude_fields_from_create = ("created_at", "updated_at")
+class UserModelView(ModelView):
     exclude_fields_from_edit = ("created_at", "updated_at")
 
 
-class UserModelView(ModelView):
+class ProductModelView(ModelView):
+    exclude_fields_from_list = ("created_at", "updated_at", "image")
+    exclude_fields_from_create = ("created_at", "updated_at")
     exclude_fields_from_edit = ("created_at", "updated_at")
 
 
@@ -46,9 +46,9 @@ class CategoryModelView(ModelView):
     pass
 
 
-admin.add_view(ProductModelView(Product))
+admin.add_view(ModelView(Product))
 admin.add_view(UserModelView(User))
-admin.add_view(ModelView(Category))
+admin.add_view(CategoryModelView(Category))
 
 admin.mount_to(app)
 

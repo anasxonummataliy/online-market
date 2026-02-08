@@ -16,6 +16,7 @@ class Category(BaseModel):
 
 
 class Product(TimeBasedModel):
+    __tablename__ = "products"
     name: Mapped[str] = mapped_column(String)
     description: Mapped[str] = mapped_column(String)
     price: Mapped[float] = mapped_column(Float)

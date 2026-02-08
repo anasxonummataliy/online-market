@@ -6,6 +6,7 @@ from database.base import TimeBasedModel
 
 
 class User(TimeBasedModel):
+    __tablename__ = "users"
     class Type(Enum):
         ADMIN = "admin"
         USER = "user"
