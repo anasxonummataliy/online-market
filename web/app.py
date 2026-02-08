@@ -3,66 +3,50 @@ import uvicorn
 from starlette.applications import Starlette
 from starlette.middleware import Middleware
 from starlette.middleware.sessions import SessionMiddleware
-
 from sqlalchemy import create_engine
 from libcloud.storage.drivers.local import LocalStorageDriver
 from sqlalchemy_file.storage import StorageManager
 from starlette_admin.contrib.sqla import Admin, ModelView
-
 from bot.config import conf
-from database.models import Product, User, Category
+from database.models import Product, User, Category, Order, OrderItem
 from web.provider import UsernameAndPasswordProvider
 
-
-middleware = [
-    Middleware(SessionMiddleware, secret_key=conf.web.SECRET_KEY),
-]
-
+middleware = [Middleware(SessionMiddleware, secret_key=conf.web.SECRET_KEY)]
 app = Starlette(middleware=middleware)
-
-# ❗ asyncpg emas, sync driver
-sync_engine = create_engine(conf.db.db_url.replace("+asyncpg", ""), echo=True)
-
+sync_engine = create_engine(
+    conf.db.db_url.replace("+asyncpg", ""), echo=False, pool_pre_ping=True
+)
 admin = Admin(
-    engine=sync_engine,
-    title="Admin Panel",
-    base_url="/",
+    sync_engine,
+    title="Aiogram Admin Panel",
+    base_url="/admin",
+    logo_url="https://cdn-icons-png.flaticon.com/512/5968/5968705.png",
     auth_provider=UsernameAndPasswordProvider(),
 )
 
 
-class UserModelView(ModelView):
-    exclude_fields_from_list = ("password",)
-    exclude_fields_from_edit = ("created_at", "updated_at")
-    exclude_fields_from_create = ("created_at", "updated_at")
-
-
-class CategoryModelView(ModelView):
-    exclude_fields_from_list = ("created_at", "updated_at")
-    exclude_fields_from_edit = ("created_at", "updated_at")
-    exclude_fields_from_create = ("created_at", "updated_at")
-
-
 class ProductModelView(ModelView):
-    exclude_fields_from_list = ("created_at", "updated_at")
-    exclude_fields_from_edit = ("created_at", "updated_at")
-    exclude_fields_from_create = ("created_at", "updated_at")
+    fields = ["id", "name", "description", "price", "quantity", "category"]
 
 
-admin.add_view(UserModelView(User))
-admin.add_view(CategoryModelView(Category))
+class UserModelView(ModelView):
+    fields = ["id", "fullname", "username", "phone_number", "type"]
+
+
+admin.add_view(ModelView(Category))
 admin.add_view(ProductModelView(Product))
+admin.add_view(UserModelView(User))
+admin.add_view(ModelView(Order))
+admin.add_view(ModelView(OrderItem))
 
 admin.mount_to(app)
 
-
-os.makedirs("./media/attachment", exist_ok=True)
+os.makedirs("./media/attachment", mode=0o777, exist_ok=True)
 container = LocalStorageDriver("./media").get_container("attachment")
 try:
     StorageManager.add_storage("default", container)
 except RuntimeError:
     pass
 
-
 if __name__ == "__main__":
-    uvicorn.run("web.app:app", host="0.0.0.0", port=8000)
+    uvicorn.run("web.app:app", host="0.0.0.0", port=8000, reload=True)
