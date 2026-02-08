@@ -7,6 +7,7 @@ from sqlalchemy import create_engine
 from libcloud.storage.drivers.local import LocalStorageDriver
 from sqlalchemy_file.storage import StorageManager
 from starlette_admin.contrib.sqla import Admin, ModelView
+from starlette_admin import StringField, FileField
 from bot.config import conf
 from database.models import Product, User, Category, Order, OrderItem
 from web.provider import UsernameAndPasswordProvider
@@ -19,14 +20,22 @@ sync_engine = create_engine(
 admin = Admin(
     sync_engine,
     title="Aiogram Admin Panel",
-    base_url="/admin",
+    base_url="/",
     logo_url="https://cdn-icons-png.flaticon.com/512/5968/5968705.png",
     auth_provider=UsernameAndPasswordProvider(),
 )
 
 
 class ProductModelView(ModelView):
-    fields = ["id", "name", "description", "price", "quantity", "category"]
+    fields = [
+        "id",
+        "name",
+        "description",
+        "price",
+        "quantity",
+        "category",
+        StringField("image", label="Image URL (optional)", required=False),
+    ]
 
 
 class UserModelView(ModelView):

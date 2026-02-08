@@ -1,6 +1,6 @@
 from aiogram import Router, Bot, F
 from aiogram.utils.keyboard import InlineKeyboardBuilder
-from aiogram.types import CallbackQuery, Message, InlineKeyboardButton
+from aiogram.types import CallbackQuery, FSInputFile, Message, InlineKeyboardButton
 
 from bot.buttons.sub_menu import *
 from database.models.shops import Category, Product
@@ -51,6 +51,15 @@ async def callback_categories(callback: CallbackQuery):
             ),
         )
         await callback.message.delete()
-        await callback.message.answer("Product detail", reply_markup=ikm.as_markup())
+        file = FSInputFile(product.image)
+        caption = f"<b>Name</b> {product.name}\n\n \
+            <b>Description:</b> {product.description}\n\n \
+            <b>Price:</b> {product.price} 💵\n \
+            <b>Quantity:</b> {product.quantity}"
+        await callback.message_photo(
+            file=file,
+            caption=caption,
+            reply_markup=ikm.as_markup(),
+        )
     else:
         await callback.answer("No product", show_alert=True)
