@@ -1,4 +1,5 @@
 from aiogram import Router, Bot, F
+from aiogram.enums.parse_mode import ParseMode
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from aiogram.types import CallbackQuery, FSInputFile, Message, InlineKeyboardButton
 
@@ -26,12 +27,12 @@ async def get_all_categories(message: Message):
 
 
 @product_router.callback_query(F.data.startswith("category_"))
-async def callback_categories(callback: CallbackQuery):
+async def callback_categories(callback: CallbackQuery, bot: Bot):
     category_id = callback.data.removeprefix("category_")
     products = await Product.filter_for_category(int(category_id))
     ikm = InlineKeyboardBuilder()
     if len(products):
-        product = products[0]
+        product = products[1]
         ikm.row(
             InlineKeyboardButton(
                 text=f"{product.name} {product.price} 💵",
@@ -51,15 +52,20 @@ async def callback_categories(callback: CallbackQuery):
             ),
         )
         await callback.message.delete()
-        file = FSInputFile(product.image)
-        caption = f"<b>Name</b> {product.name}\n\n \
-            <b>Description:</b> {product.description}\n\n \
-            <b>Price:</b> {product.price} 💵\n \
-            <b>Quantity:</b> {product.quantity}"
-        await callback.message_photo(
-            file=file,
-            caption=caption,
-            reply_markup=ikm.as_markup(),
-        )
+        caption = f"""<b>Name</b> {product.name}
+<b>Description:</b> {product.description}
+<b>Price:</b> {product.price} USD
+<b>Quantity:</b> {product.quantity}"""
+        if product.image:
+            await callback.message.answer_photo(
+                photo=FSInputFile(product.image['url']),
+                caption=caption,
+                reply_markup=ikm.as_markup(),
+                parse_mode=ParseMode.HTML,
+            )
+        else:
+            await callback.message.answer(
+                text=caption, reply_markup=ikm.as_markup(), parse_mode=ParseMode.HTML
+            )
     else:
         await callback.answer("No product", show_alert=True)

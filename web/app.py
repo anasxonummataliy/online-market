@@ -1,4 +1,5 @@
 import os
+from starlette_admin.fields import URLField
 import uvicorn
 from starlette.applications import Starlette
 from starlette.middleware import Middleware
@@ -34,7 +35,7 @@ class ProductModelView(ModelView):
         "price",
         "quantity",
         "category",
-        StringField("image", label="Image URL (optional)", required=False),
+        FileField("image", label="Upload Image", required=False),  # Fayl upload maydoni
     ]
 
 
