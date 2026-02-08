@@ -56,6 +56,14 @@ class AbstractClass:
         return obj
 
     @classmethod
+    async def filter_for_category(cls, category_id: int):
+        return (
+            (await db.execute(select(cls).where(cls.category_id == category_id)))
+            .scalars()
+            .all()
+        )
+
+    @classmethod
     async def update(
         cls, _id: Optional[int] = None, telegram_id: Optional[int] = None, **kwargs
     ):
@@ -126,5 +134,3 @@ class TimeBasedModel(BaseModel):
         DateTime, default=datetime.now(), onupdate=datetime.now()
     )
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now())
-
-sync_engine = create_engine(conf.db.db_url.replace("+asyncpg", ""), echo=False)

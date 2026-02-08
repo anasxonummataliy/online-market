@@ -32,8 +32,14 @@ admin = Admin(
 )
 
 
-class UserModelView(ModelView):
+class CategoryModelView(ModelView):
+    exclude_fields_from_list = ("created_at", "updated_at", "image")
+    exclude_fields_from_create = ("created_at", "updated_at")
     exclude_fields_from_edit = ("created_at", "updated_at")
+
+
+class UserModelView(ModelView):
+    pass
 
 
 class ProductModelView(ModelView):
@@ -42,11 +48,7 @@ class ProductModelView(ModelView):
     exclude_fields_from_edit = ("created_at", "updated_at")
 
 
-class CategoryModelView(ModelView):
-    pass
-
-
-admin.add_view(ModelView(Product))
+admin.add_view(ProductModelView(Product))
 admin.add_view(UserModelView(User))
 admin.add_view(CategoryModelView(Category))
 

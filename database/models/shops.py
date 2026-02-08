@@ -16,7 +16,6 @@ class Category(BaseModel):
 
 
 class Product(TimeBasedModel):
-    __tablename__ = "products"
     name: Mapped[str] = mapped_column(String)
     description: Mapped[str] = mapped_column(String)
     price: Mapped[float] = mapped_column(Float)
@@ -35,14 +34,6 @@ class Product(TimeBasedModel):
     order_items: Mapped[list["OrderItem"]] = relationship(
         "OrderItem", back_populates="product"
     )
-
-    @classmethod
-    async def filter(cls, category_id: int):
-        return (
-            (await db.execute(select(cls).where(cls.category_id == category_id)))
-            .scalars()
-            .all()
-        )
 
 
 class Cart(BaseModel):

@@ -27,12 +27,11 @@ async def get_all_categories(message: Message):
 
 @product_router.callback_query(F.data.startswith("category_"))
 async def callback_categories(callback: CallbackQuery):
-    cateogry_id = callback.data.removeprefix("category_")
-    products = await Product.filter(int(cateogry_id))
+    category_id = callback.data.removeprefix("category_")
+    products = await Product.filter_for_category(int(category_id))
     ikm = InlineKeyboardBuilder()
     if len(products):
         product = products[0]
-        print(product, "sam")
         ikm.row(
             InlineKeyboardButton(
                 text=f"{product.name} {product.price} 💵",
