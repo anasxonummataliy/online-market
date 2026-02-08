@@ -1,7 +1,6 @@
 import logging
 from datetime import datetime
 from typing import Optional
-from sqlalchemy import create_engine
 from sqlalchemy.orm.attributes import Mapped
 from sqlalchemy.types import BigInteger, DateTime
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncAttrs, AsyncSession
