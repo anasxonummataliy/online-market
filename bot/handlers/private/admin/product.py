@@ -1,6 +1,8 @@
-from aiogram import Router, F
+from sqlalchemy_file import File
+from aiogram import Router, F, Bot
 from aiogram.fsm.context import FSMContext
-from aiogram.types import Message, ReplyKeyboardRemove
+from aiogram.types import Message, ReplyKeyboardRemove, CallbackQuery
+from aiogram.utils.keyboard import InlineKeyboardBuilder, InlineKeyboardButton
 
 from bot.filter.admin import IsAdmin
 from database.models import Category, Product
@@ -98,33 +100,48 @@ async def add_product_quantity(message: Message, state: FSMContext):
 
 
 @admin_product.message(ProductState.image, F.photo)
-async def add_product_image(message: Message, state: FSMContext):
-    photo = message.photo[-1]
-    file = await message.bot.get_file(photo.file_id)
-    file_path = f"media/products/{photo.file_unique_id}.jpg"
-    await message.bot.download_file(file.file_path, destination=file_path)
-    await state.update_data(image=file_path)
+async def add_product_image(message: Message, bot: Bot, state: FSMContext):
+    file = message.photo[-1]
+    await state.update_data(file_id=file.file_id)
+
+    categories = await Category.get_all()
+    ikb = InlineKeyboardBuilder()
+    if not categories:
+        await message.answer("No categories available. Please add a category first.")
+        await state.clear()
+        return
+    for category in categories:
+        ikb.add(
+            InlineKeyboardButton(
+                text=category.name, callback_data=f"add_category_{category.id}"
+            )
+        )
+    ikb.adjust(2)
+    await message.answer("Select category:", reply_markup=ikb.as_markup())
     await state.set_state(ProductState.category_id)
 
-    await message.answer("Enter category ID for the product.")
 
-
-@admin_product.message(ProductState.category_id)
-async def add_product_category_id(message: Message, state: FSMContext):
-    category_id = message.text
-    if not category_id.isdigit():
-        await message.answer("Category ID must be a number. Please enter again.")
+@admin_product.callback_query(F.data.startswith("add_category_"))
+async def add_product_category_id(callback: CallbackQuery, bot: Bot, state: FSMContext):
+    category_id = int(callback.data.removeprefix("add_category_"))
+    if not category_id:
+        await callback.answer("Category ID must be a number. Please enter again.")
         return
-    await state.update_data(category_id=int(category_id))
+    await state.update_data(category_id=category_id)
     data = await state.get_data()
+
+    file_info = await bot.get_file(data["file_id"])
+    file_obj = await bot.download_file(file_info.file_path)
+    file = File(file_obj.read(), content_type="image/jpeg")
+
+    await state.clear()
     await Product.create(
         name=data["name"],
         description=data["description"],
         price=data["price"],
         quantity=data["quantity"],
-        image=data["image"],
+        image=file,
         category_id=data["category_id"],
     )
-    await state.clear()
-    await message.answer("Product added successfully.")
-    await start_handler(message)
+    await callback.answer("Product added successfully.")
+    await start_handler(callback.message)

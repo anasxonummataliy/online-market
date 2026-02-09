@@ -1,3 +1,4 @@
+import os
 import sys
 import asyncio
 import logging
@@ -7,6 +8,8 @@ from aiogram.utils.i18n import FSMI18nMiddleware, I18n
 from bot.config import conf
 from database.base import db
 from bot.handlers.private import main_router
+from sqlalchemy_file.storage import StorageManager
+from libcloud.storage.drivers.local import LocalStorageDriver
 
 dp = Dispatcher()
 bot = Bot(conf.bot.TOKEN)
@@ -14,6 +17,12 @@ bot = Bot(conf.bot.TOKEN)
 
 @dp.startup()
 async def startup(bot: Bot):
+    os.makedirs("./media/attachment", mode=0o777, exist_ok=True)
+    container = LocalStorageDriver("./media").get_container("attachment")
+    try:
+        StorageManager.add_storage("default", container)
+    except RuntimeError:
+        pass
     await db.create_all()
     await bot.send_message(chat_id=conf.bot.ADMIN, text="Bot started.✅")
 
