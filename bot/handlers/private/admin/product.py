@@ -5,6 +5,6 @@ from bot.config import conf
 
 admin_product = Router()
 
-@admin_product.message(commands=["product"])
+@admin_product.message()
 async def product(message: Message):
     pass

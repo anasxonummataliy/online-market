@@ -29,19 +29,20 @@ async def start_with_deeplink(msg: Message, command: Command):
 
 @menu_router.message(CommandStart())
 async def start_handler(msg: Message, parent_id: Optional[int] = None):
-    user = await User.get(id=msg.from_user.id)
-    await User.create(
-        id=msg.from_user.id,
-        fullname=msg.from_user.full_name,
-        username=msg.from_user.username,
-        parent_user_id=parent_id,
-    )
+    if not await User.get_user(tg_id=msg.from_user.id):
+        await User.create(
+            tg_id=msg.from_user.id,
+            fullname=msg.from_user.full_name,
+            username=msg.from_user.username,
+            parent_user_id=parent_id,
+        )
+    user = await User.get_user(tg_id=msg.from_user.id)
     markup = [
         [KeyboardButton(text=CATEGORIES)],
         [KeyboardButton(text=HELP), KeyboardButton(text=MY_REFERRALS)],
         [KeyboardButton(text=SETTINGS)],
     ]
-    if user.is_admin():
-        markup.insert(-1, [KeyboardButton(text=ADMIN)])
+    if user.is_admin:
+        markup[-1].append(KeyboardButton(text=ADMIN))
     rkb = ReplyKeyboardBuilder(markup=markup)
     await msg.answer((WELCOME_TEXT), reply_markup=rkb.as_markup())

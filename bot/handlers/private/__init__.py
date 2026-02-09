@@ -12,6 +12,6 @@ main_router.include_routers(
     menu_router,
     referrals_router,
     settings_router,
-    admin_product,
     admin_menu,
+    admin_product,
 )

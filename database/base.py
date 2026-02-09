@@ -45,7 +45,7 @@ class AbstractClass:
 
     @classmethod
     async def get(cls, _id: int):
-        return (await db.excute(select(cls).where(cls.id == _id))).scalar()
+        return (await db.execute(select(cls).where(cls.id == _id))).scalar()
 
     @classmethod
     async def create(cls, **kwargs):
