@@ -17,7 +17,8 @@ async def get_all_categories(message: Message):
         for category in categories:
             ikm.add(
                 InlineKeyboardButton(
-                    text=category.name, callback_data=f"category_{category.id}"
+                    text=category.name,
+                    callback_data=f"category_{category.id}",
                 )
             )
         ikm.adjust(2)
@@ -58,7 +59,7 @@ async def callback_categories(callback: CallbackQuery, bot: Bot):
 <b>Quantity:</b> {product.quantity}"""
         if product.image:
             await callback.message.answer_photo(
-                photo=FSInputFile(product.image['url']),
+                photo=FSInputFile(product.image["url"]),
                 caption=caption,
                 reply_markup=ikm.as_markup(),
                 parse_mode=ParseMode.HTML,
