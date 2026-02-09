@@ -5,5 +5,14 @@ class AdminState(StatesGroup):
     admin_menu = State()
 
 
-class AddCategoryState(StatesGroup):
+class CategoryState(StatesGroup):
     name = State()
+
+
+class ProductState(StatesGroup):
+    name = State()
+    description = State()
+    price = State()
+    quantity = State()
+    image = State()
+    category_id = State()
