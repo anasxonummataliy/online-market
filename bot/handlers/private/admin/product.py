@@ -143,5 +143,6 @@ async def add_product_category_id(callback: CallbackQuery, bot: Bot, state: FSMC
         image=file,
         category_id=data["category_id"],
     )
-    await callback.answer("Product added successfully.")
+    await callback.answer("Product added successfully.", show_alert=True)
     await start_handler(callback.message)
+    await callback.message.delete()
