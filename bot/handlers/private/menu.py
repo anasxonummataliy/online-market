@@ -4,9 +4,15 @@ from aiogram.types import KeyboardButton, Message
 from aiogram.filters import CommandStart, Command
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
 
-from bot.buttons.sub_menu import CATEGORIES, MY_REFERRALS, HELP, SETTINGS, WELCOME_TEXT
 from database import User
-from database.base import db
+from bot.buttons.sub_menu import (
+    CATEGORIES,
+    MY_REFERRALS,
+    HELP,
+    SETTINGS,
+    WELCOME_TEXT,
+    ADMIN,
+)
 
 menu_router = Router()
 
@@ -23,6 +29,7 @@ async def start_with_deeplink(msg: Message, command: Command):
 
 @menu_router.message(CommandStart())
 async def start_handler(msg: Message, parent_id: Optional[int] = None):
+    user = await User.get(id=msg.from_user.id)
     await User.create(
         id=msg.from_user.id,
         fullname=msg.from_user.full_name,
@@ -32,7 +39,9 @@ async def start_handler(msg: Message, parent_id: Optional[int] = None):
     markup = [
         [KeyboardButton(text=CATEGORIES)],
         [KeyboardButton(text=HELP), KeyboardButton(text=MY_REFERRALS)],
-        [KeyboardButton(text=SETTINGS)]
+        [KeyboardButton(text=SETTINGS)],
     ]
+    if user.is_admin():
+        markup.insert(-1, [KeyboardButton(text=ADMIN)])
     rkb = ReplyKeyboardBuilder(markup=markup)
     await msg.answer((WELCOME_TEXT), reply_markup=rkb.as_markup())

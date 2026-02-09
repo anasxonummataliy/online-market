@@ -4,6 +4,14 @@ from .product import product_router
 from .menu import menu_router
 from .referrals import referrals_router
 from .settings import settings_router
+from .admin import admin_product, admin_menu
 
 main_router = Router()
-main_router.include_routers(product_router, menu_router, referrals_router, settings_router)
+main_router.include_routers(
+    product_router,
+    menu_router,
+    referrals_router,
+    settings_router,
+    admin_product,
+    admin_menu,
+)

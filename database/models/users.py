@@ -21,3 +21,6 @@ class User(TimeBasedModel):
 
     carts: Mapped[list["Cart"]] = relationship("Cart", back_populates="user")
     orders: Mapped[list["Order"]] = relationship("Order", back_populates="user")
+
+    def is_admin(self) -> bool:
+        return self.type == self.Type.ADMIN
