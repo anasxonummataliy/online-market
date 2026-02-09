@@ -1,7 +1,7 @@
 from aiogram import Router
 
 from .product import product_router
-from .menu import menu_router
+from .menu import menu_router, start_handler
 from .referrals import referrals_router
 from .settings import settings_router
 from .admin import admin_product, admin_menu
