@@ -40,7 +40,7 @@ async def all_category(message: Message):
     for category in categories:
         ikb.add(
             InlineKeyboardButton(
-                text=category.name, callback_data=f"change_category_{category.id}"
+                text=category.name, callback_data=f"choice_category_{category.id}"
             )
         )
     ikb.adjust(2)
@@ -49,14 +49,36 @@ async def all_category(message: Message):
     )
 
 
-@admin_product.callback_query(F.data.startswith("change_category_"))
+@admin_product.callback_query(F.data.startswith("choice_category_"))
 async def change_category_name(callback: CallbackQuery, state: FSMContext):
-    category_id = int(callback.data.removeprefix("change_category_"))
+    category_id = int(callback.data.removeprefix("choice_category_"))
     await state.update_data(category_id=category_id)
-    await state.set_state(ChangeCategoryState.name)
-    rkm = ReplyKeyboardRemove()
-    await callback.message.answer("Enter new category name.", reply_markup=rkm)
+    rkm = InlineKeyboardBuilder()
+    rkm.add(
+        InlineKeyboardButton(
+            text="Rename ✍️", callback_data=f"rename_category_{category_id}"
+        )
+    )
+    rkm.add(
+        InlineKeyboardButton(
+            text="Delete 🛒", callback_data=f"delete_category_{category_id}"
+        )
+    )
+    await callback.message.answer(
+        f"Which you want delete or rename?", reply_markup=rkm.as_markup()
+    )
     await callback.message.delete()
+
+
+@admin_product.callback_query(F.data.startswith("delete_category_"))
+async def delete_category(callback: CallbackQuery, state: FSMContext):
+    category_id = callback.data.removeprefix("delete_category_")
+
+
+@admin_product.callback_query(F.data.startswith("rename_category_"))
+async def name_category(callback: CallbackQuery, state: FSMContext):
+    await callback.message.answer("Enter new category name.")
+    await state.set_state(ChangeCategoryState.name)
 
 
 @admin_product.message(ChangeCategoryState.name)
@@ -69,7 +91,6 @@ async def change_name_category(message: Message, state: FSMContext):
     rm = ReplyKeyboardRemove()
     await message.answer("Category name changed successfully.", reply_markup=rm)
     await start_handler(message)
-
 
 
 @admin_product.message(F.text == "Show products")
