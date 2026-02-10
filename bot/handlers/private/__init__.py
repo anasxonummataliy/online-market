@@ -4,7 +4,7 @@ from .product import product_router
 from .menu import menu_router, start_handler
 from .referrals import referrals_router
 from .settings import settings_router
-from .admin import admin_product, admin_menu
+from .admin import admin_product, admin_menu, admin_category
 
 main_router = Router()
 main_router.include_routers(
@@ -13,5 +13,6 @@ main_router.include_routers(
     referrals_router,
     settings_router,
     admin_menu,
+    admin_category,
     admin_product,
 )
