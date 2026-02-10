@@ -1,3 +1,1 @@
-from .admin_state import CategoryState, AdminState, ProductState
-
-
+from .admin_state import CategoryState, AdminState, ProductState, ChangeCategoryState

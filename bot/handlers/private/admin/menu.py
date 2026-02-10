@@ -14,8 +14,8 @@ admin_menu.message.filter(IsAdmin())
 @admin_menu.message(IsAdmin(), F.text == ADMIN)
 async def admin_menu_handler(message: Message):
     markup = [
-        [KeyboardButton(text="Add product"), KeyboardButton(text="All product")],
-        [KeyboardButton(text="Add category"), KeyboardButton(text="All category")],
+        [KeyboardButton(text="Add product"), KeyboardButton(text="Show products")],
+        [KeyboardButton(text="Add category"), KeyboardButton(text="Show categories")],
         [KeyboardButton(text="⏮️ Back")],
     ]
     rkm = ReplyKeyboardBuilder(markup)

@@ -16,3 +16,7 @@ class ProductState(StatesGroup):
     quantity = State()
     image = State()
     category_id = State()
+
+
+class ChangeCategoryState(StatesGroup):
+    name = State()

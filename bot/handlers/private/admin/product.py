@@ -7,7 +7,7 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder, InlineKeyboardButton
 from bot.filter.admin import IsAdmin
 from database.models import Category, Product
 from bot.handlers.private import start_handler
-from bot.state import AdminState, CategoryState, ProductState
+from bot.state import CategoryState, ProductState, ChangeCategoryState
 
 
 admin_product = Router()
@@ -30,19 +30,49 @@ async def add_category_name(message: Message, state: FSMContext):
     await start_handler(message)
 
 
-@admin_product.message(F.text == "All category")
+@admin_product.message(F.text == "Show categories")
 async def all_category(message: Message):
-    categories = await Category.all()
+    categories = await Category.get_all()
     if not categories:
         await message.answer("No categories available.")
         return
-    text = "All Categories:\n"
+    ikb = InlineKeyboardBuilder()
     for category in categories:
-        text += f"• {category.name}\n"
-    await message.answer(text)
+        ikb.add(
+            InlineKeyboardButton(
+                text=category.name, callback_data=f"change_category_{category.id}"
+            )
+        )
+    ikb.adjust(2)
+    await message.answer(
+        "Select category to change name:", reply_markup=ikb.as_markup()
+    )
 
 
-@admin_product.message(F.text == "All product")
+@admin_product.callback_query(F.data.startswith("change_category_"))
+async def change_category_name(callback: CallbackQuery, state: FSMContext):
+    category_id = int(callback.data.removeprefix("change_category_"))
+    await state.update_data(category_id=category_id)
+    await state.set_state(ChangeCategoryState.name)
+    rkm = ReplyKeyboardRemove()
+    await callback.message.answer("Enter new category name.", reply_markup=rkm)
+    await callback.message.delete()
+
+
+@admin_product.message(ChangeCategoryState.name)
+async def change_name_category(message: Message, state: FSMContext):
+    category_name = message.text
+    data = await state.get_data()
+    category_id = data.pop("category_id")
+    await Category.update(_id=category_id, name=category_name)
+    await state.clear()
+    rm = ReplyKeyboardRemove()
+    await message.answer("Category name changed successfully.", reply_markup=rm)
+    await start_handler(message)
+
+
+
+@admin_product.message(F.text == "Show products")
 async def all_product(message: Message):
     products = await Product.get_all()
     if not products:

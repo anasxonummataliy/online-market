@@ -76,7 +76,7 @@ class AbstractClass:
         else:
             query = (
                 sqlalchemy_update(cls)
-                .where(cls.telegram_id == telegram_id)
+                .where(cls.tg_id == telegram_id)
                 .values(**kwargs)
                 .execution_options(synchronize_session="fetch")
             )
