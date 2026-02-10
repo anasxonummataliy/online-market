@@ -89,7 +89,7 @@ class AbstractClass:
             query = sqlalchemy_delete(cls).where(cls.id == _id)
         else:
             query = sqlalchemy_delete(cls).where(cls.telegram_id == telegram_id)
-        db.execute(query)
+        await db.execute(query)
         await cls.commit()
         return (await db.execute(select(cls))).scalars()
 
