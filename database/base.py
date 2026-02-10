@@ -80,7 +80,7 @@ class AbstractClass:
                 .values(**kwargs)
                 .execution_options(synchronize_session="fetch")
             )
-        db.execute(query)
+        await db.execute(query)
         await cls.commit()
 
     @classmethod
