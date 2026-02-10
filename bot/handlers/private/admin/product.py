@@ -32,7 +32,6 @@ async def add_category_name(message: Message, state: FSMContext):
 
 @admin_product.message(F.text == "Show categories")
 async def all_category(message: Message):
-    
     categories = await Category.get_all()
     if not categories:
         await message.answer("No categories available.")
