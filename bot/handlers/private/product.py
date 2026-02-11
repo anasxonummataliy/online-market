@@ -4,7 +4,7 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 from aiogram.types import CallbackQuery, FSInputFile, Message, InlineKeyboardButton
 
 from bot.buttons.sub_menu import *
-from database.models.shops import Category, Product
+from database.models import Category, Product, User
 
 product_router = Router()
 
@@ -135,3 +135,12 @@ async def get_previous_product(callback: CallbackQuery):
 async def back_to_category(callback: CallbackQuery):
     await callback.message.delete()
     await get_all_categories(callback.message)
+
+
+@product_router.callback_query(F.data == "product_add_to_cart_")
+async def add_to_cart(callback: CallbackQuery):
+    product_id, category_id = map(
+        int, callback.data.removeprefix("product_next_").split("_")
+    )
+    await callback.answer("Added to Cart 🛒", show_alert=True)
+    await User.add_to_acrt
