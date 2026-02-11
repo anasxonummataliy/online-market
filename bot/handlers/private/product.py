@@ -27,36 +27,69 @@ async def get_all_categories(message: Message):
         await message.answer("No categories")
 
 
-@product_router.callback_query(F.data.startswith("category_"))
-async def callback_categories(callback: CallbackQuery, bot: Bot):
-    category_id = callback.data.removeprefix("category_")
-    products = await Product.filter_for_category(int(category_id))
+def make(product, category_id):
     ikm = InlineKeyboardBuilder()
-    if len(products):
-        product = products[1]
-        ikm.row(
-            InlineKeyboardButton(
-                text=f"{product.name} {product.price} 💵",
-                callback_data=f"product_{product.id}",
-            )
+    ikm.row(
+        InlineKeyboardButton(
+            text=f"{product.name} {product.price} 💵",
+            callback_data=f"product_{product.id}",
         )
-        ikm.row(
-            InlineKeyboardButton(
-                text="⏮️ Previous", callback_data=f"product_previous_{product.id}"
-            ),
-            InlineKeyboardButton(
-                text="Add to Cart 🛒",
-                callback_data=f"product_add_to_cart_{product.id}",
-            ),
-            InlineKeyboardButton(
-                text="Next ⏭️", callback_data=f"product_next_{product.id}"
-            ),
-        )
-        await callback.message.delete()
-        caption = f"""<b>Name</b> {product.name}
+    )
+    ikm.row(
+        InlineKeyboardButton(
+            text="⏮️ Previous",
+            callback_data=f"product_previous_{product.id}_{category_id}",
+        ),
+        InlineKeyboardButton(
+            text="Add to Cart 🛒",
+            callback_data=f"product_add_to_cart_{product.id}",
+        ),
+        InlineKeyboardButton(
+            text="Next ⏭️", callback_data=f"product_next_{product.id}_{category_id}"
+        ),
+    )
+    ikm.row(InlineKeyboardButton(text="⏮️ Back", callback_data="back_to_categotry"))
+    caption = f"""<b>Name</b> {product.name}
 <b>Description:</b> {product.description}
 <b>Price:</b> {product.price} USD
 <b>Quantity:</b> {product.quantity}"""
+    return (
+        caption,
+        ikm.as_markup(),
+    )
+
+
+async def send_product(callback, product, category_id):
+    caption, ikm = make(product, category_id)
+
+    try:
+        await callback.message.delete()
+    except:
+        pass
+
+    if product.image:
+        await callback.message.answer_photo(
+            photo=FSInputFile(product.image["url"]),
+            caption=caption,
+            reply_markup=ikm,
+            parse_mode=ParseMode.HTML,
+        )
+    else:
+        await callback.message.answer(
+            caption,
+            reply_markup=ikm,
+            parse_mode=ParseMode.HTML,
+        )
+
+
+@product_router.callback_query(F.data.startswith("category_"))
+async def callback_categories(callback: CallbackQuery):
+    category_id = callback.data.removeprefix("category_")
+    products = await Product.filter_for_category(int(category_id))
+    if len(products):
+        product = products[0]
+        await callback.message.delete()
+        caption, ikm = make(product, category_id)
         if product.image:
             await callback.message.answer_photo(
                 photo=FSInputFile(product.image["url"]),
@@ -66,11 +99,39 @@ async def callback_categories(callback: CallbackQuery, bot: Bot):
             )
         else:
             await callback.message.answer(
-                text=caption, reply_markup=ikm.as_markup(), parse_mode=ParseMode.HTML
+                text=caption, reply_markup=ikm, parse_mode=ParseMode.HTML
             )
     else:
         await callback.answer("No product", show_alert=True)
 
-@product_router.message(F.data == "product_next_")
-async def get_next_product(message: Message):
-    pass
+
+@product_router.callback_query(F.data.startswith("product_next_"))
+async def get_next_product(callback: CallbackQuery):
+    product_id, category_id = map(
+        int, callback.data.removeprefix("product_next_").split("_")
+    )
+    product = await Product.get_next_product_by_category(category_id, product_id)
+    if not product:
+        await callback.answer("Last product", show_alert=True)
+        return
+
+    caption, ikm = make(product, category_id)
+    await send_product(callback, product, category_id)
+
+
+@product_router.callback_query(F.data.startswith("product_previous_"))
+async def get_previous_product(callback: CallbackQuery):
+    product_id, category_id = map(
+        int, callback.data.removeprefix("product_previous_").split("_")
+    )
+    product = await Product.get_previous_product_by_category(category_id, product_id)
+    if not product:
+        await callback.answer("First product", show_alert=True)
+        return
+    await send_product(callback, product, category_id)
+
+
+@product_router.callback_query(F.data == "back_to_categotry")
+async def back_to_category(callback: CallbackQuery):
+    await callback.message.delete()
+    await get_all_categories(callback.message)

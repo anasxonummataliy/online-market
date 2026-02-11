@@ -96,30 +96,22 @@ class AbstractClass:
     @classmethod
     async def get_next_product_by_category(cls, category_id, product_id):
         return (
-            (
-                await db.execute(
-                    select(cls).where(
-                        cls.category_id == category_id, cls.id > product_id
-                    )
-                )
+            await db.execute(
+                select(cls)
+                .where(cls.category_id == category_id, cls.id > product_id)
+                .order_by(cls.id)
             )
-            .scalars()
-            .all()
-        )
+        ).scalar()
 
     @classmethod
     async def get_previous_product_by_category(cls, category_id, product_id):
         return (
-            (
-                await db.execute(
-                    select(cls)
-                    .where(cls.category_id == category_id, cls.id < product_id)
-                    .order_by(cls.id.desc)
-                )
+            await db.execute(
+                select(cls)
+                .where(cls.category_id == category_id, cls.id < product_id)
+                .order_by(cls.id.desc())
             )
-            .scalars()
-            .all()
-        )
+        ).scalar()
 
 
 class AsyncDatabaseSession:
