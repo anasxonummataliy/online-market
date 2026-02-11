@@ -85,9 +85,9 @@ async def send_product(callback, product, category_id):
 @product_router.callback_query(F.data.startswith("category_"))
 async def callback_categories(callback: CallbackQuery):
     category_id = callback.data.removeprefix("category_")
-    products = await Product.filter_for_category(int(category_id))
-    if len(products):
-        product = products[0]
+    product = await Product.filter_for_category(int(category_id))
+    print(product)
+    if product:
         await callback.message.delete()
         caption, ikm = make(product, category_id)
         if product.image:

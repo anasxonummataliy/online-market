@@ -57,10 +57,13 @@ class AbstractClass:
     @classmethod
     async def filter_for_category(cls, category_id: int):
         return (
-            (await db.execute(select(cls).where(cls.category_id == category_id)))
-            .scalars()
-            .all()
-        )
+            await db.execute(
+                select(cls)
+                .where(cls.category_id == category_id)
+                .order_by(cls.id.asc())
+                .limit(1)
+            )
+        ).scalar()
 
     @classmethod
     async def update(
