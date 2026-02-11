@@ -36,6 +36,9 @@ class Product(TimeBasedModel):
     )
 
 
+
+
+
 class Cart(BaseModel):
     user_id: Mapped[int] = mapped_column(
         BigInteger, ForeignKey("users.id", ondelete="CASCADE")

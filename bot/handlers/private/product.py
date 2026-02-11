@@ -70,3 +70,7 @@ async def callback_categories(callback: CallbackQuery, bot: Bot):
             )
     else:
         await callback.answer("No product", show_alert=True)
+
+@product_router.message(F.data == "product_next_")
+async def get_next_product(message: Message):
+    pass

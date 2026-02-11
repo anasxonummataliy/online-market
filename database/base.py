@@ -93,6 +93,34 @@ class AbstractClass:
         await cls.commit()
         return (await db.execute(select(cls))).scalars()
 
+    @classmethod
+    async def get_next_product_by_category(cls, category_id, product_id):
+        return (
+            (
+                await db.execute(
+                    select(cls).where(
+                        cls.category_id == category_id, cls.id > product_id
+                    )
+                )
+            )
+            .scalars()
+            .all()
+        )
+
+    @classmethod
+    async def get_previous_product_by_category(cls, category_id, product_id):
+        return (
+            (
+                await db.execute(
+                    select(cls)
+                    .where(cls.category_id == category_id, cls.id < product_id)
+                    .order_by(cls.id.desc)
+                )
+            )
+            .scalars()
+            .all()
+        )
+
 
 class AsyncDatabaseSession:
     def __init__(self):
