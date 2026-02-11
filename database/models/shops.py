@@ -4,7 +4,7 @@ from sqlalchemy import Float, String, select
 from sqlalchemy.orm.properties import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from database.base import *
+from database import *
 
 
 class Category(BaseModel):
@@ -34,9 +34,6 @@ class Product(TimeBasedModel):
     order_items: Mapped[list["OrderItem"]] = relationship(
         "OrderItem", back_populates="product"
     )
-
-
-
 
 
 class Cart(BaseModel):
