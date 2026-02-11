@@ -27,7 +27,7 @@ async def get_all_categories(message: Message):
         await message.answer("No categories")
 
 
-def make(product, category_id):
+def make_product(product, category_id):
     ikm = InlineKeyboardBuilder()
     ikm.row(
         InlineKeyboardButton(
@@ -60,7 +60,7 @@ def make(product, category_id):
 
 
 async def send_product(callback, product, category_id):
-    caption, ikm = make(product, category_id)
+    caption, ikm = make_product(product, category_id)
 
     try:
         await callback.message.delete()
@@ -89,7 +89,7 @@ async def callback_categories(callback: CallbackQuery):
     print(product)
     if product:
         await callback.message.delete()
-        caption, ikm = make(product, category_id)
+        caption, ikm = make_product(product, category_id)
         if product.image:
             await callback.message.answer_photo(
                 photo=FSInputFile(product.image["url"]),
@@ -115,7 +115,7 @@ async def get_next_product(callback: CallbackQuery):
         await callback.answer("Last product", show_alert=True)
         return
 
-    caption, ikm = make(product, category_id)
+    caption, ikm = make_product(product, category_id)
     await send_product(callback, product, category_id)
 
 
