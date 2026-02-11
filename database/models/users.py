@@ -36,4 +36,12 @@ class User(TimeBasedModel):
     @classmethod
     async def add_cart(cls, user_id, product_id, quantity: int = 1):
         cart = await Cart.create(user_id=user_id)
-        cart_item = await CartItem.create(cart_id=cart.id, product_id=product_id, quantity=quantity)
+        cart_item = await CartItem.create(
+            cart_id=cart.id, product_id=product_id, quantity=quantity
+        )
+
+    @classmethod
+    async def remove_cart(cls, user_id: int, product_id: int):
+        cart_item = await CartItem.delete_by_user_product(
+            user_id=user_id, product_id=product_id
+        )
