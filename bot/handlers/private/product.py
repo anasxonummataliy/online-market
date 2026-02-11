@@ -85,7 +85,7 @@ async def send_product(callback, product, category_id):
 @product_router.callback_query(F.data.startswith("category_"))
 async def callback_categories(callback: CallbackQuery):
     category_id = callback.data.removeprefix("category_")
-    product = await Product.filter_for_category(int(category_id))
+    product = await Product.filter_for_category(int(category_id), 1)
     print(product)
     if product:
         await callback.message.delete()
