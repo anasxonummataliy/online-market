@@ -7,7 +7,7 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder, InlineKeyboardButton
 from bot.filter.admin import IsAdmin
 from database.models import Category, Product
 from bot.handlers.private import start_handler
-from bot.state import CategoryState, ProductState, ChangeCategoryState
+from bot.states import CategoryState, ProductState, ChangeCategoryState
 
 
 admin_product = Router()

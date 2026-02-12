@@ -9,7 +9,7 @@ from aiogram.utils.keyboard import (
 from bot.filter.admin import IsAdmin
 from database.models import Category
 from bot.handlers.private import start_handler
-from bot.state import CategoryState, ChangeCategoryState
+from bot.states import CategoryState, ChangeCategoryState
 
 
 admin_category = Router()
