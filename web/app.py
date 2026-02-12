@@ -1,19 +1,22 @@
 import os
 import uvicorn
-from starlette.applications import Starlette
-from starlette.middleware import Middleware
-from starlette.middleware.sessions import SessionMiddleware
 from sqlalchemy import create_engine
-from libcloud.storage.drivers.local import LocalStorageDriver
+from starlette_admin import FileField
+from starlette.middleware import Middleware
+from starlette.applications import Starlette
 from sqlalchemy_file.storage import StorageManager
 from starlette_admin.contrib.sqla import Admin, ModelView
-from starlette_admin import StringField, FileField
+from starlette.middleware.sessions import SessionMiddleware
+from libcloud.storage.drivers.local import LocalStorageDriver
+
 from bot.config import conf
 from database.models import Product, User, Category, Order, OrderItem
 from web.provider import UsernameAndPasswordProvider
 
 middleware = [Middleware(SessionMiddleware, secret_key=conf.web.SECRET_KEY)]
+
 app = Starlette(middleware=middleware)
+
 sync_engine = create_engine(
     conf.db.db_url.replace("+asyncpg", ""), echo=False, pool_pre_ping=True
 )
