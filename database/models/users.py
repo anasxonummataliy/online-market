@@ -50,6 +50,12 @@ class User(TimeBasedModel):
 
     @classmethod
     async def remove_cart(cls, user_id: int, product_id: int):
-        cart_item = await CartItem.delete_by_user_product(
-            user_id=user_id, product_id=product_id
+        cart = await Cart.filter(user_id=user_id).first()
+        if cart is None:
+            return False
+
+        query = select(CartItem).where(
+            CartItem.cart_id == cart.id, CartItem.product_id == product_id
         )
+        result = await db.execute(query)
+        cart_item = result.scalar_one_or_none()

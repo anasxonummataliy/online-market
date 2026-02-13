@@ -6,6 +6,7 @@ from sqlalchemy.types import BigInteger, DateTime
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncAttrs, AsyncSession
 from sqlalchemy.orm import DeclarativeBase, declared_attr, mapped_column, sessionmaker
 from sqlalchemy import (
+    and_,
     select,
     delete as sqlalchemy_delete,
     update as sqlalchemy_update,
@@ -115,6 +116,17 @@ class AbstractClass:
                 .order_by(cls.id.desc())
             )
         ).scalar()
+
+    @classmethod
+    async def filter(cls, **kwargs):
+        conditions = [getattr[cls, key] == value for key, value in kwargs.items()]
+        query = select(cls).where(and_(*conditions))
+        return (await db.execute(query)).scalars()
+
+    async def save_model(self):
+        db.add(self)
+        await self.commit()
+        return self
 
 
 class AsyncDatabaseSession:
