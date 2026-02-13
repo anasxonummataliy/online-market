@@ -5,7 +5,6 @@ from sqlalchemy import BigInteger, String, Enum as SqlEnum, ForeignKey, select
 from database import *
 
 
-
 class User(TimeBasedModel):
     __tablename__ = "users"
 
@@ -35,10 +34,19 @@ class User(TimeBasedModel):
 
     @classmethod
     async def add_cart(cls, user_id, product_id, quantity: int = 1):
-        cart = await Cart.create(user_id=user_id)
-        cart_item = await CartItem.create(
-            cart_id=cart.id, product_id=product_id, quantity=quantity
-        )
+        cart = await Cart.filter(user_id=user_id).first()
+        if cart is None:
+            cart = await Cart.create(user_id=user_id)
+        cart_item = (
+            await CartItem.filter(cart_id=cart.id, product_id=product_id)
+        ).first()
+        if cart_item is not None:
+            cart_item.quantity += quantity
+            await cart_item.save_model()
+        else:
+            await CartItem.create(
+                cart_id=cart.id, product_id=product_id, quantity=quantity
+            )
 
     @classmethod
     async def remove_cart(cls, user_id: int, product_id: int):
