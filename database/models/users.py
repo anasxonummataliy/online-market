@@ -59,3 +59,16 @@ class User(TimeBasedModel):
         )
         result = await db.execute(query)
         cart_item = result.scalar_one_or_none()
+
+        if not cart_item:
+            return False
+
+        if cart_item.quantity < 2:
+            await db.delete(cart_item)
+
+        else:
+            cart_item.quantity -= 1
+            db.add(cart_item)
+            
+        await CartItem.commit()
+        return True
