@@ -69,6 +69,6 @@ class User(TimeBasedModel):
         else:
             cart_item.quantity -= 1
             db.add(cart_item)
-            
+
         await CartItem.commit()
         return True
