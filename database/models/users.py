@@ -2,7 +2,7 @@ from enum import Enum
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import BigInteger, String, Enum as SqlEnum, ForeignKey, select
 
-from database import *
+from database import db, TimeBasedModel, Cart, Order, CartItem
 
 
 class User(TimeBasedModel):
@@ -55,8 +55,7 @@ class User(TimeBasedModel):
         query = select(CartItem).where(
             CartItem.cart_id == cart.id, CartItem.product_id == product_id
         )
-        result = await db.execute(query)
-        cart_item = result.scalar_one_or_none()
+        cart_item = (await db.execute(query)).scalar_one_or_none()
 
         if not cart_item:
             return False

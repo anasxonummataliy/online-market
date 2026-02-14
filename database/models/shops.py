@@ -58,3 +58,9 @@ class CartItem(BaseModel):
 
     product: Mapped["Product"] = relationship("Product", back_populates="cart_items")
     cart: Mapped["Cart"] = relationship("Cart", back_populates="cart_item")
+
+    @classmethod
+    async def get_by_user_id(cls, user_id: int):
+        query = (
+            select(User).join(Cart).options(selectinoad())
+        )

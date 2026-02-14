@@ -61,14 +61,14 @@ class AbstractClass:
             await db.execute(
                 select(cls)
                 .where(cls.category_id == category_id)
-                .order_by(cls.id.asc())
+                .order_by(cls.id)
                 .limit(1)
             )
         ).scalar()
 
     @classmethod
     async def update(
-        cls, _id: Optional[int] = None, telegram_id: Optional[int] = None, **kwargs
+            cls, _id: Optional[int] = None, telegram_id: Optional[int] = None, **kwargs
     ):
         if _id is not None:
             query = (
