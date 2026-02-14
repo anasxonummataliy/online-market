@@ -32,9 +32,10 @@ class User(TimeBasedModel):
 
     @classmethod
     async def add_cart(cls, tg_id: int, product_id: int, quantity: int = 1):
-        user = await cls.filter_one(tg_id=tg_id)
+        user = await User.filter_one(tg_id=tg_id)
         from .shops import Cart
 
+        print(user.id)
         cart = await Cart.filter_one(user_id=user.id)
         if cart is None:
             cart = await Cart.create(user_id=user.id)
@@ -51,28 +52,43 @@ class User(TimeBasedModel):
             )
 
     @classmethod
-    async def remove_cart(cls, user_id: int, product_id: int):
-        from .shops import Cart
-
-        cart = await Cart.filter(user_id=user_id).first()
-        if cart is None:
+    async def remove_cart(cls, tg_id: int, product_id: int):
+        user = await cls.filter_one(tg_id=tg_id)
+        if not user:
             return False
-        from database.models import CartItem
 
-        query = select(CartItem).where(
-            CartItem.cart_id == cart.id, CartItem.product_id == product_id
-        )
-        cart_item = (await db.execute(query)).scalar_one_or_none()
+        from .shops import Cart, CartItem
+
+        cart = await Cart.filter_one(user_id=user.id)
+        if not cart:
+            return False
+
+        cart_item = await CartItem.filter_one(cart_id=cart.id, product_id=product_id)
 
         if not cart_item:
             return False
 
-        if cart_item.quantity < 2:
-            await db.delete(cart_item)
-
+        if cart_item.quantity > 1:
+            await CartItem.update(_id=cart_item.id, quantity=cart_item.quantity - 1)
         else:
-            cart_item.quantity -= 1
-            db.add(cart_item)
+            await CartItem.delete(_id=cart_item.id)
 
-        await CartItem.commit()
+        return True
+
+    @classmethod
+    async def clear_cart(cls, tg_id: int):
+        user = await User.filter_one(tg_id=tg_id)
+        from .shops import Cart
+
+        cart = await Cart.filter_one(user_id=user.id)
+        if cart is None:
+            return False
+
+        from .shops import CartItem
+
+        cart_items = await CartItem.filter(cart_id=cart.id)
+        for item in cart_items:
+            await CartItem.delete(_id=item.id)
+
+        await Cart.delete(_id=cart.id)
         return True

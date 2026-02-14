@@ -68,11 +68,16 @@ class CartItem(BaseModel):
     @classmethod
     async def get_by_user_id(cls, tg_id: int):
         user = await User.filter_one(tg_id=tg_id)
+
+        if not user:
+            return []
+        print(user.id)
+        cart = await Cart.filter_one(user_id=user.id)
+        if not cart:
+            return []
+
         query = (
-            select(cls)
-            .join(Cart)
-            .options(selectinload(cls.product), selectinload(cls.cart))
-            .where(Cart.user_id == user.id)
+            select(cls).where(cls.cart_id == cart.id).options(selectinload(cls.product))
         )
         from database.base import db
 
