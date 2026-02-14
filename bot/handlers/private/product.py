@@ -139,18 +139,6 @@ async def back_to_category(callback: CallbackQuery):
 
 @product_router.callback_query(F.data == "product_add_to_cart_")
 async def add_to_cart(callback: CallbackQuery):
-    product_id, category_id = map(
-        int, callback.data.removeprefix("product_next_").split("_")
-    )
-    await User.add_cart()
+    product_id = int(callback.data.removeprefix("product_add_to_cart_"))
+    await User.add_cart(callback.message.from_user.id, product_id)
     await callback.answer("Added to Cart 🛒", show_alert=True)
-
-
-@product_router.callback_query(F.data == "product_remove_from_cart_")
-async def add_to_cart(callback: CallbackQuery):
-    product_id, category_id = map(
-        int, callback.data.removeprefix("product_next_").split("_")
-    )
-    await callback.answer("Added to Cart 🛒", show_alert=True)
-    await User.remove_from_cart()
-
