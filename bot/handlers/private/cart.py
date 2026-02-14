@@ -26,20 +26,22 @@ async def build_cart_message(tg_id: int):
 
         ikm.row(
             InlineKeyboardButton(
-                text="➕", callback_data=f"cart_add_{cart_item.product_id}"
+                text="➕",
+                callback_data=f"cart_add_{cart_item.product_id}", style='success'
             ),
             InlineKeyboardButton(
                 text=f"{cart_item.product.name} ({cart_item.quantity})",
-                callback_data="ignore",
+                callback_data="ignore", style='primary'
             ),
             InlineKeyboardButton(
-                text="➖", callback_data=f"cart_remove_{cart_item.product_id}"
+                text="➖", callback_data=f"cart_remove_{cart_item.product_id}", style='danger'
             ),
         )
 
     text += f"\n💰 Jami: {total} so'm"
 
     ikm.row(InlineKeyboardButton(text="🗑 Savatni tozalash", callback_data="cart_clear"))
+
     ikm.row(
         InlineKeyboardButton(text="✅ Buyurtma berish", callback_data="cart_checkout")
     )
