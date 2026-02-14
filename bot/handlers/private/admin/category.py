@@ -6,7 +6,7 @@ from aiogram.utils.keyboard import (
     InlineKeyboardButton,
 )
 
-from bot.filter.admin import IsAdmin
+from bot.filters.admin import IsAdmin
 from database.models import Category
 from bot.handlers.private import start_handler
 from bot.states import CategoryState, ChangeCategoryState

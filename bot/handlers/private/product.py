@@ -85,7 +85,7 @@ async def send_product(callback, product, category_id):
 @product_router.callback_query(F.data.startswith("category_"))
 async def callback_categories(callback: CallbackQuery):
     category_id = callback.data.removeprefix("category_")
-    product = await Product.filter_for_category(int(category_id), 1)
+    product = await Product.filter_for_category(int(category_id))
     print(product)
     if product:
         await callback.message.delete()
@@ -131,14 +131,15 @@ async def get_previous_product(callback: CallbackQuery):
     await send_product(callback, product, category_id)
 
 
-@product_router.callback_query(F.data == "back_to_categotry")
+@product_router.callback_query(F.data.startswith("back_to_categotry"))
 async def back_to_category(callback: CallbackQuery):
     await callback.message.delete()
     await get_all_categories(callback.message)
 
 
-@product_router.callback_query(F.data == "product_add_to_cart_")
+@product_router.callback_query(F.data.startswith("product_add_to_cart_"))
 async def add_to_cart(callback: CallbackQuery):
+    await callback.message.answer("Salom")
     product_id = int(callback.data.removeprefix("product_add_to_cart_"))
     await User.add_cart(callback.message.from_user.id, product_id)
     await callback.answer("Added to Cart 🛒", show_alert=True)

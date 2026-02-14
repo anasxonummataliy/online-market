@@ -9,8 +9,8 @@ from .cart import cart_router
 
 main_router = Router()
 main_router.include_routers(
-    product_router,
     menu_router,
+    product_router,
     cart_router,
     referrals_router,
     settings_router,

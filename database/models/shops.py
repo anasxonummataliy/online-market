@@ -4,7 +4,7 @@ from sqlalchemy import Float, String, select
 from sqlalchemy.orm.properties import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship, selectinload
 
-from database import OrderItem, User, db, BaseModel, TimeBasedModel
+from database import db, BaseModel, TimeBasedModel
 
 
 class Category(BaseModel):

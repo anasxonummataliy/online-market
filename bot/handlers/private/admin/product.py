@@ -4,7 +4,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, ReplyKeyboardRemove, CallbackQuery
 from aiogram.utils.keyboard import InlineKeyboardBuilder, InlineKeyboardButton
 
-from bot.filter.admin import IsAdmin
+from bot.filters.admin import IsAdmin
 from database.models import Category, Product
 from bot.handlers.private import start_handler
 from bot.states import CategoryState, ProductState, ChangeCategoryState

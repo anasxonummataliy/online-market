@@ -68,7 +68,7 @@ class AbstractClass:
 
     @classmethod
     async def update(
-            cls, _id: Optional[int] = None, telegram_id: Optional[int] = None, **kwargs
+        cls, _id: Optional[int] = None, telegram_id: Optional[int] = None, **kwargs
     ):
         if _id is not None:
             query = (
@@ -119,7 +119,7 @@ class AbstractClass:
 
     @classmethod
     async def filter(cls, **kwargs):
-        conditions = [getattr[cls, key] == value for key, value in kwargs.items()]
+        conditions = [getattr(cls, key) == value for key, value in kwargs.items()]
         query = select(cls).where(and_(*conditions))
         return (await db.execute(query)).scalars()
 

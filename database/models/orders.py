@@ -3,7 +3,7 @@ from sqlalchemy.orm.properties import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import BigInteger, Integer, Enum as SQLEnum, Float
 
-from database import db, TimeBasedModel, User, Product
+from database.base import db, TimeBasedModel
 
 
 class Order(TimeBasedModel):

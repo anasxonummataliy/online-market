@@ -4,7 +4,7 @@ from aiogram.utils.keyboard import ReplyKeyboardBuilder
 from aiogram.fsm.context import FSMContext
 
 from bot.buttons.sub_menu import ADMIN
-from bot.filter.admin import IsAdmin
+from bot.filters.admin import IsAdmin
 
 
 admin_menu = Router()

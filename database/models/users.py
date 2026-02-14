@@ -2,7 +2,8 @@ from enum import Enum
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import BigInteger, String, Enum as SqlEnum, ForeignKey, select
 
-from database import db, TimeBasedModel, Cart, Order, CartItem
+from database.base import db, TimeBasedModel
+from database.models import Cart, CartItem
 
 
 class User(TimeBasedModel):
@@ -31,13 +32,16 @@ class User(TimeBasedModel):
         return (await db.execute(select(cls).where(cls.tg_id == tg_id))).scalar()
 
     @classmethod
-    async def add_cart(cls, user_id, product_id, quantity: int = 1):
-        cart = await Cart.filter(user_id=user_id).first()
+    async def add_cart(cls, user_id: int, product_id: int, quantity: int = 1):
+        carts = await Cart.filter(user_id=user_id)
+        cart = carts[0]
+
         if cart is None:
             cart = await Cart.create(user_id=user_id)
-        cart_item = (
-            await CartItem.filter(cart_id=cart.id, product_id=product_id)
-        ).first()
+
+        cart_items = await CartItem.filter(cart_id=cart.id, product_id=product_id)
+        cart_item = cart_items[0]
+
         if cart_item is not None:
             cart_item.quantity += quantity
             await cart_item.save_model()

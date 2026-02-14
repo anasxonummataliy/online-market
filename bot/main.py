@@ -6,7 +6,7 @@ from aiogram import Bot, Dispatcher
 from aiogram.utils.i18n import FSMI18nMiddleware, I18n
 
 from bot.config import conf
-from database.base import db
+from database import db
 from bot.handlers.private import main_router
 from sqlalchemy_file.storage import StorageManager
 from libcloud.storage.drivers.local import LocalStorageDriver
