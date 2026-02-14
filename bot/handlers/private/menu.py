@@ -43,6 +43,6 @@ async def start_handler(msg: Message, parent_id: Optional[int] = None):
         [KeyboardButton(text=SETTINGS), KeyboardButton(text="My carts 🛒")],
     ]
     if user.is_admin:
-        markup.append(KeyboardButton(text=ADMIN))
+        markup.append([KeyboardButton(text=ADMIN)])
     rkb = ReplyKeyboardBuilder(markup=markup)
     await msg.answer((WELCOME_TEXT), reply_markup=rkb.as_markup())

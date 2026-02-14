@@ -4,6 +4,8 @@ from sqlalchemy import Float, String, select
 from sqlalchemy.orm.properties import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship, selectinload
 
+
+from .users import User
 from database import db, BaseModel, TimeBasedModel
 
 
@@ -60,11 +62,12 @@ class CartItem(BaseModel):
     cart: Mapped["Cart"] = relationship("Cart", back_populates="cart_item")
 
     @classmethod
-    async def get_by_user_id(cls, user_id: int):
+    async def get_by_user_id(cls, tg_id: int):
+        user = await User.filter_one(tg_id=tg_id)
         query = (
             select(User)
             .join(Cart)
             .options(selectinload(cls.product), selectinload(cls.cart))
-            .where(Cart.user_id == user_id)
+            .where(Cart.user_id == user.id)
         )
         return (await db.execute(query)).scalars().all()
