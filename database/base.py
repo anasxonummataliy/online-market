@@ -171,7 +171,7 @@ db = AsyncDatabaseSession()
 db.init()
 
 
-class BaseModel(Base, AbstractClass, UserService, CartService):
+class BaseModel(Base, AbstractClass):
     __abstract__ = True
     id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
 

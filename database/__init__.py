@@ -4,8 +4,6 @@ from .base import Base, TimeBasedModel, BaseModel, db
 from .models import User, Order, OrderItem, Product, Cart, CartItem, Category
 
 
-from .services import UserService, CartService
-
 __all__ = [
     "db",
     "Base",
@@ -18,6 +16,4 @@ __all__ = [
     "Cart",
     "CartItem",
     "Category",
-    "UserService",
-    "CartService",
 ]
