@@ -142,7 +142,7 @@ async def add_to_cart(callback: CallbackQuery):
     product_id, category_id = map(
         int, callback.data.removeprefix("product_next_").split("_")
     )
-    await User.add_to_acrt
+    await User.add_cart()
     await callback.answer("Added to Cart 🛒", show_alert=True)
 
 
@@ -153,3 +153,4 @@ async def add_to_cart(callback: CallbackQuery):
     )
     await callback.answer("Added to Cart 🛒", show_alert=True)
     await User.remove_from_cart()
+

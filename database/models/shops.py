@@ -2,9 +2,9 @@ from sqlalchemy_file import ImageField
 from sqlalchemy.types import BigInteger
 from sqlalchemy import Float, String, select
 from sqlalchemy.orm.properties import ForeignKey
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.orm import Mapped, mapped_column, relationship, selectinload
 
-from database import *
+from database import OrderItem, User, db, BaseModel, TimeBasedModel
 
 
 class Category(BaseModel):
@@ -62,5 +62,9 @@ class CartItem(BaseModel):
     @classmethod
     async def get_by_user_id(cls, user_id: int):
         query = (
-            select(User).join(Cart).options(selectinoad())
+            select(User)
+            .join(Cart)
+            .options(selectinload(cls.product), selectinload(cls.cart))
+            .where(Cart.user_id == user_id)
         )
+        return (await db.execute(query)).scalars().all()
