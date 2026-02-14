@@ -15,6 +15,8 @@ from sqlalchemy import (
 from bot.config import conf
 
 
+
+
 class Base(AsyncAttrs, DeclarativeBase):
     @declared_attr.directive
     def __tablename__(cls) -> str:
@@ -169,7 +171,7 @@ db = AsyncDatabaseSession()
 db.init()
 
 
-class BaseModel(Base, AbstractClass):
+class BaseModel(Base, AbstractClass, UserService, CartService):
     __abstract__ = True
     id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
 

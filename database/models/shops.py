@@ -61,13 +61,4 @@ class CartItem(BaseModel):
     product: Mapped["Product"] = relationship("Product", back_populates="cart_items")
     cart: Mapped["Cart"] = relationship("Cart", back_populates="cart_item")
 
-    @classmethod
-    async def get_by_user_id(cls, tg_id: int):
-        user = await User.filter_one(tg_id=tg_id)
-        query = (
-            select(User)
-            .join(Cart)
-            .options(selectinload(cls.product), selectinload(cls.cart))
-            .where(Cart.user_id == user.id)
-        )
-        return (await db.execute(query)).scalars().all()
+ 
