@@ -1,8 +1,12 @@
+from typing import TYPE_CHECKING
 from sqlalchemy_file import ImageField
 from sqlalchemy.types import BigInteger
 from sqlalchemy import Float, String, select
 from sqlalchemy.orm.properties import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship, selectinload
+
+if TYPE_CHECKING:
+    from database.models import OrderItem
 
 
 from .users import User
@@ -71,5 +75,5 @@ class CartItem(BaseModel):
             .where(Cart.user_id == user.id)
         )
         from database.base import db
-        return (await db.execute(query)).scalars().all()
 
+        return (await db.execute(query)).scalars().all()

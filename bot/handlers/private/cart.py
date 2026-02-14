@@ -9,9 +9,11 @@ cart_router = Router()
 
 @cart_router.message(F.text == "My carts 🛒")
 async def cart_handler(message: Message):
+    await message.answer("My casrts")
     cart_items = await CartItem.get_by_user_id(message.from_user.id)
 
-    if cart_items:
+    if cart_items is not None:
+        print("salom")
         ikm = InlineKeyboardBuilder()
         for cart in cart_items:
             ikm.row(
@@ -21,6 +23,11 @@ async def cart_handler(message: Message):
                     text="−", callback_data="product_remove_from_cart_"
                 ),
             )
+        await message.answer("Cart", reply_markup=ikm.as_markup())
+    else:
+        print("alk")
+
+        await message.answer("No cart ❌")
 
 
 @cart_router.callback_query(F.data == "product_remove_from_cart_")
