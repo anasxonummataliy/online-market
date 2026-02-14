@@ -33,14 +33,14 @@ class User(TimeBasedModel):
 
     @classmethod
     async def add_cart(cls, user_id: int, product_id: int, quantity: int = 1):
-        carts = await Cart.filter(user_id=user_id)
-        cart = carts[0]
+        cart = await Cart.filter_one(user_id=user_id)
 
         if cart is None:
             cart = await Cart.create(user_id=user_id)
 
-        cart_items = await CartItem.filter(cart_id=cart.id, product_id=product_id)
-        cart_item = cart_items[0]
+        cart_item = await CartItem.filter_one(
+            cart_id=cart.id, product_id=product_id
+        )
 
         if cart_item is not None:
             cart_item.quantity += quantity

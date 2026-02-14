@@ -48,12 +48,19 @@ class AbstractClass:
     async def get(cls, _id: int):
         return (await db.execute(select(cls).where(cls.id == _id))).scalar()
 
+
     @classmethod
     async def create(cls, **kwargs):
-        obj = cls(**kwargs)
-        db.add(obj)
-        await cls.commit()
-        return obj
+        try:
+            obj = cls(**kwargs)
+            db.add(obj)
+            await cls.commit()
+            await db.refresh(obj)  # Commit dan keyin refresh
+            return obj
+        except Exception as e:
+            await db.rollback()
+            logging.error(f"create error: {e}")
+            raise  # ✅ Xatoni yuqoriga uzatish
 
     @classmethod
     async def filter_for_category(cls, category_id: int):
@@ -121,7 +128,13 @@ class AbstractClass:
     async def filter(cls, **kwargs):
         conditions = [getattr(cls, key) == value for key, value in kwargs.items()]
         query = select(cls).where(and_(*conditions))
-        return (await db.execute(query)).scalars()
+        return (await db.execute(query)).scalars().all()
+
+    @classmethod
+    async def filter_one(cls, **kwargs):
+        conditions = [getattr(cls, key) == value for key, value in kwargs.items()]
+        query = select(cls).where(and_(*conditions))
+        return (await db.execute(query)).scalar_one_or_none()
 
     async def save_model(self):
         db.add(self)
