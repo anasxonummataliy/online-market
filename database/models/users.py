@@ -32,11 +32,11 @@ class User(TimeBasedModel):
         return (await db.execute(select(cls).where(cls.tg_id == tg_id))).scalar()
 
     @classmethod
-    async def add_cart(cls, user_id: int, product_id: int, quantity: int = 1):
-        cart = await Cart.filter_one(user_id=user_id)
-
+    async def add_cart(cls, tg_id: int, product_id: int, quantity: int = 1):
+        user = await cls.filter_one(tg_id=tg_id)
+        cart = await Cart.filter_one(user_id=user.id)
         if cart is None:
-            cart = await Cart.create(user_id=user_id)
+            cart = await Cart.create(user_id=user.id)
 
         cart_item = await CartItem.filter_one(
             cart_id=cart.id, product_id=product_id
