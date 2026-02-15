@@ -71,7 +71,7 @@ class CartItem(BaseModel):
 
         if not user:
             return []
-        print(user.id)
+
         cart = await Cart.filter_one(user_id=user.id)
         if not cart:
             return []

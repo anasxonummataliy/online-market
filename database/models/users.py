@@ -26,7 +26,6 @@ class User(TimeBasedModel):
     def is_admin(self) -> bool:
         return self.type == self.Type.ADMIN
 
-
     @classmethod
     async def get_user(cls, tg_id: int):
         return (await db.execute(select(cls).where(cls.tg_id == tg_id))).scalar()
@@ -34,10 +33,9 @@ class User(TimeBasedModel):
     @classmethod
     async def add_cart(cls, tg_id: int, product_id: int, quantity: int = 1):
         user = await User.get_user(tg_id=tg_id)
-        print(tg_id)
+
         from .shops import Cart
 
-        print(user)
         cart = await Cart.filter_one(user_id=user.id)
         if cart is None:
             cart = await Cart.create(user_id=user.id)
