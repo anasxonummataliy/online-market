@@ -1,8 +1,11 @@
 from enum import Enum
+from typing import TYPE_CHECKING
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import BigInteger, String, Enum as SqlEnum, ForeignKey, select
 
 from database.base import db, TimeBasedModel
+if TYPE_CHECKING:
+    from database.models import Cart, Order
 
 
 class User(TimeBasedModel):
