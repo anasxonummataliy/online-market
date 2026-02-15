@@ -6,6 +6,7 @@ from aiogram import Bot, Dispatcher
 from aiogram.utils.i18n import FSMI18nMiddleware, I18n
 
 from bot.config import conf
+from bot.inlinemode import inline_router
 from database import db
 from bot.handlers.private import main_router
 from sqlalchemy_file.storage import StorageManager
@@ -37,6 +38,7 @@ async def main():
     i18n = I18n(path="locales")
     dp.update.outer_middleware(FSMI18nMiddleware(i18n))
     dp.include_routers(main_router)
+    dp.include_routers(inline_router)
     await dp.start_polling(bot)
 
 

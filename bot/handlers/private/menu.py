@@ -4,6 +4,7 @@ from aiogram.types import KeyboardButton, Message
 from aiogram.filters import CommandStart, Command
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
 
+from bot.utils import register_user
 from database import User
 from bot.buttons.sub_menu import (
     CATEGORIES,
@@ -19,24 +20,24 @@ menu_router = Router()
 
 @menu_router.message(CommandStart(deep_link=True, deep_link_encoded=True))
 async def start_with_deeplink(msg: Message, command: Command):
-    user_id = command.args
-    if user_id.isdigit():
-        await start_handler(msg, int(user_id))
-
+    data = command.args
+    if "_" in data:
+        product_id = data.removeprefix("product_")
+        user = await register_user(msg)
+        await User.add_cart(user.tg_id, int(product_id))
+        await msg.answer("Added to Cart 🛒")
     else:
-        await start_handler(msg)
+        if data.isdigit():
+            await start_handler(msg, int(data))
+
+        else:
+            await start_handler(msg)
 
 
 @menu_router.message(CommandStart())
 async def start_handler(msg: Message, parent_id: Optional[int] = None):
-    if not await User.get_user(tg_id=msg.from_user.id):
-        await User.create(
-            tg_id=msg.from_user.id,
-            fullname=msg.from_user.full_name,
-            username=msg.from_user.username,
-            parent_user_id=parent_id,
-        )
-    user = await User.get_user(tg_id=msg.from_user.id)
+    user = await register_user(msg, parent_id)
+
     markup = [
         [KeyboardButton(text=CATEGORIES)],
         [KeyboardButton(text=HELP), KeyboardButton(text=MY_REFERRALS)],

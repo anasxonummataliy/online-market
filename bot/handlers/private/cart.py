@@ -20,25 +20,29 @@ async def build_cart_message(tg_id: int):
     for cart_item in cart_items:
         item_total = cart_item.product.price * cart_item.quantity
         text += f"📦 {cart_item.product.name}\n"
-        text += f"   💰 {cart_item.product.price} so'm x {cart_item.quantity}\n"
-        text += f"   💵 {item_total} so'm\n\n"
+        text += f"   💰 {cart_item.product.price} ＄ x {cart_item.quantity}\n"
+        text += f"   💵 {item_total} ＄\n\n"
         total += item_total
 
         ikm.row(
             InlineKeyboardButton(
                 text="➕",
-                callback_data=f"cart_add_{cart_item.product_id}", style='success'
+                callback_data=f"cart_add_{cart_item.product_id}",
+                style="success",
             ),
             InlineKeyboardButton(
                 text=f"{cart_item.product.name} ({cart_item.quantity})",
-                callback_data="ignore", style='primary'
+                callback_data="ignore",
+                style="primary",
             ),
             InlineKeyboardButton(
-                text="➖", callback_data=f"cart_remove_{cart_item.product_id}", style='danger'
+                text="➖",
+                callback_data=f"cart_remove_{cart_item.product_id}",
+                style="danger",
             ),
         )
 
-    text += f"\n💰 Jami: {total} so'm"
+    text += f"\n💰 All: {total} ＄"
 
     ikm.row(InlineKeyboardButton(text="🗑 Savatni tozalash", callback_data="cart_clear"))
 

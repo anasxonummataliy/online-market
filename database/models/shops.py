@@ -41,6 +41,16 @@ class Product(TimeBasedModel):
         "OrderItem", back_populates="product"
     )
 
+    @classmethod
+    async def filter_startwith(cls, query):
+        from database.base import db
+
+        return (
+            (await db.execute(select(cls).where(cls.name.ilike(f"{query}%"))))
+            .scalars()
+            .all()
+        )
+
 
 class Cart(BaseModel):
     user_id: Mapped[int] = mapped_column(
