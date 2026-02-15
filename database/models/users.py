@@ -1,5 +1,5 @@
 from enum import Enum
-from sqlalchemy.orm import Mapped, mapped_column, relationship, selectinload
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import BigInteger, String, Enum as SqlEnum, ForeignKey, select
 
 from database.base import db, TimeBasedModel
