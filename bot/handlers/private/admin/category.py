@@ -17,7 +17,7 @@ admin_category = Router()
 admin_category.message.filter(IsAdmin())
 
 
-@admin_category.message(F.text == "Add category")
+@admin_category.message(F.text == _("Add category"))
 async def add_category(message: Message, state: FSMContext):
     await state.set_state(CategoryState.name)
     rkm = ReplyKeyboardRemove()
@@ -33,7 +33,7 @@ async def add_category_name(message: Message, state: FSMContext):
     await start_handler(message)
 
 
-@admin_category.message(F.text == "Show categories")
+@admin_category.message(F.text == _("Show categories"))
 async def all_category(message: Message):
     categories = await Category.get_all()
     if not categories:

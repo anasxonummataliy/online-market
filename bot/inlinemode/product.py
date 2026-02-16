@@ -1,6 +1,7 @@
 from aiogram import Router
 from aiogram.utils.deep_linking import create_deep_link
 from aiogram.utils.keyboard import InlineKeyboardBuilder
+from aiogram.utils.i18n import gettext as _
 from aiogram.types import (
     InlineQuery,
     InlineQueryResultArticle,
@@ -29,7 +30,7 @@ async def get_inline_query(query: InlineQuery):
             bot_data.username, "start", f"product_{product.id}", encode=True
         )
         ikm = InlineKeyboardBuilder()
-        ikm.row(InlineKeyboardButton(text="Add to Cart 🛒", url=link))
+        ikm.row(InlineKeyboardButton(text=_("Add to Cart 🛒"), url=link))
 
         results.append(
             InlineQueryResultArticle(

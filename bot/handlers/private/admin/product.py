@@ -1,6 +1,7 @@
 from sqlalchemy_file import File
 from aiogram import Router, F, Bot
 from aiogram.fsm.context import FSMContext
+from aiogram.utils.i18n import gettext as _
 from aiogram.types import Message, ReplyKeyboardRemove, CallbackQuery
 from aiogram.utils.keyboard import InlineKeyboardBuilder, InlineKeyboardButton
 
@@ -14,23 +15,23 @@ admin_product = Router()
 admin_product.message.filter(IsAdmin())
 
 
-@admin_product.message(F.text == "Show products")
+@admin_product.message(F.text == _("Show products"))
 async def all_product(message: Message):
     products = await Product.get_all()
     if not products:
-        await message.answer("No products available.")
+        await message.answer(_("No products available."))
         return
-    text = "All Products:\n"
+    text = _("All Products:\n")
     for product in products:
         text += f"• {product.name}\n"
     await message.answer(text)
 
 
-@admin_product.message(F.text == "Add product")
+@admin_product.message(F.text == _("Add product"))
 async def add_product(message: Message, state: FSMContext):
     await state.set_state(ProductState.name)
     rkm = ReplyKeyboardRemove()
-    await message.answer("Enter product name.", reply_markup=rkm)
+    await message.answer(_("Enter product name."), reply_markup=rkm)
 
 
 @admin_product.message(ProductState.name)
@@ -38,7 +39,7 @@ async def add_product_name(message: Message, state: FSMContext):
     product_name = message.text
     await state.update_data(name=product_name)
     await state.set_state(ProductState.description)
-    await message.answer("Enter product description.")
+    await message.answer(_("Enter product description."))
 
 
 @admin_product.message(ProductState.description)
@@ -46,29 +47,29 @@ async def add_product_description(message: Message, state: FSMContext):
     product_description = message.text
     await state.update_data(description=product_description)
     await state.set_state(ProductState.price)
-    await message.answer("Enter product price.")
+    await message.answer(_("Enter product price."))
 
 
 @admin_product.message(ProductState.price)
 async def add_product_price(message: Message, state: FSMContext):
     product_price = message.text
     if not product_price.isdigit():
-        await message.answer("Price must be a number. Please enter again.")
+        await message.answer(_("Price must be a number. Please enter again."))
         return
     await state.update_data(price=int(product_price))
     await state.set_state(ProductState.quantity)
-    await message.answer("Enter product quantity.")
+    await message.answer(_("Enter product quantity."))
 
 
 @admin_product.message(ProductState.quantity)
 async def add_product_quantity(message: Message, state: FSMContext):
     product_quantity = message.text
     if not product_quantity.isdigit():
-        await message.answer("Quantity must be a number. Please enter again.")
+        await message.answer(_("Quantity must be a number. Please enter again."))
         return
     await state.update_data(quantity=int(product_quantity))
     await state.set_state(ProductState.image)
-    await message.answer("Send product image.")
+    await message.answer(_("Send product image."))
 
 
 @admin_product.message(ProductState.image, F.photo)
@@ -79,7 +80,7 @@ async def add_product_image(message: Message, bot: Bot, state: FSMContext):
     categories = await Category.get_all()
     ikb = InlineKeyboardBuilder()
     if not categories:
-        await message.answer("No categories available. Please add a category first.")
+        await message.answer(_("No categories available. Please add a category first."))
         await state.clear()
         return
     for category in categories:
@@ -89,7 +90,7 @@ async def add_product_image(message: Message, bot: Bot, state: FSMContext):
             )
         )
     ikb.adjust(2)
-    await message.answer("Select category:", reply_markup=ikb.as_markup())
+    await message.answer(_("Select category:"), reply_markup=ikb.as_markup())
     await state.set_state(ProductState.category_id)
 
 
@@ -97,7 +98,7 @@ async def add_product_image(message: Message, bot: Bot, state: FSMContext):
 async def add_product_category_id(callback: CallbackQuery, bot: Bot, state: FSMContext):
     category_id = int(callback.data.removeprefix("add_category_"))
     if not category_id:
-        await callback.answer("Category ID must be a number. Please enter again.")
+        await callback.answer(_("Category ID must be a number. Please enter again."))
         return
     await state.update_data(category_id=category_id)
     data = await state.get_data()
@@ -115,6 +116,6 @@ async def add_product_category_id(callback: CallbackQuery, bot: Bot, state: FSMC
         image=file,
         category_id=data["category_id"],
     )
-    await callback.answer("Product added successfully.", show_alert=True)
+    await callback.answer(_("Product added successfully. ✅"), show_alert=True)
     await start_handler(callback.message)
     await callback.message.delete()
