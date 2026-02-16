@@ -1,5 +1,5 @@
 extract:
-	mkdir locales
+	mkdir -p locales
 	pybabel extract --input-dirs=. -o locales/message.pot
 
 init:
@@ -11,4 +11,4 @@ compile:
 	pybabel update -d locales -i locales/message.pot
 
 update:
- 	pybabel update -d locales -i locales/message.pot
+	pybabel update -d locales -i locales/message.pot

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-02-04 20:50+0500\n"
+"POT-Creation-Date: 2026-02-16 23:57+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,4 +16,272 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
+
+#: bot/buttons/sub_menu.py:3
+msgid "My Referrals 📋"
+msgstr ""
+
+#: bot/buttons/sub_menu.py:4
+msgid "HELP 📨"
+msgstr ""
+
+#: bot/buttons/sub_menu.py:5
+msgid "Categories 📦"
+msgstr ""
+
+#: bot/buttons/sub_menu.py:6
+msgid "Settings ⚙️"
+msgstr ""
+
+#: bot/buttons/sub_menu.py:7
+msgid "Welcome to our bot!😊"
+msgstr ""
+
+#: bot/buttons/sub_menu.py:8
+msgid "ADMIN🧑‍💼"
+msgstr ""
+
+#: bot/handlers/private/cart.py:15 bot/handlers/private/cart.py:115
+msgid "Your cart is empty ❌"
+msgstr ""
+
+#: bot/handlers/private/cart.py:17
+msgid ""
+"🛒 Your cart:\n"
+"\n"
+msgstr ""
+
+#: bot/handlers/private/cart.py:26
+#, python-brace-format
+msgid ""
+"📦 {name}\n"
+"   💰 {price} ＄ x {quantity}\n"
+"   💵 {item_total} ＄\n"
+"\n"
+msgstr ""
+
+#: bot/handlers/private/cart.py:52
+#, python-brace-format
+msgid ""
+"\n"
+"💰 Total: {total} ＄"
+msgstr ""
+
+#: bot/handlers/private/cart.py:54
+msgid "🗑 Clear cart"
+msgstr ""
+
+#: bot/handlers/private/cart.py:56
+msgid "✅ Checkout"
+msgstr ""
+
+#: bot/handlers/private/cart.py:61
+msgid "My cart 🛒"
+msgstr ""
+
+#: bot/handlers/private/cart.py:75
+msgid "✅ Added +1"
+msgstr ""
+
+#: bot/handlers/private/cart.py:81 bot/handlers/private/cart.py:106
+#, python-brace-format
+msgid "❌ Error: {error}"
+msgstr ""
+
+#: bot/handlers/private/cart.py:93
+msgid "✅ Removed -1"
+msgstr ""
+
+#: bot/handlers/private/cart.py:103
+msgid "❌ Product not found"
+msgstr ""
+
+#: bot/handlers/private/cart.py:116
+msgid "🗑 Cart cleared"
+msgstr ""
+
+#: bot/handlers/private/cart.py:119
+msgid "❌ Cart not found"
+msgstr ""
+
+#: bot/handlers/private/menu.py:29 bot/handlers/private/product.py:153
+msgid "Added to Cart 🛒"
+msgstr ""
+
+#: bot/handlers/private/menu.py:45
+msgid "My carts 🛒"
+msgstr ""
+
+#: bot/handlers/private/product.py:41
+msgid "⏮️ Previous"
+msgstr ""
+
+#: bot/handlers/private/product.py:45 bot/inlinemode/product.py:33
+msgid "Add to Cart 🛒"
+msgstr ""
+
+#: bot/handlers/private/product.py:49
+msgid "Next ⏭️"
+msgstr ""
+
+#: bot/handlers/private/product.py:54
+#, python-brace-format
+msgid ""
+"<b>Name:</b> {name}\n"
+"<b>Description:</b> {description}\n"
+"<b>Price:</b> {price} USD\n"
+"<b>Quantity:</b> {quantity}"
+msgstr ""
+
+#: bot/handlers/private/product.py:114
+msgid "No product"
+msgstr ""
+
+#: bot/handlers/private/product.py:124
+msgid "Last product"
+msgstr ""
+
+#: bot/handlers/private/product.py:138
+msgid "First product"
+msgstr ""
+
+#: bot/handlers/private/referrals.py:18
+#, python-brace-format
+msgid ""
+"✨ Number of people you invited: <b>{n}</b>\n"
+"🔗 Invitation link: <a href=\"{link}\">Click to enter</a>"
+msgstr ""
+
+#: bot/handlers/private/settings.py:16
+msgid "Change language 🇬🇧 🇺🇿"
+msgstr ""
+
+#: bot/handlers/private/settings.py:17
+msgid "Notification 📢"
+msgstr ""
+
+#: bot/handlers/private/admin/menu.py:19 bot/handlers/private/settings.py:19
+#: bot/handlers/private/settings.py:25
+msgid "⏮️ Back"
+msgstr ""
+
+#: bot/handlers/private/settings.py:22
+msgid "Settings"
+msgstr ""
+
+#: bot/handlers/private/admin/category.py:20
+#: bot/handlers/private/admin/menu.py:18
+msgid "Add category"
+msgstr ""
+
+#: bot/handlers/private/admin/category.py:24
+msgid "Enter category name."
+msgstr ""
+
+#: bot/handlers/private/admin/category.py:32
+msgid "Category added successfully."
+msgstr ""
+
+#: bot/handlers/private/admin/category.py:36
+#: bot/handlers/private/admin/menu.py:18
+msgid "Show categories"
+msgstr ""
+
+#: bot/handlers/private/admin/category.py:40
+msgid "No categories available."
+msgstr ""
+
+#: bot/handlers/private/admin/category.py:51
+msgid "Select category to change name:"
+msgstr ""
+
+#: bot/handlers/private/admin/category.py:63
+msgid "Rename ✍️"
+msgstr ""
+
+#: bot/handlers/private/admin/category.py:68
+msgid "Delete 🛒"
+msgstr ""
+
+#: bot/handlers/private/admin/category.py:72
+msgid "Which do you want to delete or rename?"
+msgstr ""
+
+#: bot/handlers/private/admin/category.py:81
+msgid "Category deleted successfully."
+msgstr ""
+
+#: bot/handlers/private/admin/category.py:88
+msgid "Enter new category name."
+msgstr ""
+
+#: bot/handlers/private/admin/category.py:110
+msgid "Category name changed successfully. ✅"
+msgstr ""
+
+#: bot/handlers/private/admin/menu.py:17
+#: bot/handlers/private/admin/product.py:30
+msgid "Add product"
+msgstr ""
+
+#: bot/handlers/private/admin/menu.py:17
+#: bot/handlers/private/admin/product.py:18
+msgid "Show products"
+msgstr ""
+
+#: bot/handlers/private/admin/menu.py:22
+msgid "Menu"
+msgstr ""
+
+#: bot/handlers/private/admin/product.py:22
+msgid "No products available."
+msgstr ""
+
+#: bot/handlers/private/admin/product.py:24
+msgid "All Products:\n"
+msgstr ""
+
+#: bot/handlers/private/admin/product.py:34
+msgid "Enter product name."
+msgstr ""
+
+#: bot/handlers/private/admin/product.py:42
+msgid "Enter product description."
+msgstr ""
+
+#: bot/handlers/private/admin/product.py:50
+msgid "Enter product price."
+msgstr ""
+
+#: bot/handlers/private/admin/product.py:57
+msgid "Price must be a number. Please enter again."
+msgstr ""
+
+#: bot/handlers/private/admin/product.py:61
+msgid "Enter product quantity."
+msgstr ""
+
+#: bot/handlers/private/admin/product.py:68
+msgid "Quantity must be a number. Please enter again."
+msgstr ""
+
+#: bot/handlers/private/admin/product.py:72
+msgid "Send product image."
+msgstr ""
+
+#: bot/handlers/private/admin/product.py:83
+msgid "No categories available. Please add a category first."
+msgstr ""
+
+#: bot/handlers/private/admin/product.py:93
+msgid "Select category:"
+msgstr ""
+
+#: bot/handlers/private/admin/product.py:101
+msgid "Category ID must be a number. Please enter again."
+msgstr ""
+
+#: bot/handlers/private/admin/product.py:119
+msgid "Product added successfully. ✅"
+msgstr ""
 
