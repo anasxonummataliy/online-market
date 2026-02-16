@@ -1,6 +1,7 @@
 from aiogram import Router, F
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, ReplyKeyboardRemove, CallbackQuery
+from aiogram.utils.i18n import gettext as _
 from aiogram.utils.keyboard import (
     InlineKeyboardBuilder,
     InlineKeyboardButton,
@@ -20,7 +21,7 @@ admin_category.message.filter(IsAdmin())
 async def add_category(message: Message, state: FSMContext):
     await state.set_state(CategoryState.name)
     rkm = ReplyKeyboardRemove()
-    await message.answer("Enter category name.", reply_markup=rkm)
+    await message.answer(_("Enter category name."), reply_markup=rkm)
 
 
 @admin_category.message(CategoryState.name)
@@ -28,7 +29,7 @@ async def add_category_name(message: Message, state: FSMContext):
     category_name = message.text
     await Category.create(name=category_name)
     await state.clear()
-    await message.answer("Category added successfully.")
+    await message.answer(_("Category added successfully."))
     await start_handler(message)
 
 
@@ -36,7 +37,7 @@ async def add_category_name(message: Message, state: FSMContext):
 async def all_category(message: Message):
     categories = await Category.get_all()
     if not categories:
-        await message.answer("No categories available.")
+        await message.answer(_("No categories available."))
         return
     ikb = InlineKeyboardBuilder()
     for category in categories:
@@ -47,7 +48,7 @@ async def all_category(message: Message):
         )
     ikb.adjust(2)
     await message.answer(
-        "Select category to change name:", reply_markup=ikb.as_markup()
+        _("Select category to change name:"), reply_markup=ikb.as_markup()
     )
 
 
@@ -59,16 +60,16 @@ async def change_category_name(callback: CallbackQuery, state: FSMContext):
     rkm = InlineKeyboardBuilder()
     rkm.add(
         InlineKeyboardButton(
-            text="Rename ✍️", callback_data=f"rename_category_{category_id}"
+            text=_("Rename ✍️"), callback_data=f"rename_category_{category_id}"
         )
     )
     rkm.add(
         InlineKeyboardButton(
-            text="Delete 🛒", callback_data=f"delete_category_{category_id}"
+            text=_("Delete 🛒"), callback_data=f"delete_category_{category_id}"
         )
     )
     await callback.message.answer(
-        f"Which you want delete or rename?", reply_markup=rkm.as_markup()
+        _("Which do you want to delete or rename?"), reply_markup=rkm.as_markup()
     )
 
 
@@ -77,14 +78,14 @@ async def delete_category(callback: CallbackQuery):
     category_id = callback.data.removeprefix("delete_category_")
     await Category.delete(_id=int(category_id))
     await callback.message.delete()
-    await callback.message.answer("Category deleted successfully.")
+    await callback.message.answer(_("Category deleted successfully."))
     await start_handler(callback.message)
 
 
 @admin_category.callback_query(F.data.startswith("rename_category_"))
 async def name_category(callback: CallbackQuery, state: FSMContext):
     await callback.message.delete()
-    msg = await callback.message.answer("Enter new category name.")
+    msg = await callback.message.answer(_("Enter new category name."))
     await state.update_data(rename_msg_id=msg.message_id)
     await state.set_state(ChangeCategoryState.name)
 
@@ -106,5 +107,5 @@ async def change_name_category(message: Message, state: FSMContext):
     await Category.update(_id=category_id, name=category_name)
     await state.clear()
     rm = ReplyKeyboardRemove()
-    await message.answer("Category name changed successfully.", reply_markup=rm)
+    await message.answer(_("Category name changed successfully. ✅"), reply_markup=rm)
     await start_handler(message)

@@ -15,8 +15,6 @@ from sqlalchemy import (
 from bot.config import conf
 
 
-
-
 class Base(AsyncAttrs, DeclarativeBase):
     @declared_attr.directive
     def __tablename__(cls) -> str:
@@ -49,7 +47,6 @@ class AbstractClass:
     @classmethod
     async def get(cls, _id: int):
         return (await db.execute(select(cls).where(cls.id == _id))).scalar()
-
 
     @classmethod
     async def create(cls, **kwargs):
@@ -155,7 +152,9 @@ class AsyncDatabaseSession:
     def init(self):
         self._engine = create_async_engine(conf.db.db_url)
         self._session = sessionmaker(
-            self._engine, expire_on_commit=False, class_=AsyncSession,
+            self._engine,
+            expire_on_commit=False,
+            class_=AsyncSession,
         )()
 
     async def create_all(self):

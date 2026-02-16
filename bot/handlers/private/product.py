@@ -2,6 +2,7 @@ from aiogram import Router, Bot, F
 from aiogram.enums.parse_mode import ParseMode
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from aiogram.types import CallbackQuery, FSInputFile, Message, InlineKeyboardButton
+from aiogram.utils.i18n import gettext as _
 
 from bot.buttons.sub_menu import *
 from database.models import Category, Product, User
@@ -37,22 +38,30 @@ def make_product(product, category_id):
     )
     ikm.row(
         InlineKeyboardButton(
-            text="⏮️ Previous",
+            text=_("⏮️ Previous"),
             callback_data=f"product_previous_{product.id}_{category_id}",
         ),
         InlineKeyboardButton(
-            text="Add to Cart 🛒",
+            text=_("Add to Cart 🛒"),
             callback_data=f"product_add_to_cart_{product.id}",
         ),
         InlineKeyboardButton(
-            text="Next ⏭️", callback_data=f"product_next_{product.id}_{category_id}"
+            text=_("Next ⏭️"), callback_data=f"product_next_{product.id}_{category_id}"
         ),
     )
     ikm.row(InlineKeyboardButton(text="⏮️ Back", callback_data="back_to_categotry"))
-    caption = f"""<b>Name</b> {product.name}
-<b>Description:</b> {product.description}
-<b>Price:</b> {product.price} USD
-<b>Quantity:</b> {product.quantity}"""
+    caption = _(
+        "<b>Name:</b> {name}\n"
+        "<b>Description:</b> {description}\n"
+        "<b>Price:</b> {price} USD\n"
+        "<b>Quantity:</b> {quantity}"
+    ).format(
+        name=product.name,
+        description=product.description,
+        price=product.price,
+        quantity=product.quantity,
+    )
+
     return (
         caption,
         ikm.as_markup(),
@@ -102,7 +111,7 @@ async def callback_categories(callback: CallbackQuery):
                 text=caption, reply_markup=ikm, parse_mode=ParseMode.HTML
             )
     else:
-        await callback.answer("No product", show_alert=True)
+        await callback.answer(_("No product"), show_alert=True)
 
 
 @product_router.callback_query(F.data.startswith("product_next_"))
@@ -112,7 +121,7 @@ async def get_next_product(callback: CallbackQuery):
     )
     product = await Product.get_next_product_by_category(category_id, product_id)
     if not product:
-        await callback.answer("Last product", show_alert=True)
+        await callback.answer(_("Last product"), show_alert=True)
         return
 
     caption, ikm = make_product(product, category_id)
@@ -126,7 +135,7 @@ async def get_previous_product(callback: CallbackQuery):
     )
     product = await Product.get_previous_product_by_category(category_id, product_id)
     if not product:
-        await callback.answer("First product", show_alert=True)
+        await callback.answer(_("First product"), show_alert=True)
         return
     await send_product(callback, product, category_id)
 
@@ -141,4 +150,4 @@ async def back_to_category(callback: CallbackQuery):
 async def add_to_cart(callback: CallbackQuery):
     product_id = callback.data.removeprefix("product_add_to_cart_")
     await User.add_cart(callback.from_user.id, int(product_id))
-    await callback.answer("Added to Cart 🛒", show_alert=True)
+    await callback.answer(_("Added to Cart 🛒"), show_alert=True)

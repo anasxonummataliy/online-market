@@ -4,7 +4,7 @@ from sqlalchemy.orm.properties import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import BigInteger, Integer, Enum as SQLEnum, Float
 
-from database.base import db, TimeBasedModel
+from database.base import TimeBasedModel
 
 if TYPE_CHECKING:
     from database.models import User, Product

@@ -3,6 +3,7 @@ from aiogram import Router, Bot
 from aiogram.types import KeyboardButton, Message
 from aiogram.filters import CommandStart, Command
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
+from aiogram.utils.i18n import gettext as _
 
 from bot.utils import register_user
 from database import User
@@ -25,7 +26,7 @@ async def start_with_deeplink(msg: Message, command: Command):
         product_id = data.removeprefix("product_")
         user = await register_user(msg)
         await User.add_cart(user.tg_id, int(product_id))
-        await msg.answer("Added to Cart 🛒")
+        await msg.answer(_("Added to Cart 🛒"))
     else:
         if data.isdigit():
             await start_handler(msg, int(data))
@@ -41,7 +42,7 @@ async def start_handler(msg: Message, parent_id: Optional[int] = None):
     markup = [
         [KeyboardButton(text=CATEGORIES)],
         [KeyboardButton(text=HELP), KeyboardButton(text=MY_REFERRALS)],
-        [KeyboardButton(text=SETTINGS), KeyboardButton(text="My carts 🛒")],
+        [KeyboardButton(text=SETTINGS), KeyboardButton(text=_("My carts 🛒"))],
     ]
     if user.is_admin:
         markup.append([KeyboardButton(text=ADMIN)])

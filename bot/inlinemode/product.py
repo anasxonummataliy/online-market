@@ -1,4 +1,4 @@
-from aiogram import Router, F
+from aiogram import Router
 from aiogram.utils.deep_linking import create_deep_link
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from aiogram.types import (
