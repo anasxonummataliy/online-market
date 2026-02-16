@@ -1,10 +1,10 @@
-from aiogram import Router, Bot, F
+from aiogram import Router, F
 from aiogram.enums.parse_mode import ParseMode
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from aiogram.types import CallbackQuery, FSInputFile, Message, InlineKeyboardButton
 from aiogram.utils.i18n import gettext as _
 
-from bot.buttons.sub_menu import *
+from bot.buttons.sub_menu import CATEGORIES
 from database.models import Category, Product, User
 
 product_router = Router()
@@ -73,8 +73,8 @@ async def send_product(callback, product, category_id):
 
     try:
         await callback.message.delete()
-    except:
-        pass
+    except Exception as e:
+        print(e)
 
     if product.image:
         await callback.message.answer_photo(

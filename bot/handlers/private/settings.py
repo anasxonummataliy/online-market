@@ -2,7 +2,6 @@ from aiogram import Router, F
 from aiogram.types import Message, KeyboardButton
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
 from aiogram.utils.i18n import gettext as _
-from aiogram.utils.i18n import lazy_gettext as __
 
 from bot.buttons.sub_menu import SETTINGS
 from bot.handlers.private.menu import start_handler
@@ -24,5 +23,5 @@ async def settings_handler(message: Message):
 
 
 @settings_router.message(F.text == _("⏮️ Back"))
-async def settings_handler(message: Message):
+async def back_to_start(message: Message):
     await start_handler(message)

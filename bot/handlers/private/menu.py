@@ -1,5 +1,5 @@
 from typing import Optional
-from aiogram import Router, Bot
+from aiogram import Router
 from aiogram.types import KeyboardButton, Message
 from aiogram.filters import CommandStart, Command
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
