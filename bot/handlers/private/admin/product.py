@@ -5,6 +5,7 @@ from aiogram.utils.i18n import gettext as _
 from aiogram.types import Message, ReplyKeyboardRemove, CallbackQuery
 from aiogram.utils.keyboard import InlineKeyboardBuilder, InlineKeyboardButton
 
+from bot.buttons.sub_menu import ADD_PRODUCT, SHOW_PRODUCT
 from bot.filters.admin import IsAdmin
 from database.models import Category, Product
 from bot.handlers.private import start_handler
@@ -15,7 +16,7 @@ admin_product = Router()
 admin_product.message.filter(IsAdmin())
 
 
-@admin_product.message(F.text == _("Show products"))
+@admin_product.message(F.text == SHOW_PRODUCT)
 async def all_product(message: Message):
     products = await Product.get_all()
     if not products:
@@ -27,7 +28,7 @@ async def all_product(message: Message):
     await message.answer(text)
 
 
-@admin_product.message(F.text == _("Add product"))
+@admin_product.message(F.text == ADD_PRODUCT)
 async def add_product(message: Message, state: FSMContext):
     await state.set_state(ProductState.name)
     rkm = ReplyKeyboardRemove()

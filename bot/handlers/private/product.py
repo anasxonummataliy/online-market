@@ -4,7 +4,7 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 from aiogram.types import CallbackQuery, FSInputFile, Message, InlineKeyboardButton
 from aiogram.utils.i18n import gettext as _
 
-from bot.buttons.sub_menu import CATEGORIES
+from bot.buttons.sub_menu import BACK_TEXT, CATEGORIES
 from database.models import Category, Product, User
 
 product_router = Router()
@@ -49,7 +49,7 @@ def make_product(product, category_id):
             text=_("Next ⏭️"), callback_data=f"product_next_{product.id}_{category_id}"
         ),
     )
-    ikm.row(InlineKeyboardButton(text="⏮️ Back", callback_data="back_to_categotry"))
+    ikm.row(InlineKeyboardButton(text=_(BACK_TEXT), callback_data="back_to_categotry"))
     caption = _(
         "<b>Name:</b> {name}\n"
         "<b>Description:</b> {description}\n"

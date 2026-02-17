@@ -9,6 +9,7 @@ from bot.utils import register_user
 from database import User
 from bot.buttons.sub_menu import (
     CATEGORIES,
+    MY_CART,
     MY_REFERRALS,
     HELP,
     SETTINGS,
@@ -40,11 +41,11 @@ async def start_handler(msg: Message, parent_id: Optional[int] = None):
     user = await register_user(msg, parent_id)
 
     markup = [
-        [KeyboardButton(text=CATEGORIES)],
-        [KeyboardButton(text=HELP), KeyboardButton(text=MY_REFERRALS)],
-        [KeyboardButton(text=SETTINGS), KeyboardButton(text=_("My carts 🛒"))],
+        [KeyboardButton(text=_(CATEGORIES))],
+        [KeyboardButton(text=_(HELP)), KeyboardButton(text=_(MY_REFERRALS))],
+        [KeyboardButton(text=_(SETTINGS)), KeyboardButton(text=_(MY_CART))],
     ]
     if user.is_admin:
         markup.append([KeyboardButton(text=ADMIN)])
     rkb = ReplyKeyboardBuilder(markup=markup)
-    await msg.answer((WELCOME_TEXT), reply_markup=rkb.as_markup())
+    await msg.answer(_(WELCOME_TEXT), reply_markup=rkb.as_markup())

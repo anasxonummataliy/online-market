@@ -3,7 +3,7 @@ from aiogram.types import Message, KeyboardButton
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
 from aiogram.utils.i18n import gettext as _
 
-from bot.buttons.sub_menu import ADMIN
+from bot.buttons.sub_menu import ADMIN, BACK_TEXT
 from bot.filters.admin import IsAdmin
 
 
@@ -16,7 +16,7 @@ async def admin_menu_handler(message: Message):
     markup = [
         [KeyboardButton(text=_("Add product")), KeyboardButton(text=_("Show products"))],
         [KeyboardButton(text=_("Add category")), KeyboardButton(text=_("Show categories"))],
-        [KeyboardButton(text=_("⏮️ Back"))],
+        [KeyboardButton(text=_(BACK_TEXT))],
     ]
     rkm = ReplyKeyboardBuilder(markup)
     await message.answer(_("Menu"), reply_markup=rkm.as_markup())
