@@ -23,9 +23,9 @@ async def get_all_categories(message: Message):
                 )
             )
         ikm.adjust(2)
-        await message.answer("Categories", reply_markup=ikm.as_markup())
+        await message.answer(_("Categories"), reply_markup=ikm.as_markup())
     else:
-        await message.answer("No categories")
+        await message.answer(_("No categories"))
 
 
 def make_product(product, category_id):
