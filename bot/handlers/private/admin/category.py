@@ -7,7 +7,7 @@ from aiogram.utils.keyboard import (
     InlineKeyboardButton,
 )
 
-from bot.buttons.sub_menu import ADD_CATG
+from bot.buttons.sub_menu import ADD_CATG, SHOW_CATG
 from bot.filters.admin import IsAdmin
 from database.models import Category
 from bot.handlers.private import start_handler
@@ -34,7 +34,7 @@ async def add_category_name(message: Message, state: FSMContext):
     await start_handler(message)
 
 
-@admin_category.message(F.text == _("Show categories"))
+@admin_category.message(F.text == SHOW_CATG)
 async def all_category(message: Message):
     categories = await Category.get_all()
     if not categories:

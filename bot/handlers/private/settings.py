@@ -27,11 +27,11 @@ async def back_to_start(message: Message):
     await start_handler(message)
 
 
-@settings_handler(F.text == NOTIF)
+@settings_router.message(F.text == NOTIF)
 async def notif_handler(message: Message):
     pass
 
 
-@settings_handler(F.text == CHANGE_LANG)
+@settings_router.message(F.text == CHANGE_LANG)
 async def language_handler(message: Message):
     pass
