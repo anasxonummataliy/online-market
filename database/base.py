@@ -1,6 +1,6 @@
 import logging
-from datetime import datetime
 from typing import Optional
+from datetime import datetime
 from sqlalchemy.orm.attributes import Mapped
 from sqlalchemy.types import BigInteger, DateTime
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncAttrs, AsyncSession
@@ -54,12 +54,12 @@ class AbstractClass:
             obj = cls(**kwargs)
             db.add(obj)
             await cls.commit()
-            await db.refresh(obj)  # Commit dan keyin refresh
+            await db.refresh(obj)
             return obj
         except Exception as e:
             await db.rollback()
             logging.error(f"create error: {e}")
-            raise  # ✅ Xatoni yuqoriga uzatish
+            raise
 
     @classmethod
     async def filter_for_category(cls, category_id: int):
