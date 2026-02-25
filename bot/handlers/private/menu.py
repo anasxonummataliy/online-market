@@ -1,7 +1,8 @@
 from typing import Optional
 from aiogram import Router, F
-from aiogram.types import KeyboardButton, Message, InlineKeyboardButton
+from aiogram.types import KeyboardButton, Message, InlineKeyboardButton, CallbackQuery
 from aiogram.filters import CommandStart, Command
+from aiogram.utils import i18n
 from aiogram.utils.keyboard import (
     InlineKeyboardBuilder,
     ReplyKeyboardBuilder,
@@ -27,6 +28,7 @@ menu_router = Router()
 @menu_router.message(CommandStart(deep_link=True, deep_link_encoded=True))
 async def start_with_deeplink(msg: Message, command: Command):
     data: str = command.args
+    print(type(command))
     if "_" in data:
         product_id = data.removeprefix("product_")
         user: User = await register_user(msg)
@@ -51,16 +53,12 @@ async def start_handler(msg: Message, parent_id: Optional[int] = None):
     await msg.answer(_(WELCOME_TEXT))
     await msg.answer("Select language / Tilni tanlang", reply_markup=ikm.as_markup())
 
-@menu_router.callback_query(F.data.startswith("lang_"))
-async def select_language(callback):
-    lang = callback.data.split("_")[1]
-    
-    await callback.message.answer(f"Language set to {lang}")
-    await callback.answer()
 
-@menu_router.message(CommandStart())
-async def start_handler(msg: Message, parent_id: Optional[int] = None):
-    user: User = await register_user(msg, parent_id)
+@menu_router.callback_query(F.data.startswith("lang_"))
+async def select_language(callback: CallbackQuery):
+    lang = callback.data.split("_")[1]
+    await User.update(tg_id=callback.from_user.id, locale=lang)
+    user = await User.get_user(tg_id=callback.from_user.id)
     markup = [
         [KeyboardButton(text=_(CATEGORIES))],
         [KeyboardButton(text=_(HELP)), KeyboardButton(text=_(MY_REFERRALS))],
@@ -69,4 +67,7 @@ async def start_handler(msg: Message, parent_id: Optional[int] = None):
     if user.is_admin:
         markup.append([KeyboardButton(text=ADMIN)])
     rkb = ReplyKeyboardBuilder(markup=markup)
-    await msg.answer(_(WELCOME_TEXT), reply_markup=rkb.as_markup())
+    await callback.message.answer(_(WELCOME_TEXT), reply_markup=rkb.as_markup())
+    await i18n.set_user_locale(callback.from_user.id, lang)
+    await callback.message.answer(_("Language set to {lang}").format(lang=lang))
+    await callback.answer()
