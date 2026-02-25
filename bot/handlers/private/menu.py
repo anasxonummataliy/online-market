@@ -22,10 +22,10 @@ menu_router = Router()
 
 @menu_router.message(CommandStart(deep_link=True, deep_link_encoded=True))
 async def start_with_deeplink(msg: Message, command: Command):
-    data = command.args
+    data: str = command.args
     if "_" in data:
         product_id = data.removeprefix("product_")
-        user = await register_user(msg)
+        user: User = await register_user(msg)
         await User.add_cart(user.tg_id, int(product_id))
         await msg.answer(_("Added to Cart 🛒"))
     else:
@@ -38,7 +38,7 @@ async def start_with_deeplink(msg: Message, command: Command):
 
 @menu_router.message(CommandStart())
 async def start_handler(msg: Message, parent_id: Optional[int] = None):
-    user = await register_user(msg, parent_id)
+    user: User = await register_user(msg, parent_id)
 
     markup = [
         [KeyboardButton(text=_(CATEGORIES))],
