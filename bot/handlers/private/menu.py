@@ -1,5 +1,5 @@
 from typing import Optional
-from aiogram import Router
+from aiogram import Router, F
 from aiogram.types import KeyboardButton, Message, InlineKeyboardButton
 from aiogram.filters import CommandStart, Command
 from aiogram.utils.keyboard import (
@@ -54,7 +54,7 @@ async def start_handler(msg: Message, parent_id: Optional[int] = None):
 @menu_router.callback_query(F.data.startswith("lang_"))
 async def select_language(callback):
     lang = callback.data.split("_")[1]
-    locale
+    
     await callback.message.answer(f"Language set to {lang}")
     await callback.answer()
 
