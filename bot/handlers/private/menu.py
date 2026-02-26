@@ -64,10 +64,8 @@ async def select_language(callback: CallbackQuery, state: FSMContext):
         markup.append([KeyboardButton(text=ADMIN)])
     rkb = ReplyKeyboardBuilder(markup=markup)
     await state.update_data(locale=lang)
-    print((await state.get_data()).get("locale"))
     await callback.message.answer(
         _("Language set to {lang}", locale=lang).format(lang=lang),
         reply_markup=rkb.as_markup(),
     )
-    print(user.locale)
     await callback.answer()
