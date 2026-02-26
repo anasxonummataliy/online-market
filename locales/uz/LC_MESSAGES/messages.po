@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-02-26 10:38+0500\n"
+"POT-Creation-Date: 2026-02-26 11:06+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: uz\n"
@@ -84,11 +84,11 @@ msgstr "🗑 Savat tozalandi"
 msgid "❌ Cart not found"
 msgstr "❌ Savat topilmadi"
 
-#: bot/handlers/private/menu.py:37 bot/handlers/private/product.py:153
+#: bot/handlers/private/menu.py:32 bot/handlers/private/product.py:153
 msgid "Added to Cart 🛒"
 msgstr "Savatga qo‘shildi 🛒"
 
-#: bot/handlers/private/menu.py:73
+#: bot/handlers/private/menu.py:69
 #, python-brace-format
 msgid "Language set to {lang}"
 msgstr "Til o‘rnatildi: {lang}"

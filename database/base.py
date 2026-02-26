@@ -31,6 +31,35 @@ class Base(AsyncAttrs, DeclarativeBase):
         return _name + "s"
 
 
+class AsyncDatabaseSession:
+    def __init__(self):
+        self._session = None
+        self._engine = None
+
+    def __getattr__(self, name):
+        return getattr(self._session, name)
+
+    def init(self):
+        self._engine = create_async_engine(conf.db.db_url)
+        self._session = sessionmaker(
+            self._engine,
+            expire_on_commit=False,
+            class_=AsyncSession,
+        )()
+
+    async def create_all(self):
+        async with self._engine.begin() as conn:
+            await conn.run_sync(Base.metadata.create_all)
+
+    async def drop_all(self):
+        async with self._engine.begin() as conn:
+            await conn.run_sync(Base.metadata.drop_all)
+
+
+db = AsyncDatabaseSession()
+db.init()
+
+
 class AbstractClass:
     @staticmethod
     async def commit():
@@ -91,7 +120,7 @@ class AbstractClass:
                 .execution_options(synchronize_session="fetch")
             )
         await db.execute(query)
-        await cls.commit()
+        await db.commit()
 
     @classmethod
     async def delete(cls, _id: Optional[int] = None, telegram_id: Optional[int] = None):
@@ -139,35 +168,6 @@ class AbstractClass:
         db.add(self)
         await self.commit()
         return self
-
-
-class AsyncDatabaseSession:
-    def __init__(self):
-        self._session = None
-        self._engine = None
-
-    def __getattr__(self, name):
-        return getattr(self._session, name)
-
-    def init(self):
-        self._engine = create_async_engine(conf.db.db_url)
-        self._session = sessionmaker(
-            self._engine,
-            expire_on_commit=False,
-            class_=AsyncSession,
-        )()
-
-    async def create_all(self):
-        async with self._engine.begin() as conn:
-            await conn.run_sync(Base.metadata.create_all)
-
-    async def drop_all(self):
-        async with self._engine.begin() as conn:
-            await conn.run_sync(Base.metadata.drop_all)
-
-
-db = AsyncDatabaseSession()
-db.init()
 
 
 class BaseModel(Base, AbstractClass):

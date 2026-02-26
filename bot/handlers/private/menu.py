@@ -1,14 +1,9 @@
 from typing import Optional
 from aiogram import Router, F
 from aiogram.fsm.context import FSMContext
+from aiogram.filters import CommandStart, CommandObject
+from aiogram.utils.keyboard import InlineKeyboardBuilder, ReplyKeyboardBuilder
 from aiogram.types import KeyboardButton, Message, InlineKeyboardButton, CallbackQuery
-from aiogram.filters import CommandStart, Command
-from aiogram.utils import i18n
-from aiogram.utils.keyboard import (
-    InlineKeyboardBuilder,
-    ReplyKeyboardBuilder,
-    InlineKeyboardButton,
-)
 from aiogram.utils.i18n import gettext as _
 
 from bot.utils import register_user
@@ -27,7 +22,7 @@ menu_router = Router()
 
 
 @menu_router.message(CommandStart(deep_link=True, deep_link_encoded=True))
-async def start_with_deeplink(msg: Message, command: Command):
+async def start_with_deeplink(msg: Message, command: CommandObject):
     data: str = command.args
     print(type(command))
     if "_" in data:
@@ -58,7 +53,7 @@ async def start_handler(msg: Message, parent_id: Optional[int] = None):
 @menu_router.callback_query(F.data.startswith("lang_"))
 async def select_language(callback: CallbackQuery, state: FSMContext):
     lang = callback.data.split("_")[1]
-    await User.update(tg_id=callback.from_user.id, locale=lang)
+    await User.update(telegram_id=callback.from_user.id, locale=lang)
     user: User = await User.get_user(tg_id=callback.from_user.id)
     markup = [
         [KeyboardButton(text=_(CATEGORIES))],
@@ -68,7 +63,11 @@ async def select_language(callback: CallbackQuery, state: FSMContext):
     if user.is_admin:
         markup.append([KeyboardButton(text=ADMIN)])
     rkb = ReplyKeyboardBuilder(markup=markup)
-    await callback.message.answer(_(WELCOME_TEXT), reply_markup=rkb.as_markup())
     await state.update_data(locale=lang)
-    await callback.message.answer(_("Language set to {lang}").format(lang=lang))
+    print((await state.get_data()).get("locale"))
+    await callback.message.answer(
+        _("Language set to {lang}", locale=lang).format(lang=lang),
+        reply_markup=rkb.as_markup(),
+    )
+    print(user.locale)
     await callback.answer()
