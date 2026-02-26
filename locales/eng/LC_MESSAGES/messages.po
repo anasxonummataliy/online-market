@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-02-26 11:06+0500\n"
-"PO-Revision-Date: 2026-02-16 23:57+0500\n"
+"POT-Creation-Date: 2026-02-26 14:26+0500\n"
+"PO-Revision-Date: 2026-02-26 14:27+0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
 "Language-Team: en_US <LL@li.org>\n"
@@ -77,11 +77,11 @@ msgstr ""
 msgid "❌ Cart not found"
 msgstr ""
 
-#: bot/handlers/private/menu.py:32 bot/handlers/private/product.py:153
+#: bot/handlers/private/menu.py:33 bot/handlers/private/product.py:153
 msgid "Added to Cart 🛒"
 msgstr ""
 
-#: bot/handlers/private/menu.py:69
+#: bot/handlers/private/menu.py:70
 #, python-brace-format
 msgid "Language set to {lang}"
 msgstr ""
@@ -249,37 +249,4 @@ msgstr ""
 #: bot/handlers/private/admin/product.py:120
 msgid "Product added successfully. ✅"
 msgstr ""
-
-#~ msgid "My Referrals 📋"
-#~ msgstr ""
-
-#~ msgid "HELP 📨"
-#~ msgstr ""
-
-#~ msgid "Categories 📦"
-#~ msgstr ""
-
-#~ msgid "Settings ⚙️"
-#~ msgstr ""
-
-#~ msgid "Welcome to our bot!😊"
-#~ msgstr ""
-
-#~ msgid "ADMIN🧑‍💼"
-#~ msgstr ""
-
-#~ msgid "My cart 🛒"
-#~ msgstr ""
-
-#~ msgid "My carts 🛒"
-#~ msgstr ""
-
-#~ msgid "Change language 🇬🇧 🇺🇿"
-#~ msgstr ""
-
-#~ msgid "Notification 📢"
-#~ msgstr ""
-
-#~ msgid "⏮️ Back"
-#~ msgstr ""
 

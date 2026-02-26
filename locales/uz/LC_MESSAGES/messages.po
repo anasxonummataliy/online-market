@@ -3,13 +3,12 @@
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-02-26 11:06+0500\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2026-02-26 14:26+0500\n"
+"PO-Revision-Date: 2026-02-26 14:27+0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: uz\n"
 "Language-Team: uz <LL@li.org>\n"
@@ -21,13 +20,15 @@ msgstr ""
 
 #: bot/handlers/private/cart.py:16 bot/handlers/private/cart.py:116
 msgid "Your cart is empty ❌"
-msgstr ""
+msgstr "Savatingiz bo'sh ❌"
 
 #: bot/handlers/private/cart.py:18
 msgid ""
 "🛒 Your cart:\n"
 "\n"
 msgstr ""
+"🛒 Savatingiz:\n"
+"\n"
 
 #: bot/handlers/private/cart.py:27
 #, python-brace-format
@@ -61,16 +62,16 @@ msgstr "✅ Buyurtma berish"
 
 #: bot/handlers/private/cart.py:76
 msgid "✅ Added +1"
-msgstr "✅ +1 qo‘shildi"
+msgstr "✅ Qo'shildi +1"
 
 #: bot/handlers/private/cart.py:82 bot/handlers/private/cart.py:107
 #, python-brace-format
 msgid "❌ Error: {error}"
-msgstr "❌ Xatolik: {error}"
+msgstr "❌ Xato: {error}"
 
 #: bot/handlers/private/cart.py:94
 msgid "✅ Removed -1"
-msgstr "✅ -1 olib tashlandi"
+msgstr "✅ O'chirildi -1"
 
 #: bot/handlers/private/cart.py:104
 msgid "❌ Product not found"
@@ -78,20 +79,20 @@ msgstr "❌ Mahsulot topilmadi"
 
 #: bot/handlers/private/cart.py:117
 msgid "🗑 Cart cleared"
-msgstr "🗑 Savat tozalandi"
+msgstr "🗑 Savatcha tozalandi"
 
 #: bot/handlers/private/cart.py:120
 msgid "❌ Cart not found"
-msgstr "❌ Savat topilmadi"
+msgstr "❌ Savatcha topilmadi"
 
-#: bot/handlers/private/menu.py:32 bot/handlers/private/product.py:153
+#: bot/handlers/private/menu.py:33 bot/handlers/private/product.py:153
 msgid "Added to Cart 🛒"
-msgstr "Savatga qo‘shildi 🛒"
+msgstr "Savatchaga qo'shildi 🛒"
 
-#: bot/handlers/private/menu.py:69
+#: bot/handlers/private/menu.py:70
 #, python-brace-format
 msgid "Language set to {lang}"
-msgstr "Til o‘rnatildi: {lang}"
+msgstr "Til o'zgartirildi: {lang}"
 
 #: bot/handlers/private/product.py:26
 msgid "Categories"
@@ -107,7 +108,7 @@ msgstr "⏮️ Oldingi"
 
 #: bot/handlers/private/product.py:45 bot/inlinemode/product.py:33
 msgid "Add to Cart 🛒"
-msgstr "Savatga qo‘shish 🛒"
+msgstr "Savatchaga qo'shish 🛒"
 
 #: bot/handlers/private/product.py:49
 msgid "Next ⏭️"
@@ -128,7 +129,7 @@ msgstr ""
 
 #: bot/handlers/private/product.py:114
 msgid "No product"
-msgstr "Mahsulot yo‘q"
+msgstr "Mahsulot mavjud emas"
 
 #: bot/handlers/private/product.py:124
 msgid "Last product"
@@ -144,7 +145,7 @@ msgid ""
 "✨ Number of people you invited: <b>{n}</b>\n"
 "🔗 Invitation link: <a href=\"{link}\">Click to enter</a>"
 msgstr ""
-"✨ Siz taklif qilganlar soni: <b>{n}</b>\n"
+"✨ Taklif qilgan odamlar soni: <b>{n}</b>\n"
 "🔗 Taklif havolasi: <a href=\"{link}\">Kirish uchun bosing</a>"
 
 #: bot/handlers/private/settings.py:22
@@ -157,7 +158,7 @@ msgstr "Kategoriya nomini kiriting."
 
 #: bot/handlers/private/admin/category.py:33
 msgid "Category added successfully."
-msgstr "Kategoriya muvaffaqiyatli qo‘shildi."
+msgstr "Kategoriya muvaffaqiyatli qo'shildi."
 
 #: bot/handlers/private/admin/category.py:41
 msgid "No categories available."
@@ -165,23 +166,23 @@ msgstr "Kategoriyalar mavjud emas."
 
 #: bot/handlers/private/admin/category.py:52
 msgid "Select category to change name:"
-msgstr "Nomini o‘zgartirish uchun kategoriyani tanlang:"
+msgstr "Nomini o'zgartirish uchun kategoriyani tanlang:"
 
 #: bot/handlers/private/admin/category.py:64
 msgid "Rename ✍️"
-msgstr "Nomini o‘zgartirish ✍️"
+msgstr "Nomini o'zgartirish ✍️"
 
 #: bot/handlers/private/admin/category.py:69
 msgid "Delete 🛒"
-msgstr "O‘chirish 🗑"
+msgstr "O'chirish 🗑"
 
 #: bot/handlers/private/admin/category.py:73
 msgid "Which do you want to delete or rename?"
-msgstr "Qaysini o‘chirmoqchi yoki nomini o‘zgartirmoqchisiz?"
+msgstr "Nima qilmoqchisiz: o'chirish yoki nomini o'zgartirish?"
 
 #: bot/handlers/private/admin/category.py:82
 msgid "Category deleted successfully."
-msgstr "Kategoriya muvaffaqiyatli o‘chirildi."
+msgstr "Kategoriya muvaffaqiyatli o'chirildi."
 
 #: bot/handlers/private/admin/category.py:89
 msgid "Enter new category name."
@@ -189,27 +190,27 @@ msgstr "Yangi kategoriya nomini kiriting."
 
 #: bot/handlers/private/admin/category.py:111
 msgid "Category name changed successfully. ✅"
-msgstr "Kategoriya nomi muvaffaqiyatli o‘zgartirildi. ✅"
+msgstr "Kategoriya nomi muvaffaqiyatli o'zgartirildi. ✅"
 
 #: bot/handlers/private/admin/menu.py:17
 msgid "Add product"
-msgstr "Mahsulot qo‘shish"
+msgstr "Mahsulot qo'shish"
 
 #: bot/handlers/private/admin/menu.py:17
 msgid "Show products"
-msgstr "Mahsulotlarni ko‘rsatish"
+msgstr "Mahsulotlarni ko'rish"
 
 #: bot/handlers/private/admin/menu.py:18
 msgid "Add category"
-msgstr "Kategoriya qo‘shish"
+msgstr "Kategoriya qo'shish"
 
 #: bot/handlers/private/admin/menu.py:18
 msgid "Show categories"
-msgstr "Kategoriyalarni ko‘rsatish"
+msgstr "Kategoriyalarni ko'rish"
 
 #: bot/handlers/private/admin/menu.py:22
 msgid "Menu"
-msgstr "Menu"
+msgstr "Menyu"
 
 #: bot/handlers/private/admin/product.py:23
 msgid "No products available."
@@ -233,7 +234,7 @@ msgstr "Mahsulot narxini kiriting."
 
 #: bot/handlers/private/admin/product.py:58
 msgid "Price must be a number. Please enter again."
-msgstr "Narx raqam bo‘lishi kerak. Qayta kiriting."
+msgstr "Narx raqam bo'lishi kerak. Qaytadan kiriting."
 
 #: bot/handlers/private/admin/product.py:62
 msgid "Enter product quantity."
@@ -241,7 +242,7 @@ msgstr "Mahsulot miqdorini kiriting."
 
 #: bot/handlers/private/admin/product.py:69
 msgid "Quantity must be a number. Please enter again."
-msgstr "Miqdor raqam bo‘lishi kerak. Qayta kiriting."
+msgstr "Miqdor raqam bo'lishi kerak. Qaytadan kiriting."
 
 #: bot/handlers/private/admin/product.py:73
 msgid "Send product image."
@@ -249,7 +250,7 @@ msgstr "Mahsulot rasmini yuboring."
 
 #: bot/handlers/private/admin/product.py:84
 msgid "No categories available. Please add a category first."
-msgstr "Kategoriyalar mavjud emas. Avval kategoriya qo‘shing."
+msgstr "Kategoriyalar mavjud emas. Avval kategoriya qo'shing."
 
 #: bot/handlers/private/admin/product.py:94
 msgid "Select category:"
@@ -257,9 +258,9 @@ msgstr "Kategoriyani tanlang:"
 
 #: bot/handlers/private/admin/product.py:102
 msgid "Category ID must be a number. Please enter again."
-msgstr "Kategoriya ID raqam bo‘lishi kerak. Qayta kiriting."
+msgstr "Kategoriya ID raqam bo'lishi kerak. Qaytadan kiriting."
 
 #: bot/handlers/private/admin/product.py:120
 msgid "Product added successfully. ✅"
-msgstr "Mahsulot muvaffaqiyatli qo‘shildi. ✅"
+msgstr "Mahsulot muvaffaqiyatli qo'shildi. ✅"
 

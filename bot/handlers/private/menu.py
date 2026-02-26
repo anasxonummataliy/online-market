@@ -4,7 +4,8 @@ from aiogram.fsm.context import FSMContext
 from aiogram.filters import CommandStart, CommandObject
 from aiogram.utils.keyboard import InlineKeyboardBuilder, ReplyKeyboardBuilder
 from aiogram.types import KeyboardButton, Message, InlineKeyboardButton, CallbackQuery
-from aiogram.utils.i18n import gettext as _
+from aiogram.utils.i18n import get_i18n, gettext as _
+
 
 from bot.utils import register_user
 from database import User
@@ -64,6 +65,7 @@ async def select_language(callback: CallbackQuery, state: FSMContext):
         markup.append([KeyboardButton(text=ADMIN)])
     rkb = ReplyKeyboardBuilder(markup=markup)
     await state.update_data(locale=lang)
+    get_i18n().current_locale = lang
     await callback.message.answer(
         _("Language set to {lang}", locale=lang).format(lang=lang),
         reply_markup=rkb.as_markup(),
