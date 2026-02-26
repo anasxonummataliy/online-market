@@ -1,5 +1,6 @@
 from typing import Optional
 from aiogram import Router, F
+from aiogram.fsm.context import FSMContext
 from aiogram.types import KeyboardButton, Message, InlineKeyboardButton, CallbackQuery
 from aiogram.filters import CommandStart, Command
 from aiogram.utils import i18n
@@ -55,10 +56,10 @@ async def start_handler(msg: Message, parent_id: Optional[int] = None):
 
 
 @menu_router.callback_query(F.data.startswith("lang_"))
-async def select_language(callback: CallbackQuery):
+async def select_language(callback: CallbackQuery, state: FSMContext):
     lang = callback.data.split("_")[1]
     await User.update(tg_id=callback.from_user.id, locale=lang)
-    user = await User.get_user(tg_id=callback.from_user.id)
+    user: User = await User.get_user(tg_id=callback.from_user.id)
     markup = [
         [KeyboardButton(text=_(CATEGORIES))],
         [KeyboardButton(text=_(HELP)), KeyboardButton(text=_(MY_REFERRALS))],
@@ -68,6 +69,6 @@ async def select_language(callback: CallbackQuery):
         markup.append([KeyboardButton(text=ADMIN)])
     rkb = ReplyKeyboardBuilder(markup=markup)
     await callback.message.answer(_(WELCOME_TEXT), reply_markup=rkb.as_markup())
-    await i18n.set_user_locale(callback.from_user.id, lang)
+    await state.update_data(locale=lang)
     await callback.message.answer(_("Language set to {lang}").format(lang=lang))
     await callback.answer()

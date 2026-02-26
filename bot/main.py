@@ -19,6 +19,7 @@ bot = Bot(conf.bot.TOKEN)
 @dp.startup()
 async def startup(bot: Bot):
     os.makedirs("./media/attachment", mode=0o777, exist_ok=True)
+    await bot.delete_webhook()
     container = LocalStorageDriver("./media").get_container("attachment")
     try:
         StorageManager.add_storage("default", container)
@@ -35,7 +36,7 @@ async def shutdown(bot: Bot):
 
 
 async def main():
-    i18n = I18n(path="locales", default_locale="en")
+    i18n = I18n(path="locales", default_locale="uz")
     dp.update.outer_middleware(FSMI18nMiddleware(i18n))
     dp.include_routers(main_router)
     dp.include_routers(inline_router)
