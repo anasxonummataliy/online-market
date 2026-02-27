@@ -22,7 +22,7 @@ class DBi18nMiddleware(I18nMiddleware):
             if locale:
                 return locale
 
-        user = await User.get_user(tg_id=from_user.id)
+        user: User = await User.get_user(tg_id=from_user.id)
         locale = user.locale if user and user.locale else self.i18n.default_locale
 
         if state:
