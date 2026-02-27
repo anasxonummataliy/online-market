@@ -245,3 +245,33 @@ msgstr ""
 msgid "Product added successfully. ✅"
 msgstr ""
 
+#~ msgid "My Referrals 📋"
+#~ msgstr ""
+
+#~ msgid "HELP 📨"
+#~ msgstr ""
+
+#~ msgid "Categories 📦"
+#~ msgstr ""
+
+#~ msgid "Settings ⚙️"
+#~ msgstr ""
+
+#~ msgid "Welcome to our bot!😊"
+#~ msgstr ""
+
+#~ msgid "ADMIN🧑‍💼"
+#~ msgstr ""
+
+#~ msgid "⏮️ Back"
+#~ msgstr ""
+
+#~ msgid "My cart 🛒"
+#~ msgstr ""
+
+#~ msgid "Change language 🇬🇧 🇺🇿"
+#~ msgstr ""
+
+#~ msgid "Notification 📢"
+#~ msgstr ""
+

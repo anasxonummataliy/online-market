@@ -28,7 +28,7 @@ async def get_all_categories(message: Message):
         await message.answer(_("No categories"))
 
 
-def make_product(product, category_id):
+def make_product(product: Product, category_id):
     ikm = InlineKeyboardBuilder()
     ikm.row(
         InlineKeyboardButton(
@@ -68,7 +68,7 @@ def make_product(product, category_id):
     )
 
 
-async def send_product(callback, product, category_id):
+async def send_product(callback: CallbackQuery, product: Product, category_id: int):
     caption, ikm = make_product(product, category_id)
 
     try:
