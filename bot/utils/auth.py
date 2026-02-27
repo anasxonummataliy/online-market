@@ -1,8 +1,9 @@
 from typing import Optional
+from aiogram.types import Message
 from database.models import User
 
 
-async def register_user(msg, parent_id: Optional[int] = None):
+async def register_user(msg: Message, parent_id: Optional[int] = None) -> User:
     if not await User.get_user(tg_id=msg.from_user.id):
         await User.create(
             tg_id=msg.from_user.id,

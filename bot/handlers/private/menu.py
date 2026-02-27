@@ -1,23 +1,24 @@
 from typing import Optional
 from aiogram import Router, F
 from aiogram.fsm.context import FSMContext
+from aiogram.utils.i18n import gettext as _, get_i18n
 from aiogram.filters import CommandStart, CommandObject
 from aiogram.utils.keyboard import InlineKeyboardBuilder, ReplyKeyboardBuilder
-from aiogram.types import KeyboardButton, Message, InlineKeyboardButton, CallbackQuery
-from aiogram.utils.i18n import get_i18n, gettext as _
-
+from aiogram.types import CallbackQuery, InlineKeyboardButton, KeyboardButton, Message
+from bot.buttons.sub_menu import (
+    ADMIN,
+    CATEGORIES,
+    CHANGE_LANG,
+    HELP,
+    MY_CART,
+    MY_REFERRALS,
+    SETTINGS,
+    WELCOME_TEXT,
+)
 
 from bot.utils import register_user
 from database import User
-from bot.buttons.sub_menu import (
-    CATEGORIES,
-    MY_CART,
-    MY_REFERRALS,
-    HELP,
-    SETTINGS,
-    WELCOME_TEXT,
-    ADMIN,
-)
+
 
 menu_router = Router()
 
@@ -40,15 +41,31 @@ async def start_with_deeplink(msg: Message, command: CommandObject):
 
 
 @menu_router.message(CommandStart())
-async def start_handler(msg: Message, parent_id: Optional[int] = None):
+async def start_handler(
+    msg: Message, parent_id: Optional[int] = None, state: FSMContext = None
+):
     await register_user(msg, parent_id)
+    print("User registered")
+    user: User = await User.get_user(tg_id=msg.from_user.id)
+    if not user.locale:
+        await language_handler(msg)
+        return
+    get_i18n().current_locale = user.locale
+    if state:
+        await state.update_data(locale=user.locale)
+    await msg.answer(_(WELCOME_TEXT))
+
+
+@menu_router.message(F.text == str(CHANGE_LANG))
+async def language_handler(message: Message):
     ikm = InlineKeyboardBuilder()
     ikm.row(
         InlineKeyboardButton(text="English 🇺🇸", callback_data="lang_en"),
         InlineKeyboardButton(text="Uzbek 🇺🇿", callback_data="lang_uz"),
     )
-    await msg.answer(_(WELCOME_TEXT))
-    await msg.answer("Select language / Tilni tanlang", reply_markup=ikm.as_markup())
+    await message.answer(
+        "Select language / Tilni tanlang", reply_markup=ikm.as_markup()
+    )
 
 
 @menu_router.callback_query(F.data.startswith("lang_"))
@@ -57,17 +74,17 @@ async def select_language(callback: CallbackQuery, state: FSMContext):
     await User.update(telegram_id=callback.from_user.id, locale=lang)
     user: User = await User.get_user(tg_id=callback.from_user.id)
     markup = [
-        [KeyboardButton(text=_(CATEGORIES))],
-        [KeyboardButton(text=_(HELP)), KeyboardButton(text=_(MY_REFERRALS))],
-        [KeyboardButton(text=_(SETTINGS)), KeyboardButton(text=_(MY_CART))],
+        [KeyboardButton(text=str(CATEGORIES))],
+        [KeyboardButton(text=str(HELP)), KeyboardButton(text=str(MY_REFERRALS))],
+        [KeyboardButton(text=str(SETTINGS)), KeyboardButton(text=str(MY_CART))],
     ]
     if user.is_admin:
-        markup.append([KeyboardButton(text=ADMIN)])
+        markup.append([KeyboardButton(text=str(ADMIN))])
     rkb = ReplyKeyboardBuilder(markup=markup)
     await state.update_data(locale=lang)
     get_i18n().current_locale = lang
     await callback.message.answer(
-        _("Language set to {lang}", locale=lang).format(lang=lang),
+        _(WELCOME_TEXT, locale=lang),
         reply_markup=rkb.as_markup(),
     )
     await callback.answer()

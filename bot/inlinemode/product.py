@@ -19,9 +19,9 @@ inline_router = Router()
 async def get_inline_query(query: InlineQuery):
     results = []
     if len(query.query):
-        products = await Product.filter_startwith(query.query)
+        products: list[Product] = await Product.filter_startwith(query.query)
     else:
-        products = await Product.get_all()
+        products: list[Product] = await Product.get_all()
 
     bot_data = await query.bot.me()
 

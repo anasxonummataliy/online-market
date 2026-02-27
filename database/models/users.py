@@ -4,6 +4,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import BigInteger, String, Enum as SqlEnum, ForeignKey, select
 
 from database.base import db, TimeBasedModel
+
 if TYPE_CHECKING:
     from database.models import Cart, Order
 
@@ -18,7 +19,7 @@ class User(TimeBasedModel):
     username: Mapped[str] = mapped_column(String, nullable=True, unique=True)
     phone_number: Mapped[str] = mapped_column(String, nullable=True, unique=True)
     type: Mapped[SqlEnum] = mapped_column(SqlEnum(Type), default=Type.USER)
-    locale: Mapped[str] = mapped_column(String, default="en")
+    locale: Mapped[str] = mapped_column(String, nullable=True)
     parent_user_id: Mapped[int | None] = mapped_column(
         BigInteger, ForeignKey("users.id", ondelete="SET NULL"), nullable=True
     )

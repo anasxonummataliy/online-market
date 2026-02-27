@@ -16,7 +16,7 @@ async def admin_menu_handler(message: Message):
     markup = [
         [KeyboardButton(text=_("Add product")), KeyboardButton(text=_("Show products"))],
         [KeyboardButton(text=_("Add category")), KeyboardButton(text=_("Show categories"))],
-        [KeyboardButton(text=_(BACK_TEXT))],
+        [KeyboardButton(text=str(BACK_TEXT))],
     ]
     rkm = ReplyKeyboardBuilder(markup)
     await message.answer(_("Menu"), reply_markup=rkm.as_markup())
