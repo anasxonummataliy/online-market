@@ -59,7 +59,7 @@ async def build_cart_message(tg_id: int):
     return text, ikm.as_markup()
 
 
-@cart_router.message(F.text == MY_CART)
+@cart_router.message(F.text == str(MY_CART))
 async def cart_handler(message: Message):
     text, markup = await build_cart_message(message.from_user.id)
     await message.answer(text, reply_markup=markup)
