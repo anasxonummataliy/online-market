@@ -1,3 +1,4 @@
+from builtins import str
 from aiogram import Bot, Router, F
 from aiogram.enums import ParseMode
 from aiogram.types import Message
@@ -10,7 +11,7 @@ from bot.buttons.sub_menu import MY_REFERRALS
 referrals_router = Router()
 
 
-@referrals_router.message(F.text == MY_REFERRALS)
+@referrals_router.message(F.text.func(lambda t: t == MY_REFERRALS))
 async def my_referrals(msg: Message, bot: Bot):
     link = await create_start_link(bot, str(msg.from_user.id), encode=True)
     n = 15
@@ -20,6 +21,3 @@ async def my_referrals(msg: Message, bot: Bot):
     ).format(n=n, link=link)
 
     await msg.answer(text, parse_mode=ParseMode.HTML)
-
-
-# "✨ Siz taklif qilganlar soni: <b>{n}</b>🔗 Taklif havolasi: <a href="{link}">Bosish orqali kirish"

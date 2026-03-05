@@ -10,7 +10,7 @@ from database.models import Category, Product, User
 product_router = Router()
 
 
-@product_router.message(F.text == CATEGORIES)
+@product_router.message(F.text.func(lambda t: t == CATEGORIES))
 async def get_all_categories(message: Message):
     categories = await Category.get_all()
     ikm = InlineKeyboardBuilder()

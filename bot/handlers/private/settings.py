@@ -1,3 +1,4 @@
+from builtins import str
 from aiogram import Router, F
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, KeyboardButton
@@ -16,7 +17,7 @@ from bot.handlers.private.menu import start_handler
 settings_router = Router()
 
 
-@settings_router.message(F.text == SETTINGS)
+@settings_router.message(F.text.func(lambda t: t == SETTINGS))
 async def settings_handler(message: Message):
     markup = [
         [
@@ -29,11 +30,11 @@ async def settings_handler(message: Message):
     await message.answer(_("Settings"), reply_markup=kb.as_markup())
 
 
-@settings_router.message(F.text == BACK_TEXT)
+@settings_router.message(F.text.func(lambda t: t == BACK_TEXT))
 async def back_to_start(message: Message, state: FSMContext):
     await start_handler(message, state)
 
 
 @settings_router.message(F.text == NOTIF)
 async def notif_handler(message: Message):
-    pass
+    await message.answer(_("Notifications"))

@@ -1,4 +1,5 @@
 from aiogram.utils.i18n import lazy_gettext as __
+
 MY_REFERRALS = __("My Referrals 📋")
 HELP = __("HELP 📨")
 CATEGORIES = __("Categories 📦")

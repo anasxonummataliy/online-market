@@ -1,3 +1,4 @@
+from builtins import str
 from sqlalchemy_file import File
 from aiogram import Router, F, Bot
 from aiogram.fsm.context import FSMContext
@@ -16,7 +17,7 @@ admin_product = Router()
 admin_product.message.filter(IsAdmin())
 
 
-@admin_product.message(F.text == SHOW_PRODUCT)
+@admin_product.message(F.text.func(lambda t: t == str(SHOW_PRODUCT)))
 async def all_product(message: Message):
     products = await Product.get_all()
     if not products:
@@ -28,7 +29,7 @@ async def all_product(message: Message):
     await message.answer(text)
 
 
-@admin_product.message(F.text == ADD_PRODUCT)
+@admin_product.message(F.text.func(lambda t: t == str(ADD_PRODUCT)))
 async def add_product(message: Message, state: FSMContext):
     await state.set_state(ProductState.name)
     rkm = ReplyKeyboardRemove()

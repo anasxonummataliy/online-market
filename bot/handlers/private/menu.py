@@ -1,3 +1,4 @@
+from builtins import str
 from typing import Optional
 from aiogram import Router, F
 from aiogram.fsm.context import FSMContext
@@ -42,7 +43,7 @@ async def send_main_menu(message: Message, user: User, state: FSMContext = None)
 
 @menu_router.message(CommandStart(deep_link=True, deep_link_encoded=True))
 async def start_with_deeplink(msg: Message, command: CommandObject, state: FSMContext):
-    data: str = command.args
+    data = command.args
     if "_" in data:
         product_id = data.removeprefix("product_")
         user: User = await register_user(msg)
@@ -67,7 +68,7 @@ async def _start(msg: Message, state: FSMContext, parent_id: Optional[int] = Non
     await send_main_menu(msg, user, state)
 
 
-@menu_router.message(F.text == CHANGE_LANG)
+@menu_router.message(F.text.func(lambda t: t == str(CHANGE_LANG)))
 async def language_handler(message: Message):
     ikm = InlineKeyboardBuilder()
     ikm.row(

@@ -1,3 +1,4 @@
+from builtins import str
 from aiogram import Router, F
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, ReplyKeyboardRemove, CallbackQuery
@@ -18,7 +19,7 @@ admin_category = Router()
 admin_category.message.filter(IsAdmin())
 
 
-@admin_category.message(F.text == ADD_CATG)
+@admin_category.message(F.text.func(lambda t: t == str(ADD_CATG)))
 async def add_category(message: Message, state: FSMContext):
     await state.set_state(CategoryState.name)
     rkm = ReplyKeyboardRemove()
@@ -34,9 +35,9 @@ async def add_category_name(message: Message, state: FSMContext):
     await start_handler(message)
 
 
-@admin_category.message(F.text == SHOW_CATG)
+@admin_category.message(F.text.func(lambda t: t == str(SHOW_CATG)))
 async def all_category(message: Message):
-    categories = await Category.get_all()
+    categories: Category = await Category.get_all()
     if not categories:
         await message.answer(_("No categories available."))
         return
