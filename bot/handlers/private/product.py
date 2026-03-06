@@ -4,7 +4,6 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 from aiogram.types import CallbackQuery, FSInputFile, Message, InlineKeyboardButton
 from aiogram.utils.i18n import gettext as _, lazy_gettext as __
 
-from bot.buttons.sub_menu import BACK_TEXT, CATEGORIES
 from database.models import Category, Product, User
 
 product_router = Router()

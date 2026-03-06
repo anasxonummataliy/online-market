@@ -5,12 +5,6 @@ from aiogram.types import Message, KeyboardButton
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
 from aiogram.utils.i18n import gettext as _, lazy_gettext as __
 
-from bot.buttons.sub_menu import (
-    BACK_TEXT,
-    CHANGE_LANG,
-    NOTIF,
-    SETTINGS,
-)
 from bot.handlers.private.menu import start_handler
 
 settings_router = Router()

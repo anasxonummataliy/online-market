@@ -13,7 +13,6 @@ from aiogram.types import (
 from aiogram.utils.deep_linking import create_start_link
 from aiogram.utils.i18n import gettext as _, lazy_gettext as __
 
-from bot.buttons.sub_menu import MY_REFERRALS
 from database import User
 
 referrals_router = Router()
