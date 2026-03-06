@@ -29,7 +29,7 @@ def build_main_markup(user: User, locale):
             ],
         ]
         if user.is_admin:
-            markup.append([KeyboardButton(text=_("ADMIN🧑‍💼"))])
+            markup.append([KeyboardButton(text=_("Admin 🧑‍💼"))])
     return ReplyKeyboardBuilder(markup=markup).as_markup(resize_keyboard=True)
 
 

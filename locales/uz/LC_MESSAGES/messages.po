@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-03-06 15:23+0500\n"
+"POT-Creation-Date: 2026-03-06 15:59+0500\n"
 "PO-Revision-Date: 2026-03-06 15:20+0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: uz\n"
@@ -106,42 +106,43 @@ msgid "My Cart 🛒"
 msgstr "Mening savatim 🛒"
 
 #: bot/handlers/private/menu.py:32
-msgid "ADMIN🧑‍💼"
+#, fuzzy
+msgid "Admin 🧑‍💼"
 msgstr "Admin 🧑‍💼"
 
 #: bot/handlers/private/menu.py:42
 msgid "Welcome to our bot!😊"
 msgstr "Bizning botimizga xush kelibsiz!😊"
 
-#: bot/handlers/private/menu.py:52 bot/handlers/private/product.py:153
+#: bot/handlers/private/menu.py:52 bot/handlers/private/product.py:152
 msgid "Added to Cart 🛒"
 msgstr "Savatga qo‘shildi 🛒"
 
-#: bot/handlers/private/product.py:26
+#: bot/handlers/private/product.py:25
 msgid "Categories"
 msgstr "Kategoriyalar"
 
-#: bot/handlers/private/product.py:28
+#: bot/handlers/private/product.py:27
 msgid "No categories"
 msgstr "Kategoriyalar mavjud emas"
 
-#: bot/handlers/private/product.py:41
+#: bot/handlers/private/product.py:40
 msgid "⏮️ Previous"
 msgstr "⏮️ Oldingi"
 
-#: bot/handlers/private/product.py:45 bot/inlinemode/product.py:33
+#: bot/handlers/private/product.py:44 bot/inlinemode/product.py:33
 msgid "Add to Cart 🛒"
 msgstr "Savatga qo‘shish 🛒"
 
-#: bot/handlers/private/product.py:49
+#: bot/handlers/private/product.py:48
 msgid "Next ⏭️"
 msgstr "Keyingi ⏭️"
 
-#: bot/handlers/private/product.py:52
+#: bot/handlers/private/product.py:51
 msgid "⬅️ Back"
 msgstr "⬅️ Orqaga"
 
-#: bot/handlers/private/product.py:54
+#: bot/handlers/private/product.py:53
 #, python-brace-format
 msgid ""
 "<b>Name:</b> {name}\n"
@@ -154,19 +155,19 @@ msgstr ""
 "<b>Narxi:</b> {price} USD\n"
 "<b>Miqdori:</b> {quantity}"
 
-#: bot/handlers/private/product.py:114
+#: bot/handlers/private/product.py:113
 msgid "No product"
 msgstr "Mahsulot mavjud emas"
 
-#: bot/handlers/private/product.py:124
+#: bot/handlers/private/product.py:123
 msgid "Last product"
 msgstr "Oxirgi mahsulot"
 
-#: bot/handlers/private/product.py:138
+#: bot/handlers/private/product.py:137
 msgid "First product"
 msgstr "Birinchi mahsulot"
 
-#: bot/handlers/private/referrals.py:28
+#: bot/handlers/private/referrals.py:27
 #, python-brace-format
 msgid ""
 "<b>🎁 Your Referrals</b>\n"
@@ -177,15 +178,15 @@ msgstr ""
 "\n"
 "👥 Jami taklif qilgan foydalanuvchilar: <b>{count}</b>"
 
-#: bot/handlers/private/referrals.py:37
+#: bot/handlers/private/referrals.py:36
 msgid "📨 Share invite link"
 msgstr "📨 Taklif havolasini ulashish"
 
-#: bot/handlers/private/referrals.py:51
+#: bot/handlers/private/referrals.py:50
 msgid "Tap the button below to choose a chat and share your invite link."
 msgstr "Taklif havolangizni ulashish uchun quyidagi tugmani bosib chatni tanlang."
 
-#: bot/handlers/private/referrals.py:66
+#: bot/handlers/private/referrals.py:65
 #, python-brace-format
 msgid ""
 "🎉 <b>You are invited!</b>\n"
@@ -200,35 +201,35 @@ msgstr ""
 "\n"
 "🔗 <code>{link}</code>"
 
-#: bot/handlers/private/referrals.py:73
+#: bot/handlers/private/referrals.py:72
 msgid "Send invite link"
 msgstr "Taklif havolasini yuborish"
 
-#: bot/handlers/private/referrals.py:74
+#: bot/handlers/private/referrals.py:73
 msgid "Share your personal referral link"
 msgstr "Shaxsiy taklif havolangizni ulashing"
 
-#: bot/handlers/private/referrals.py:84
+#: bot/handlers/private/referrals.py:83
 msgid "🚀 Open bot"
 msgstr "🚀 Botni ochish"
 
-#: bot/handlers/private/settings.py:23
+#: bot/handlers/private/settings.py:17
 msgid "Change language 🌐"
 msgstr "Tilni o‘zgartirish 🌐"
 
-#: bot/handlers/private/settings.py:24
+#: bot/handlers/private/settings.py:18
 msgid "Notifications 🔔"
 msgstr "Bildirishnomalar 🔔"
 
-#: bot/handlers/private/admin/menu.py:25 bot/handlers/private/settings.py:26
+#: bot/handlers/private/admin/menu.py:25 bot/handlers/private/settings.py:20
 msgid "⏮️ Back"
 msgstr "⏮️ Orqaga"
 
-#: bot/handlers/private/settings.py:29
+#: bot/handlers/private/settings.py:23
 msgid "Settings"
 msgstr "Sozlamalar"
 
-#: bot/handlers/private/settings.py:39
+#: bot/handlers/private/settings.py:33
 msgid "🔔 You don’t have any notifications yet."
 msgstr "🔔 Sizda hozircha bildirishnomalar mavjud emas."
 
@@ -343,5 +344,4 @@ msgstr "Kategoriya ID raqam bo‘lishi kerak. Qaytadan kiriting."
 #: bot/handlers/private/admin/product.py:119
 msgid "Product added successfully. ✅"
 msgstr "Mahsulot muvaffaqiyatli qo‘shildi. ✅"
-
 
