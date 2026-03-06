@@ -344,3 +344,4 @@ msgstr "Kategoriya ID raqam bo‘lishi kerak. Qaytadan kiriting."
 msgid "Product added successfully. ✅"
 msgstr "Mahsulot muvaffaqiyatli qo‘shildi. ✅"
 
+
