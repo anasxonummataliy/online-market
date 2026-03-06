@@ -6,16 +6,7 @@ from aiogram.utils.i18n import get_i18n, gettext as _, lazy_gettext as __
 from aiogram.filters import CommandStart, CommandObject
 from aiogram.utils.keyboard import InlineKeyboardBuilder, ReplyKeyboardBuilder
 from aiogram.types import CallbackQuery, InlineKeyboardButton, KeyboardButton, Message
-from bot.buttons.sub_menu import (
-    ADMIN,
-    CATEGORIES,
-    CHANGE_LANG,
-    HELP,
-    MY_CART,
-    MY_REFERRALS,
-    SETTINGS,
-    WELCOME_TEXT,
-)
+
 from bot.utils import register_user
 from database import User
 
@@ -23,22 +14,32 @@ from database import User
 menu_router = Router()
 
 
-def build_main_markup(user: User):
-    markup = [
-        [KeyboardButton(text=_(CATEGORIES))],
-        [KeyboardButton(text=_(HELP)), KeyboardButton(text=_(MY_REFERRALS))],
-        [KeyboardButton(text=_(SETTINGS)), KeyboardButton(text=_(MY_CART))],
-    ]
-    if user.is_admin:
-        markup.append([KeyboardButton(text=_(ADMIN))])
+def build_main_markup(user: User, locale):
+    i18n = get_i18n()
+    with i18n.use_locale(locale):
+        markup = [
+            [KeyboardButton(text=_("Categories 📦"))],
+            [
+                KeyboardButton(text=_("HELP 📨")),
+                KeyboardButton(text=_("My Referrals 📋")),
+            ],
+            [
+                KeyboardButton(text=_("Settings ⚙️")),
+                KeyboardButton(text=_("My Cart 🛒")),
+            ],
+        ]
+        if user.is_admin:
+            markup.append([KeyboardButton(text=_("ADMIN🧑‍💼"))])
     return ReplyKeyboardBuilder(markup=markup).as_markup(resize_keyboard=True)
 
 
 async def send_main_menu(message: Message, user: User, state: FSMContext):
-    get_i18n().current_locale = user.locale
-
     await state.update_data(locale=user.locale)
-    await message.answer(_(WELCOME_TEXT), reply_markup=build_main_markup(user))
+
+    i18n = get_i18n()
+    with i18n.use_locale(user.locale):
+        markup = build_main_markup(user, user.locale)
+        await message.answer(_("Welcome to our bot!😊"), reply_markup=markup)
 
 
 @menu_router.message(CommandStart(deep_link=True, deep_link_encoded=True))
@@ -68,7 +69,7 @@ async def _start(msg: Message, state: FSMContext, parent_id: Optional[int] = Non
     await send_main_menu(msg, user, state)
 
 
-@menu_router.message(F.text == __(CHANGE_LANG))
+@menu_router.message(F.text == __("Change language 🌐"))
 async def language_handler(message: Message):
     ikm = InlineKeyboardBuilder()
     ikm.row(

@@ -1,17 +1,16 @@
 from aiogram.utils.i18n import lazy_gettext as __
 
-
-MY_REFERRALS = "My Referrals 📋"
-HELP = "Help 📨"
-CATEGORIES = "Categories 📦"
-SETTINGS = "Settings ⚙️"
-WELCOME_TEXT = "Welcome to our bot! 😊"
-ADMIN = "Admin 🧑‍💼"
-BACK_TEXT = "⏮️ Back"
-MY_CART = "My Cart 🛒"
-ADD_CATG = "Add category"
-SHOW_CATG = "Show categories"
-SHOW_PRODUCT = "Show products"
-ADD_PRODUCT = "Add product"
-CHANGE_LANG = "Change language 🇬🇧 🇺🇿"
-NOTIF = "Notification 📢"
+MY_REFERRALS = __("My Referrals 📋")
+HELP = __("HELP 📨")
+CATEGORIES = __("Categories 📦")
+SETTINGS = __("Settings ⚙️")
+WELCOME_TEXT = __("Welcome to our bot!😊")
+ADMIN = __("ADMIN🧑‍💼")
+BACK_TEXT = __("⏮️ Back")
+MY_CART = __("My cart 🛒")
+ADD_CATG = __("Add category")
+SHOW_CATG = __("Show categories")
+SHOW_PRODUCT = __("Show products")
+ADD_PRODUCT = __("Add product")
+CHANGE_LANG = __("Change language 🇬🇧 🇺🇿")
+NOTIF = __("Notification 📢")

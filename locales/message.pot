@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-03-06 10:36+0500\n"
+"POT-Creation-Date: 2026-03-06 15:23+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,17 +17,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: bot/handlers/private/cart.py:16 bot/handlers/private/cart.py:116
+#: bot/handlers/private/cart.py:15 bot/handlers/private/cart.py:115
 msgid "Your cart is empty ❌"
 msgstr ""
 
-#: bot/handlers/private/cart.py:18
+#: bot/handlers/private/cart.py:17
 msgid ""
 "🛒 Your cart:\n"
 "\n"
 msgstr ""
 
-#: bot/handlers/private/cart.py:27
+#: bot/handlers/private/cart.py:26
 #, python-brace-format
 msgid ""
 "📦 {name}\n"
@@ -36,47 +36,75 @@ msgid ""
 "\n"
 msgstr ""
 
-#: bot/handlers/private/cart.py:53
+#: bot/handlers/private/cart.py:52
 #, python-brace-format
 msgid ""
 "\n"
 "💰 Total: {total} ＄"
 msgstr ""
 
-#: bot/handlers/private/cart.py:55
+#: bot/handlers/private/cart.py:54
 msgid "🗑 Clear cart"
 msgstr ""
 
-#: bot/handlers/private/cart.py:57
+#: bot/handlers/private/cart.py:56
 msgid "✅ Checkout"
 msgstr ""
 
-#: bot/handlers/private/cart.py:76
+#: bot/handlers/private/cart.py:75
 msgid "✅ Added +1"
 msgstr ""
 
-#: bot/handlers/private/cart.py:82 bot/handlers/private/cart.py:107
+#: bot/handlers/private/cart.py:81 bot/handlers/private/cart.py:106
 #, python-brace-format
 msgid "❌ Error: {error}"
 msgstr ""
 
-#: bot/handlers/private/cart.py:94
+#: bot/handlers/private/cart.py:93
 msgid "✅ Removed -1"
 msgstr ""
 
-#: bot/handlers/private/cart.py:104
+#: bot/handlers/private/cart.py:103
 msgid "❌ Product not found"
 msgstr ""
 
-#: bot/handlers/private/cart.py:117
+#: bot/handlers/private/cart.py:116
 msgid "🗑 Cart cleared"
 msgstr ""
 
-#: bot/handlers/private/cart.py:120
+#: bot/handlers/private/cart.py:119
 msgid "❌ Cart not found"
 msgstr ""
 
-#: bot/handlers/private/menu.py:51 bot/handlers/private/product.py:153
+#: bot/handlers/private/menu.py:21
+msgid "Categories 📦"
+msgstr ""
+
+#: bot/handlers/private/menu.py:23
+msgid "HELP 📨"
+msgstr ""
+
+#: bot/handlers/private/menu.py:24
+msgid "My Referrals 📋"
+msgstr ""
+
+#: bot/handlers/private/menu.py:27
+msgid "Settings ⚙️"
+msgstr ""
+
+#: bot/handlers/private/menu.py:28
+msgid "My Cart 🛒"
+msgstr ""
+
+#: bot/handlers/private/menu.py:32
+msgid "ADMIN🧑‍💼"
+msgstr ""
+
+#: bot/handlers/private/menu.py:42
+msgid "Welcome to our bot!😊"
+msgstr ""
+
+#: bot/handlers/private/menu.py:52 bot/handlers/private/product.py:153
 msgid "Added to Cart 🛒"
 msgstr ""
 
@@ -98,6 +126,10 @@ msgstr ""
 
 #: bot/handlers/private/product.py:49
 msgid "Next ⏭️"
+msgstr ""
+
+#: bot/handlers/private/product.py:52
+msgid "⬅️ Back"
 msgstr ""
 
 #: bot/handlers/private/product.py:54
@@ -159,123 +191,135 @@ msgstr ""
 msgid "🚀 Open bot"
 msgstr ""
 
-#: bot/handlers/private/settings.py:30
+#: bot/handlers/private/settings.py:23
+msgid "Change language 🌐"
+msgstr ""
+
+#: bot/handlers/private/settings.py:24
+msgid "Notifications 🔔"
+msgstr ""
+
+#: bot/handlers/private/admin/menu.py:25 bot/handlers/private/settings.py:26
+msgid "⏮️ Back"
+msgstr ""
+
+#: bot/handlers/private/settings.py:29
 msgid "Settings"
 msgstr ""
 
-#: bot/handlers/private/settings.py:40
+#: bot/handlers/private/settings.py:39
 msgid "🔔 You don’t have any notifications yet."
 msgstr ""
 
-#: bot/handlers/private/admin/category.py:25
+#: bot/handlers/private/admin/category.py:24
 msgid "Enter category name."
 msgstr ""
 
-#: bot/handlers/private/admin/category.py:33
+#: bot/handlers/private/admin/category.py:32
 msgid "Category added successfully."
 msgstr ""
 
-#: bot/handlers/private/admin/category.py:41
+#: bot/handlers/private/admin/category.py:40
 msgid "No categories available."
 msgstr ""
 
-#: bot/handlers/private/admin/category.py:52
+#: bot/handlers/private/admin/category.py:51
 msgid "Select category to change name:"
 msgstr ""
 
-#: bot/handlers/private/admin/category.py:64
+#: bot/handlers/private/admin/category.py:63
 msgid "Rename ✍️"
 msgstr ""
 
-#: bot/handlers/private/admin/category.py:69
+#: bot/handlers/private/admin/category.py:68
 msgid "Delete 🛒"
 msgstr ""
 
-#: bot/handlers/private/admin/category.py:73
+#: bot/handlers/private/admin/category.py:72
 msgid "Which do you want to delete or rename?"
 msgstr ""
 
-#: bot/handlers/private/admin/category.py:82
+#: bot/handlers/private/admin/category.py:81
 msgid "Category deleted successfully."
 msgstr ""
 
-#: bot/handlers/private/admin/category.py:89
+#: bot/handlers/private/admin/category.py:88
 msgid "Enter new category name."
 msgstr ""
 
-#: bot/handlers/private/admin/category.py:111
+#: bot/handlers/private/admin/category.py:110
 msgid "Category name changed successfully. ✅"
 msgstr ""
 
 #: bot/handlers/private/admin/menu.py:18
-msgid "Add product"
-msgstr ""
-
-#: bot/handlers/private/admin/menu.py:18
-msgid "Show products"
+msgid "Add product 📂"
 msgstr ""
 
 #: bot/handlers/private/admin/menu.py:19
-msgid "Add category"
+msgid "Show products 📂"
 msgstr ""
 
-#: bot/handlers/private/admin/menu.py:19
-msgid "Show categories"
+#: bot/handlers/private/admin/menu.py:22
+msgid "Add category 📂"
 msgstr ""
 
 #: bot/handlers/private/admin/menu.py:23
+msgid "Show categories 📂"
+msgstr ""
+
+#: bot/handlers/private/admin/menu.py:28
 msgid "Menu"
 msgstr ""
 
-#: bot/handlers/private/admin/product.py:23
+#: bot/handlers/private/admin/product.py:22
 msgid "No products available."
 msgstr ""
 
-#: bot/handlers/private/admin/product.py:25
+#: bot/handlers/private/admin/product.py:24
 msgid "All Products:\n"
 msgstr ""
 
-#: bot/handlers/private/admin/product.py:35
+#: bot/handlers/private/admin/product.py:34
 msgid "Enter product name."
 msgstr ""
 
-#: bot/handlers/private/admin/product.py:43
+#: bot/handlers/private/admin/product.py:42
 msgid "Enter product description."
 msgstr ""
 
-#: bot/handlers/private/admin/product.py:51
+#: bot/handlers/private/admin/product.py:50
 msgid "Enter product price."
 msgstr ""
 
-#: bot/handlers/private/admin/product.py:58
+#: bot/handlers/private/admin/product.py:57
 msgid "Price must be a number. Please enter again."
 msgstr ""
 
-#: bot/handlers/private/admin/product.py:62
+#: bot/handlers/private/admin/product.py:61
 msgid "Enter product quantity."
 msgstr ""
 
-#: bot/handlers/private/admin/product.py:69
+#: bot/handlers/private/admin/product.py:68
 msgid "Quantity must be a number. Please enter again."
 msgstr ""
 
-#: bot/handlers/private/admin/product.py:73
+#: bot/handlers/private/admin/product.py:72
 msgid "Send product image."
 msgstr ""
 
-#: bot/handlers/private/admin/product.py:84
+#: bot/handlers/private/admin/product.py:83
 msgid "No categories available. Please add a category first."
 msgstr ""
 
-#: bot/handlers/private/admin/product.py:94
+#: bot/handlers/private/admin/product.py:93
 msgid "Select category:"
 msgstr ""
 
-#: bot/handlers/private/admin/product.py:102
+#: bot/handlers/private/admin/product.py:101
 msgid "Category ID must be a number. Please enter again."
 msgstr ""
 
-#: bot/handlers/private/admin/product.py:120
+#: bot/handlers/private/admin/product.py:119
 msgid "Product added successfully. ✅"
 msgstr ""
 

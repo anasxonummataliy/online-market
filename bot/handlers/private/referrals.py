@@ -19,7 +19,7 @@ from database import User
 referrals_router = Router()
 
 
-@referrals_router.message(F.text == __(MY_REFERRALS))
+@referrals_router.message(F.text == __("My Referrals 📋"))
 async def my_referrals(msg: Message, bot: Bot):
     count = await User.get_referrals_count(msg.from_user.id)
 

@@ -10,7 +10,7 @@ from database.models import Category, Product, User
 product_router = Router()
 
 
-@product_router.message(F.text == __(CATEGORIES))
+@product_router.message(F.text == __("Categories 📦"))
 async def get_all_categories(message: Message):
     categories = await Category.get_all()
     ikm = InlineKeyboardBuilder()
@@ -49,7 +49,7 @@ def make_product(product: Product, category_id):
             text=_("Next ⏭️"), callback_data=f"product_next_{product.id}_{category_id}"
         ),
     )
-    ikm.row(InlineKeyboardButton(text=_(BACK_TEXT), callback_data="back_to_categotry"))
+    ikm.row(InlineKeyboardButton(text=_("⬅️ Back"), callback_data="back_to_categotry"))
     caption = _(
         "<b>Name:</b> {name}\n"
         "<b>Description:</b> {description}\n"
