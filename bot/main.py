@@ -36,7 +36,7 @@ async def shutdown(bot: Bot):
 
 
 async def main():
-    i18n = I18n(path="locales", default_locale="en")
+    i18n = I18n(path="locales", default_locale="en", domain="messages")
     dp.update.outer_middleware(FSMI18nMiddleware(i18n))
     dp.include_routers(main_router)
     dp.include_routers(inline_router)
