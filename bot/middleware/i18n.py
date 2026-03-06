@@ -1,3 +1,4 @@
+from builtins import str
 from typing import Any, Dict
 from aiogram import BaseMiddleware
 from aiogram.fsm.context import FSMContext

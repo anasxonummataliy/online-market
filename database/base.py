@@ -56,7 +56,7 @@ class AsyncDatabaseSession:
             await conn.run_sync(Base.metadata.drop_all)
 
 
-db = AsyncDatabaseSession()
+db: AsyncSession = AsyncDatabaseSession()
 db.init()
 
 
@@ -103,7 +103,7 @@ class AbstractClass:
 
     @classmethod
     async def update(
-        cls, _id: Optional[int] = None, telegram_id: Optional[int] = None, **kwargs
+        cls, _id: Optional[int] = None, tg_id: Optional[int] = None, **kwargs
     ):
         if _id is not None:
             query = (
@@ -115,7 +115,7 @@ class AbstractClass:
         else:
             query = (
                 sqlalchemy_update(cls)
-                .where(cls.tg_id == telegram_id)
+                .where(cls.tg_id == tg_id)
                 .values(**kwargs)
                 .execution_options(synchronize_session="fetch")
             )

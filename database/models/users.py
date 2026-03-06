@@ -1,7 +1,8 @@
+from builtins import str
 from enum import Enum
 from typing import TYPE_CHECKING
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import BigInteger, String, Enum as SqlEnum, ForeignKey, select
+from sqlalchemy import BigInteger, String, Enum as SqlEnum, ForeignKey, func, select
 
 from database.base import db, TimeBasedModel
 
@@ -34,6 +35,16 @@ class User(TimeBasedModel):
     @classmethod
     async def get_user(cls, tg_id: int):
         return (await db.execute(select(cls).where(cls.tg_id == tg_id))).scalar()
+
+    @classmethod
+    async def get_referrals_count(cls, tg_id: int) -> int:
+        user = await cls.get_user(tg_id)
+        if not user:
+            return 0
+
+        stmt = select(func.count(cls.id)).where(cls.parent_user_id == user.id)
+        result = await db.execute(stmt)
+        return result.scalar_one() or 0
 
     @classmethod
     async def add_cart(cls, tg_id: int, product_id: int, quantity: int = 1):

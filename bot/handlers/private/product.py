@@ -4,13 +4,13 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 from aiogram.types import CallbackQuery, FSInputFile, Message, InlineKeyboardButton
 from aiogram.utils.i18n import gettext as _
 
-from bot.buttons.sub_menu import BACK_TEXT, CATEGORIES
+from bot.buttons.sub_menu import BACK_TEXT, CATEGORIES_FILTER
 from database.models import Category, Product, User
 
 product_router = Router()
 
 
-@product_router.message(F.text == CATEGORIES)
+@product_router.message(F.text == CATEGORIES_FILTER)
 async def get_all_categories(message: Message):
     categories = await Category.get_all()
     ikm = InlineKeyboardBuilder()

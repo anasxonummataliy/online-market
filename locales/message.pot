@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-02-27 09:16+0500\n"
+"POT-Creation-Date: 2026-03-06 10:36+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -76,7 +76,7 @@ msgstr ""
 msgid "❌ Cart not found"
 msgstr ""
 
-#: bot/handlers/private/menu.py:34 bot/handlers/private/product.py:153
+#: bot/handlers/private/menu.py:51 bot/handlers/private/product.py:153
 msgid "Added to Cart 🛒"
 msgstr ""
 
@@ -121,15 +121,50 @@ msgstr ""
 msgid "First product"
 msgstr ""
 
-#: bot/handlers/private/referrals.py:18
+#: bot/handlers/private/referrals.py:28
 #, python-brace-format
 msgid ""
-"✨ Number of people you invited: <b>{n}</b>\n"
-"🔗 Invitation link: <a href=\"{link}\">Click to enter</a>"
+"<b>🎁 Your Referrals</b>\n"
+"\n"
+"👥 Total invited users: <b>{count}</b>"
+msgstr ""
+
+#: bot/handlers/private/referrals.py:37
+msgid "📨 Share invite link"
+msgstr ""
+
+#: bot/handlers/private/referrals.py:51
+msgid "Tap the button below to choose a chat and share your invite link."
+msgstr ""
+
+#: bot/handlers/private/referrals.py:66
+#, python-brace-format
+msgid ""
+"🎉 <b>You are invited!</b>\n"
+"\n"
+"Join our bot using my personal invite link below.\n"
+"\n"
+"🔗 <code>{link}</code>"
+msgstr ""
+
+#: bot/handlers/private/referrals.py:73
+msgid "Send invite link"
+msgstr ""
+
+#: bot/handlers/private/referrals.py:74
+msgid "Share your personal referral link"
+msgstr ""
+
+#: bot/handlers/private/referrals.py:84
+msgid "🚀 Open bot"
 msgstr ""
 
 #: bot/handlers/private/settings.py:30
 msgid "Settings"
+msgstr ""
+
+#: bot/handlers/private/settings.py:40
+msgid "🔔 You don’t have any notifications yet."
 msgstr ""
 
 #: bot/handlers/private/admin/category.py:25
@@ -172,23 +207,23 @@ msgstr ""
 msgid "Category name changed successfully. ✅"
 msgstr ""
 
-#: bot/handlers/private/admin/menu.py:17
+#: bot/handlers/private/admin/menu.py:18
 msgid "Add product"
 msgstr ""
 
-#: bot/handlers/private/admin/menu.py:17
+#: bot/handlers/private/admin/menu.py:18
 msgid "Show products"
 msgstr ""
 
-#: bot/handlers/private/admin/menu.py:18
+#: bot/handlers/private/admin/menu.py:19
 msgid "Add category"
 msgstr ""
 
-#: bot/handlers/private/admin/menu.py:18
+#: bot/handlers/private/admin/menu.py:19
 msgid "Show categories"
 msgstr ""
 
-#: bot/handlers/private/admin/menu.py:22
+#: bot/handlers/private/admin/menu.py:23
 msgid "Menu"
 msgstr ""
 
