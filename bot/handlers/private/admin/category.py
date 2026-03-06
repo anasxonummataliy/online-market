@@ -1,13 +1,13 @@
 from aiogram import Router, F
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, ReplyKeyboardRemove, CallbackQuery
-from aiogram.utils.i18n import gettext as _
+from aiogram.utils.i18n import gettext as _, lazy_gettext as __
 from aiogram.utils.keyboard import (
     InlineKeyboardBuilder,
     InlineKeyboardButton,
 )
 
-from bot.buttons.sub_menu import ADD_CATG_FILTER, SHOW_CATG_FILTER
+from bot.buttons.sub_menu import ADD_CATG, SHOW_CATG
 from bot.filters.admin import IsAdmin
 from database.models import Category
 from bot.handlers.private import start_handler
@@ -18,7 +18,7 @@ admin_category = Router()
 admin_category.message.filter(IsAdmin())
 
 
-@admin_category.message(F.text == ADD_CATG_FILTER)
+@admin_category.message(F.text == __(ADD_CATG))
 async def add_category(message: Message, state: FSMContext):
     await state.set_state(CategoryState.name)
     rkm = ReplyKeyboardRemove()
@@ -34,7 +34,7 @@ async def add_category_name(message: Message, state: FSMContext):
     await start_handler(message)
 
 
-@admin_category.message(F.text == SHOW_CATG_FILTER)
+@admin_category.message(F.text == __(SHOW_CATG))
 async def all_category(message: Message):
     categories = await Category.get_all()
     if not categories:

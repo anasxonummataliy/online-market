@@ -11,15 +11,15 @@ from aiogram.types import (
     SwitchInlineQueryChosenChat,
 )
 from aiogram.utils.deep_linking import create_start_link
-from aiogram.utils.i18n import gettext as _
+from aiogram.utils.i18n import gettext as _, lazy_gettext as __
 
-from bot.buttons.sub_menu import MY_REFERRALS_FILTER
+from bot.buttons.sub_menu import MY_REFERRALS
 from database import User
 
 referrals_router = Router()
 
 
-@referrals_router.message(F.text == MY_REFERRALS_FILTER)
+@referrals_router.message(F.text == __(MY_REFERRALS))
 async def my_referrals(msg: Message, bot: Bot):
     count = await User.get_referrals_count(msg.from_user.id)
 

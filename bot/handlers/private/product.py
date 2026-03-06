@@ -2,15 +2,15 @@ from aiogram import Router, F
 from aiogram.enums.parse_mode import ParseMode
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from aiogram.types import CallbackQuery, FSInputFile, Message, InlineKeyboardButton
-from aiogram.utils.i18n import gettext as _
+from aiogram.utils.i18n import gettext as _, lazy_gettext as __
 
-from bot.buttons.sub_menu import BACK_TEXT, CATEGORIES_FILTER
+from bot.buttons.sub_menu import BACK_TEXT, CATEGORIES
 from database.models import Category, Product, User
 
 product_router = Router()
 
 
-@product_router.message(F.text == CATEGORIES_FILTER)
+@product_router.message(F.text == __(CATEGORIES))
 async def get_all_categories(message: Message):
     categories = await Category.get_all()
     ikm = InlineKeyboardBuilder()

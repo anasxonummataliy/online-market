@@ -2,14 +2,14 @@ from builtins import str
 from typing import Optional
 from aiogram import Router, F
 from aiogram.fsm.context import FSMContext
-from aiogram.utils.i18n import get_i18n, gettext as _
+from aiogram.utils.i18n import get_i18n, gettext as _, lazy_gettext as __
 from aiogram.filters import CommandStart, CommandObject
 from aiogram.utils.keyboard import InlineKeyboardBuilder, ReplyKeyboardBuilder
 from aiogram.types import CallbackQuery, InlineKeyboardButton, KeyboardButton, Message
 from bot.buttons.sub_menu import (
     ADMIN,
     CATEGORIES,
-    CHANGE_LANG_FILTER,
+    CHANGE_LANG,
     HELP,
     MY_CART,
     MY_REFERRALS,
@@ -30,7 +30,7 @@ def build_main_markup(user: User):
         [KeyboardButton(text=_(SETTINGS)), KeyboardButton(text=_(MY_CART))],
     ]
     if user.is_admin:
-        markup.append([KeyboardButton(text=str(ADMIN))])
+        markup.append([KeyboardButton(text=_(ADMIN))])
     return ReplyKeyboardBuilder(markup=markup).as_markup(resize_keyboard=True)
 
 
@@ -68,7 +68,7 @@ async def _start(msg: Message, state: FSMContext, parent_id: Optional[int] = Non
     await send_main_menu(msg, user, state)
 
 
-@menu_router.message(F.text == CHANGE_LANG_FILTER)
+@menu_router.message(F.text == __(CHANGE_LANG))
 async def language_handler(message: Message):
     ikm = InlineKeyboardBuilder()
     ikm.row(
