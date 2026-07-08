@@ -52,8 +52,8 @@ class WebConfig:
 
 @dataclass
 class BotConfig:
-    TOKEN = os.getenv("BOT_TOKEN") or ""
-    ADMIN = os.getenv("ADMIN") or ""
+    TOKEN: str = os.getenv("BOT_TOKEN", "")
+    ADMIN: str = os.getenv("ADMIN", "")
 
 
 @dataclass
