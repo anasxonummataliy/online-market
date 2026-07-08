@@ -9,6 +9,7 @@ from aiogram.utils.i18n import FSMI18nMiddleware, I18n
 from bot.config import conf
 from database import db
 from database.models import User
+from bot.handlers.private import main_router
 
 dp = Dispatcher()
 bot = Bot(conf.bot.TOKEN)
@@ -57,19 +58,10 @@ async def start_handler(message: Message):
         await message.answer("Siz admin emassiz.")
 
 
-def setup_routers():
-    from bot.handlers.private.admin.menu import admin_menu
-    from bot.handlers.private.admin.category import admin_category
-    from bot.handlers.private.admin.product import admin_product
-    dp.include_router(admin_menu)
-    dp.include_router(admin_category)
-    dp.include_router(admin_product)
-
-
 async def main():
-    setup_routers()
     i18n = I18n(path="locales", default_locale="en", domain="messages")
     dp.update.outer_middleware(FSMI18nMiddleware(i18n))
+    dp.include_router(main_router)
     await dp.start_polling(bot)
 
 
