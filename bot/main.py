@@ -33,7 +33,8 @@ async def start_handler(message: Message):
 
     user = await User.get_user(tg_id=tg_id)
     if not user:
-        is_admin = str(tg_id) == str(conf.bot.ADMIN)
+        admin_id = int(conf.bot.ADMIN) if conf.bot.ADMIN else None
+        is_admin = admin_id is not None and tg_id == admin_id
         user = await User.create(
             tg_id=tg_id,
             fullname=message.from_user.full_name,
@@ -41,6 +42,12 @@ async def start_handler(message: Message):
             type=User.Type.ADMIN if is_admin else User.Type.USER,
             locale="en",
         )
+    else:
+        # DB dagi user USER bo'lsa, lekin .env da ADMIN ID mos kelsa — adminlikka o'tkazamiz
+        admin_id = int(conf.bot.ADMIN) if conf.bot.ADMIN else None
+        if admin_id and tg_id == admin_id and not user.is_admin:
+            await User.update(tg_id=tg_id, type=User.Type.ADMIN)
+            user = await User.get_user(tg_id=tg_id)
 
     if user.is_admin:
         markup = ReplyKeyboardMarkup(
