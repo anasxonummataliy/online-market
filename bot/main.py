@@ -2,13 +2,11 @@ import sys
 import asyncio
 import logging
 from aiogram import Bot, Dispatcher
-from aiogram.filters import CommandStart
-from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton
-from aiogram.utils.i18n import FSMI18nMiddleware, I18n
+from aiogram.utils.i18n import I18n
 
 from bot.config import conf
+from bot.middleware.i18n import DBi18nMiddleware
 from database import db
-from database.models import User
 from bot.handlers.private import main_router
 
 dp = Dispatcher()
@@ -27,40 +25,9 @@ async def shutdown(bot: Bot):
     await bot.send_message(chat_id=conf.bot.ADMIN, text="Bot stopped. 🛑")
 
 
-@dp.message(CommandStart())
-async def start_handler(message: Message):
-    tg_id = message.from_user.id
-
-    user = await User.get_user(tg_id=tg_id)
-    if not user:
-        admin_id = int(conf.bot.ADMIN) if conf.bot.ADMIN else None
-        is_admin = admin_id is not None and tg_id == admin_id
-        user = await User.create(
-            tg_id=tg_id,
-            fullname=message.from_user.full_name,
-            username=message.from_user.username,
-            type=User.Type.ADMIN if is_admin else User.Type.USER,
-            locale="en",
-        )
-    else:
-        admin_id = int(conf.bot.ADMIN) if conf.bot.ADMIN else None
-        if admin_id and tg_id == admin_id and not user.is_admin:
-            await User.update(tg_id=tg_id, type=User.Type.ADMIN)
-            user = await User.get_user(tg_id=tg_id)
-
-    if user.is_admin:
-        markup = ReplyKeyboardMarkup(
-            keyboard=[[KeyboardButton(text="Admin 🧑‍💼")]],
-            resize_keyboard=True,
-        )
-        await message.answer("Xush kelibsiz, Admin! 👋", reply_markup=markup)
-    else:
-        await message.answer("Siz admin emassiz.")
-
-
 async def main():
     i18n = I18n(path="locales", default_locale="en", domain="messages")
-    dp.update.outer_middleware(FSMI18nMiddleware(i18n))
+    dp.update.outer_middleware(DBi18nMiddleware(i18n))
     dp.include_router(main_router)
     await dp.start_polling(bot)
 
