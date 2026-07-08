@@ -6,17 +6,30 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
+# @dataclass
+# class PostgresConfig:
+#     PG_USER: str = os.getenv("PG_USER", "")
+#     PG_PASS: str = os.getenv("PG_PASS", "")
+#     PG_HOST: str = os.getenv("PG_HOST", "localhost")
+#     PG_PORT: int = int(os.getenv("PG_PORT", "5432"))
+#     PG_DB: str = os.getenv("PG_DB", "")
+#
+#     @property
+#     def db_url(self) -> str:
+#         return f"postgresql+asyncpg://{self.PG_USER}:{self.PG_PASS}@{self.PG_HOST}:{self.PG_PORT}/{self.PG_DB}"
+
+
 @dataclass
-class PostgresConfig:
-    PG_USER: str = os.getenv("PG_USER", "")
-    PG_PASS: str = os.getenv("PG_PASS", "")
-    PG_HOST: str = os.getenv("PG_HOST", "localhost")
-    PG_PORT: int = int(os.getenv("PG_PORT", "5432"))
-    PG_DB: str = os.getenv("PG_DB", "")
+class SQLiteConfig:
+    DB_PATH: str = os.getenv("SQLITE_PATH", "database.db")
 
     @property
     def db_url(self) -> str:
-        return f"postgresql+asyncpg://{self.PG_USER}:{self.PG_PASS}@{self.PG_HOST}:{self.PG_PORT}/{self.PG_DB}"
+        return f"sqlite+aiosqlite:///{self.DB_PATH}"
+
+    @property
+    def sync_url(self) -> str:
+        return f"sqlite:///{self.DB_PATH}"
 
 
 @dataclass
@@ -42,7 +55,8 @@ class BotConfig:
 
 @dataclass
 class Configuration:
-    db = PostgresConfig()
+    db = SQLiteConfig()
+    # db = PostgresConfig()  # keyinchalik PostgreSQL uchun
     redis = RedisConfig()
     bot = BotConfig()
     web = WebConfig()

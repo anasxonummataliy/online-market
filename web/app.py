@@ -18,7 +18,7 @@ middleware = [Middleware(SessionMiddleware, secret_key=conf.web.SECRET_KEY)]
 app = Starlette(middleware=middleware)
 
 sync_engine = create_engine(
-    conf.db.db_url.replace("+asyncpg", ""), echo=False, pool_pre_ping=True
+    conf.db.sync_url, echo=False, pool_pre_ping=True
 )
 admin = Admin(
     sync_engine,

@@ -1,7 +1,6 @@
 from typing import TYPE_CHECKING
 from sqlalchemy_file import ImageField
-from sqlalchemy.types import BigInteger
-from sqlalchemy import Float, String, select
+from sqlalchemy import Float, String, select, Integer
 from sqlalchemy.orm.properties import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship, selectinload
 
@@ -28,9 +27,9 @@ class Product(TimeBasedModel):
     image: Mapped[str] = mapped_column(
         ImageField(thumbnail_size=(128, 128)), nullable=True
     )
-    quantity: Mapped[int] = mapped_column(BigInteger)
+    quantity: Mapped[int] = mapped_column(Integer)
     category_id: Mapped[int] = mapped_column(
-        BigInteger, ForeignKey("categories.id", ondelete="CASCADE")
+        Integer, ForeignKey("categories.id", ondelete="CASCADE")
     )
 
     category: Mapped["Category"] = relationship("Category", back_populates="products")
@@ -54,7 +53,7 @@ class Product(TimeBasedModel):
 
 class Cart(BaseModel):
     user_id: Mapped[int] = mapped_column(
-        BigInteger, ForeignKey("users.id", ondelete="CASCADE")
+        Integer, ForeignKey("users.id", ondelete="CASCADE")
     )
 
     user: Mapped["User"] = relationship("User", back_populates="carts")
@@ -65,11 +64,11 @@ class Cart(BaseModel):
 
 class CartItem(BaseModel):
     product_id: Mapped[int] = mapped_column(
-        BigInteger, ForeignKey("products.id", ondelete="CASCADE")
+        Integer, ForeignKey("products.id", ondelete="CASCADE")
     )
-    quantity: Mapped[int] = mapped_column(BigInteger)
+    quantity: Mapped[int] = mapped_column(Integer)
     cart_id: Mapped[int] = mapped_column(
-        BigInteger, ForeignKey("carts.id", ondelete="CASCADE")
+        Integer, ForeignKey("carts.id", ondelete="CASCADE")
     )
 
     product: Mapped["Product"] = relationship("Product", back_populates="cart_items")

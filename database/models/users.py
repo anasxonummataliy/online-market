@@ -2,7 +2,7 @@ from builtins import str
 from enum import Enum
 from typing import TYPE_CHECKING
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import BigInteger, String, Enum as SqlEnum, ForeignKey, func, select
+from sqlalchemy import Integer, String, Enum as SqlEnum, ForeignKey, func, select
 
 from database.base import db, TimeBasedModel
 
@@ -15,14 +15,14 @@ class User(TimeBasedModel):
         ADMIN = "admin"
         USER = "user"
 
-    tg_id: Mapped[int] = mapped_column(BigInteger, unique=True)
+    tg_id: Mapped[int] = mapped_column(Integer, unique=True)
     fullname: Mapped[str] = mapped_column(String)
     username: Mapped[str] = mapped_column(String, nullable=True, unique=True)
     phone_number: Mapped[str] = mapped_column(String, nullable=True, unique=True)
     type: Mapped[SqlEnum] = mapped_column(SqlEnum(Type), default=Type.USER)
     locale: Mapped[str] = mapped_column(String, nullable=True)
     parent_user_id: Mapped[int | None] = mapped_column(
-        BigInteger, ForeignKey("users.id", ondelete="SET NULL"), nullable=True
+        Integer, ForeignKey("users.id", ondelete="SET NULL"), nullable=True
     )
 
     carts: Mapped[list["Cart"]] = relationship("Cart", back_populates="user")

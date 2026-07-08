@@ -2,7 +2,7 @@ from enum import Enum
 from typing import TYPE_CHECKING
 from sqlalchemy.orm.properties import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import BigInteger, Integer, Enum as SQLEnum, Float
+from sqlalchemy import Integer, Enum as SQLEnum, Float
 
 from database.base import TimeBasedModel
 
@@ -18,7 +18,7 @@ class Order(TimeBasedModel):
 
     user: Mapped["User"] = relationship("User", back_populates="orders")
     user_id: Mapped[int] = mapped_column(
-        BigInteger,
+        Integer,
         ForeignKey("users.id", ondelete="CASCADE"),
     )
 
@@ -31,11 +31,11 @@ class Order(TimeBasedModel):
 class OrderItem(TimeBasedModel):
     order: Mapped["Order"] = relationship("Order", back_populates="order_items")
     order_id: Mapped[int] = mapped_column(
-        BigInteger, ForeignKey("orders.id", ondelete="CASCADE")
+        Integer, ForeignKey("orders.id", ondelete="CASCADE")
     )
     product: Mapped["Product"] = relationship("Product", back_populates="order_items")
     product_id: Mapped[int] = mapped_column(
-        BigInteger, ForeignKey("products.id", ondelete="CASCADE")
+        Integer, ForeignKey("products.id", ondelete="CASCADE")
     )
 
     price: Mapped[float] = mapped_column(Float)

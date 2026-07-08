@@ -2,7 +2,7 @@ import logging
 from typing import Optional
 from datetime import datetime
 from sqlalchemy.orm.attributes import Mapped
-from sqlalchemy.types import BigInteger, DateTime
+from sqlalchemy.types import Integer, DateTime
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncAttrs, AsyncSession
 from sqlalchemy.orm import DeclarativeBase, declared_attr, mapped_column, sessionmaker
 from sqlalchemy import (
@@ -67,7 +67,7 @@ class AbstractClass:
             await db.commit()
         except Exception as e:
             await db.rollback()
-            logging.info(f"postgres commit error: {e}")
+            logging.info(f"db commit error: {e}")
 
     @classmethod
     async def get_all(cls):
@@ -172,7 +172,7 @@ class AbstractClass:
 
 class BaseModel(Base, AbstractClass):
     __abstract__ = True
-    id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
 
 
 class TimeBasedModel(BaseModel):
