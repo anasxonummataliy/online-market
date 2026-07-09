@@ -13,9 +13,9 @@ admin_menu.callback_query.filter(IsAdmin())
 def admin_main_markup():
     return ReplyKeyboardMarkup(
         keyboard=[
-            [KeyboardButton(text="Add product 📂"), KeyboardButton(text="Show products 📂")],
-            [KeyboardButton(text="Add category 📂"), KeyboardButton(text="Show categories 📂")],
-            [KeyboardButton(text="⏮️ Back")],
+            [KeyboardButton(text=_("Add product 📂")), KeyboardButton(text=_("Show products 📂"))],
+            [KeyboardButton(text=_("Add category 📂")), KeyboardButton(text=_("Show categories 📂"))],
+            [KeyboardButton(text=_("⏮️ Back"))],
         ],
         resize_keyboard=True,
     )
@@ -29,7 +29,7 @@ async def admin_menu_handler(message: Message):
 @admin_menu.message(F.text == __("⏮️ Back"))
 async def back_handler(message: Message):
     markup = ReplyKeyboardMarkup(
-        keyboard=[[KeyboardButton(text="Admin 🧑‍💼")]],
+        keyboard=[[KeyboardButton(text=_("Admin 🧑‍💼"))]],
         resize_keyboard=True,
     )
-    await message.answer("Asosiy menyu", reply_markup=markup)
+    await message.answer(_("Main menu"), reply_markup=markup)
